@@ -149,8 +149,8 @@ class SingupScreen extends BaseView<SingupController> {
                           height: 42.h,
                         ),
                         InkWell(
-                          onTap: () {
-                            Get.toNamed(RouterName.login);
+                          onTap: () async {
+                            await controller.signup();
                           },
                           child: Container(
                             height: 50.h,

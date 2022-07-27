@@ -1,3 +1,4 @@
+import 'package:clue_get/auth/authcheck/authcheck_screen.dart';
 import 'package:clue_get/auth/forgot/forgot_binding.dart';
 import 'package:clue_get/auth/forgot/forgot_screen.dart';
 import 'package:clue_get/auth/login/login_binding.dart';
@@ -94,6 +95,10 @@ class Pages {
           name: RouterName.tagitem,
           page: () => const TagItemScreen(),
           binding: TagItemBinding()),
+      GetPage(
+        name: RouterName.authcheck,
+        page: () => const AuthCheckScreen(),
+      )
 
       // GetPage(
       //     name: RouterName.search,

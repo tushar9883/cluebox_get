@@ -143,8 +143,8 @@ class LoginScreen extends BaseView<LoginController> {
                           height: 42.h,
                         ),
                         InkWell(
-                          onTap: () {
-                            Get.toNamed(RouterName.home);
+                          onTap: () async {
+                            await controller.login();
                           },
                           child: Container(
                             height: 50.h,

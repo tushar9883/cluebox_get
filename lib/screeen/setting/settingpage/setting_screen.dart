@@ -2,6 +2,7 @@ import 'package:clue_get/res/gradient.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/setting/settingpage/setting_binding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -386,7 +387,12 @@ class SettingScreen extends BaseView<SettingController> {
                   child: Column(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          await FirebaseAuth.instance.signOut();
+                          await controller.storage.deleteAll();
+                          print("firebase logout");
+                          Get.toNamed(RouterName.login);
+                        },
                         child: Column(
                           children: [
                             SizedBox(

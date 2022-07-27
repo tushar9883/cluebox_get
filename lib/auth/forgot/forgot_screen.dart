@@ -107,7 +107,7 @@ class ForgotScreen extends BaseView<ForgotController> {
                         ),
                         InkWell(
                           onTap: () {
-                            controller.emailLink();
+                            controller.forgot();
                           },
                           child: Container(
                             height: 50.h,
