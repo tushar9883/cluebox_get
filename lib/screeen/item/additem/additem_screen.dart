@@ -124,6 +124,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                           ),
                           TextField(
                             cursorColor: const Color(0xff5566fd),
+                            controller: controller.Nameitem,
                             style: robotoRegular.copyWith(
                               color: const Color(0xff111111),
                               fontSize: 14.sp,
@@ -535,34 +536,39 @@ class AdditemScreen extends BaseView<AddItemController> {
                           SizedBox(
                             height: 40.h,
                           ),
-                          Center(
-                            child: Container(
-                              width: 177.w,
-                              height: 48.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0x3f000000),
-                                    blurRadius: 16.r,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xff4a00e0),
-                                    Color(0xff8e2de2)
+                          InkWell(
+                            onTap: () async {
+                              await controller.additem();
+                            },
+                            child: Center(
+                              child: Container(
+                                width: 177.w,
+                                height: 48.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.r),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0x3f000000),
+                                      blurRadius: 16.r,
+                                      offset: const Offset(0, 0),
+                                    ),
                                   ],
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xff4a00e0),
+                                      Color(0xff8e2de2)
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Add Item",
-                                  style: robotoBold.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
+                                child: Center(
+                                  child: Text(
+                                    "Add Item",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 20.sp,
+                                    ),
                                   ),
                                 ),
                               ),
