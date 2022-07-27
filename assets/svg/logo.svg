@@ -1,0 +1,43 @@
+<svg id="CB_New_Logo" data-name="CB New Logo" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="543.36" height="121.8"
+    viewBox="0 0 543.36 121.8">
+    <defs>
+        <linearGradient id="linear-gradient" x1="4.175" y1="3.564" x2="1.054" y2="0.962"
+            gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#8e2de2" />
+            <stop offset="1" stop-color="#4a00e0" />
+        </linearGradient>
+        <linearGradient id="linear-gradient-2" x1="1.972" y1="1.727" x2="0.838" y2="0.782"
+            xlink:href="#linear-gradient" />
+    </defs>
+    <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1" data-name="Layer 1">
+            <path id="Path_1" data-name="Path 1"
+                d="M117.7,81.09A18.67,18.67,0,1,1,99,62.43,18.67,18.67,0,0,1,117.7,81.09Z"
+                fill="url(#linear-gradient)" />
+            <path id="Path_2" data-name="Path 2"
+                d="M128.85,19H39.52a6.74,6.74,0,0,0-6.73,6.74v89.32a6.74,6.74,0,0,0,6.73,6.74h89.33a6.59,6.59,0,0,0,3.06-.75l-20.69-20.69A22.6,22.6,0,0,1,99,103.9a22.85,22.85,0,1,1,15.5-6.1l20.31,20.31a6.59,6.59,0,0,0,.74-3.06V25.73A6.74,6.74,0,0,0,128.85,19Z"
+                fill="url(#linear-gradient-2)" />
+            <image id="Rectangle_1" data-name="Rectangle 1" width="169" height="65" opacity="0.25"
+                xlink:href="data:image/png;base64,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" />
+            <rect id="Rectangle_2" data-name="Rectangle 2" width="113.94" height="9.08" rx="1.53"
+                transform="translate(27.22 18.99)" fill="#5220ed" />
+            <path id="Path_3" data-name="Path 3"
+                d="M114.54,97.81a22.8,22.8,0,1,0-3.31,2.55L131.9,121a6.64,6.64,0,0,0,2.93-2.93ZM99,99.75a18.66,18.66,0,1,1,18.7-18.66A18.66,18.66,0,0,1,99,99.75Z"
+                fill="#fff" />
+            <path id="Path_4" data-name="Path 4"
+                d="M200.65,54.76a32.24,32.24,0,0,1,16.76,4.5V46.9q-7.17-3.09-18.07-3.09-16.9,0-28,11.11T160.29,84q0,16.74,9.84,27.07t26.18,10.31q12.62,0,21.1-4.39V105.5a33.38,33.38,0,0,1-18.43,5q-11.52,0-18.59-7.36T173.32,83.4q0-13,7.56-20.84T200.65,54.76Z" />
+            <path id="Path_5" data-name="Path 5" d="M229.21,40.78v79.38h12.21V40.78Z" />
+            <path id="Path_6" data-name="Path 6"
+                d="M290.77,66.53V97.38q0,6.44-3.49,10.42a11.24,11.24,0,0,1-8.87,4q-11.16,0-11.15-14.45V66.53H255.11V98.58q0,22.83,19,22.83,11.14,0,16.44-9.74h.21v8.49h12.15V66.53Z" />
+            <path id="Path_7" data-name="Path 7"
+                d="M363.06,92q0-12.56-6-19.63t-17-7.07a24.24,24.24,0,0,0-18.4,7.88q-7.41,7.89-7.41,20.4,0,13.23,6.73,20.55t18.56,7.3q12,0,19.37-4.6V107a26.48,26.48,0,0,1-15.76,5.13q-7.64,0-12-4c-2.92-2.68-4.44-6.51-4.58-11.46h36.55Zm-36.55-3.92a17.42,17.42,0,0,1,4.48-10,11.77,11.77,0,0,1,8.87-3.83,10.32,10.32,0,0,1,8.37,3.64q3,3.64,3.1,10.19Z" />
+            <path id="Path_8" data-name="Path 8"
+                d="M421.12,86a19.61,19.61,0,0,0-12.38-5.74v-.2a19.47,19.47,0,0,0,10-6.71,17.69,17.69,0,0,0,3.61-11.09A14.8,14.8,0,0,0,416,49.84q-6.36-4.77-17.25-4.77H374.92v75.09H399q11.56,0,19.17-6a18.88,18.88,0,0,0,7.58-15.6Q425.75,90.84,421.12,86Zm-33.8-30.92h9.06q12.89,0,12.88,9.63,0,5.61-3.69,8.67c-2.46,2-5.85,3.06-10.18,3.06h-8.07ZM408.71,107q-3.79,3.23-10.76,3.22H387.32V86.44h9q16.19,0,16.18,11.67a11,11,0,0,1-3.79,8.89Z" />
+            <path id="Path_9" data-name="Path 9"
+                d="M481.92,72.67q-7-7.4-19.59-7.39-13.09,0-20.81,7.6T433.79,94q0,12.4,7.42,19.92T461,121.41q12.77,0,20.34-7.72t7.56-20.55Q488.93,80,481.92,72.67ZM472.62,107q-3.86,4.77-11,4.76a14,14,0,0,1-11.2-4.83q-4.2-4.84-4.2-13.28,0-8.75,4.14-13.72a13.89,13.89,0,0,1,11.26-5q7.17,0,11,4.83t3.85,13.66Q476.47,102.255,472.62,107Z" />
+            <path id="Path_10" data-name="Path 10"
+                d="M543.36,66.53h-13.3L518.07,88h-.16c-.66-1.36-1.34-2.68-2-4l-9.26-17.44H492.47L509.75,93.9l-18.23,26.29h14l9.59-16.61c1.32-2.26,2.06-3.55,2.2-3.87h.21c.8,1.58,1.5,2.86,2.09,3.87l9.43,16.61h14.08l-17.64-26.5Z" />
+        </g>
+    </g>
+</svg>
