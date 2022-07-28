@@ -11,7 +11,7 @@ class UserModel {
   });
 
   UserModel.fromJson(String mId, dynamic json) {
-    print(">>>>>Location>>>> $mId");
+    print(">>>>> User >>>> $mId");
     name = json['name'];
     email = json['email'];
     uid = mId;

@@ -1,23 +1,29 @@
+import 'package:clue_get/model/additem_model.dart';
+import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
+import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
-  static const String User_DB = "User";
-  static const String Location_DB = "Location";
+  static const String User_DB = "USER";
+  static const String Additem_DB = "ADDITEM";
+  static const String Location_Db = "LOCATION";
+  static const String BOX_Db = "BOX";
+  static const String TAG_Db = "TAG";
 
   ///TODO Location Table
-  DatabaseService<LocationModel> locationdb = DatabaseService(Location_DB,
-      fromDS: (id, data) => LocationModel.fromJson(id, data),
+  DatabaseService<AddItemModel> additemdb = DatabaseService(Additem_DB,
+      fromDS: (id, data) => AddItemModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
-  Future addlocation(LocationModel location_details) async {
-    await locationdb.create(location_details.toJson());
+  Future addlocation(AddItemModel addItemModel) async {
+    await additemdb.create(addItemModel.toJson());
   }
 
-  Future<List<LocationModel>> getAllLocation(String uids) async {
-    List<LocationModel> res = await locationdb.getQueryList(
+  Future<List<AddItemModel>> getAllItemList(String uids) async {
+    List<AddItemModel> res = await additemdb.getQueryList(
       args: [
         QueryArgsV2(
           "userid",
@@ -29,21 +35,39 @@ class DbHelp {
     return res;
   }
 
-  ///TODO User Table
+  ///TODO Location Table Create
+  DatabaseService<LocationModel> locationdb = DatabaseService(Location_Db,
+      fromDS: (id, data) => LocationModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
 
+  Future adlocation(LocationModel locationModel) async {
+    await locationdb.create(locationModel.toJson());
+  }
+
+  ///TODO Box Table Create
+  DatabaseService<BoxModel> boxdb = DatabaseService(BOX_Db,
+      fromDS: (id, data) => BoxModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  Future adbox(BoxModel boxModel) async {
+    await boxdb.create(boxModel.toJson());
+  }
+
+  ///TODO Tag Table Create
+  DatabaseService<TagModel> tagdb = DatabaseService(TAG_Db,
+      fromDS: (id, data) => TagModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  Future adtag(TagModel tagModel) async {
+    await tagdb.create(tagModel.toJson());
+  }
+
+  ///TODO User Table
   DatabaseService<UserModel> userdb = DatabaseService(User_DB,
       fromDS: (id, data) => UserModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
   Future adduser(UserModel userModel) async {
     await userdb.create(userModel.toJson());
-  }
-
-  ///TODO User Table Get Details
-  Future<List<UserModel>> getSpecificUser() async {
-    List<UserModel> res = await userdb.getQueryList(args: [
-      QueryArgsV2("email", isEqualTo: FirebaseAuth.instance.currentUser?.email)
-    ]);
-    return res;
   }
 }

@@ -14,6 +14,7 @@ class AdditemScreen extends BaseView<AddItemController> {
   Widget vBuilder(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,103 +245,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                           SizedBox(
                             height: 25.h,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Box Number/Name",
-                                style: robotoBold.copyWith(
-                                  color: Colors.black,
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        // title: Text('Welcome'),
-                                        content: Text(
-                                          'Where are you putting your items?',
-                                          style: robotoRegular.copyWith(
-                                            color: Colors.black,
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'OK'),
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 20.w,
-                                  width: 20.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: const Color(0x3f000000),
-                                        blurRadius: 16.r,
-                                        offset: const Offset(0, 0),
-                                      ),
-                                    ],
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xff4a00e0),
-                                        Color(0xff8e2de2)
-                                      ],
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '?',
-                                    textAlign: TextAlign.center,
-                                    style: robotoBold.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          DropdownButton(
-                            value: controller.dropdownvalue,
-                            elevation: 16,
-                            style: robotoRegular.copyWith(
-                              color: const Color(0xff111111),
-                              fontSize: 14.sp,
-                            ),
-                            isExpanded: true,
-                            underline: Container(
-                              height: 1.h,
-                              color: const Color(0xFF999999),
-                            ),
-                            hint: const Text('joh'),
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            items: controller.items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              controller.dropdownvalue = newValue!;
-                              controller.update();
-                            },
-                          ),
-                          SizedBox(
-                            height: 25.h,
-                          ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -411,7 +316,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                             ],
                           ),
                           DropdownButton(
-                            value: controller.dropdownvaluess,
+                            value: controller.locationvaluess,
                             elevation: 16,
                             isExpanded: true,
                             style: robotoRegular.copyWith(
@@ -422,19 +327,215 @@ class AdditemScreen extends BaseView<AddItemController> {
                               height: 1.h,
                               color: const Color(0xFF999999),
                             ),
-                            hint: const Text('joh'),
+                            hint: const Text('Select Location'),
                             icon: const Icon(Icons.keyboard_arrow_down),
-                            items: controller.itemsss.map((String itemsss) {
+                            items: controller.locationss.map((String itemsss) {
                               return DropdownMenuItem(
                                 value: itemsss,
                                 child: Text(itemsss),
                               );
                             }).toList(),
                             onChanged: (String? newValue) {
-                              controller.dropdownvaluess = newValue!;
-                              controller.update();
+                              controller.locationvaluess = newValue ?? '';
+                              if (newValue == 'Add Location') {
+                                controller.showLocation = true;
+                                controller.showBox = true;
+                                controller.update();
+                                print('>>>>>>${controller.locationvaluess}');
+                              } else {
+                                controller.showLocation = false;
+                                controller.update();
+                                print(controller.locationvaluess);
+                              }
                             },
                           ),
+
+                          ///ToDo Location TextField
+                          Visibility(
+                            visible: controller.showLocation,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Text(
+                                  "Location Name",
+                                  style: robotoBold.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                TextField(
+                                  cursorColor: const Color(0xff5566fd),
+                                  controller: controller.LocationName,
+                                  style: robotoRegular.copyWith(
+                                    color: const Color(0xff111111),
+                                    fontSize: 14.sp,
+                                  ),
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: const InputDecoration(
+                                      focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff5566fd)),
+                                  )),
+                                ),
+                                SizedBox(
+                                  height: 25.h,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Box Number/Name",
+                                style: robotoBold.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        // title: Text('Welcome'),
+                                        content: Text(
+                                          'Where are you putting your items?',
+                                          style: robotoRegular.copyWith(
+                                            color: Colors.black,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, 'OK'),
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 20.w,
+                                  width: 20.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0x3f000000),
+                                        blurRadius: 16.r,
+                                        offset: const Offset(0, 0),
+                                      ),
+                                    ],
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xff4a00e0),
+                                        Color(0xff8e2de2)
+                                      ],
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '?',
+                                    textAlign: TextAlign.center,
+                                    style: robotoBold.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          ///TODo AddValue
+                          DropdownButton(
+                            value: controller.boxvalue,
+                            elevation: 16,
+                            isExpanded: true,
+                            style: robotoRegular.copyWith(
+                              color: const Color(0xff111111),
+                              fontSize: 14.sp,
+                            ),
+                            underline: Container(
+                              height: 1.h,
+                              color: const Color(0xFF999999),
+                            ),
+                            hint: const Text('Select Box'),
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            items: controller.boxss.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              controller.boxvalue = newValue ?? '';
+                              if (newValue == 'Add New Box') {
+                                controller.showBox = true;
+                                controller.update();
+                                print('>>>>>>${controller.boxvalue}');
+                              } else {
+                                controller.showBox = false;
+                                controller.update();
+                                print(controller.boxvalue);
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+
+                          ///TODo Box Name TextField
+
+                          Visibility(
+                            visible: controller.showBox,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Box Name",
+                                  style: robotoBold.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                TextField(
+                                  cursorColor: const Color(0xff5566fd),
+                                  controller: controller.BoxName,
+                                  style: robotoRegular.copyWith(
+                                    color: const Color(0xff111111),
+                                    fontSize: 14.sp,
+                                  ),
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: const InputDecoration(
+                                      focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff5566fd)),
+                                  )),
+                                ),
+                                SizedBox(
+                                  height: 25.h,
+                                ),
+                              ],
+                            ),
+                          ),
+
                           SizedBox(
                             height: 25.h,
                           ),

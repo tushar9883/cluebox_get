@@ -6,7 +6,9 @@ import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends BaseView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -274,114 +276,117 @@ class HomeScreen extends BaseView<HomeController> {
                             ),
                           ),
                         ),
-                        FutureBuilder(
-                          future: DefaultAssetBundle.of(context)
-                              .loadString('assets/json/check.json'),
-                          builder: (context, snapshot) {
-                            var newData = json.decode(snapshot.data.toString());
-                            return ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: newData?.length ?? 0,
-                              itemBuilder: (BuildContext context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                      left: 21.h, right: 21.h, top: 15.h),
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.r),
-                                    border: Border.all(
-                                      color: const Color(0xffe0e0e0),
-                                      width: 1,
+                        controller.itemlist != null
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: controller.itemlist?.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  var loc = controller.itemlist?[index];
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                        left: 21.h, right: 21.h, top: 15.h),
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      border: Border.all(
+                                        color: const Color(0xffe0e0e0),
+                                        width: 1,
+                                      ),
                                     ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 5.w,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color:
-                                                      const Color(0x3f000000),
-                                                  blurRadius: 8.r,
-                                                  offset: const Offset(0, 0),
-                                                ),
-                                              ],
-                                            ),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.r),
-                                                child: Image.network(
-                                                  newData[index]['img'],
-                                                  height: 65.h,
-                                                  width: 74.w,
-                                                  fit: BoxFit.cover,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return Image.asset(
-                                                        'assets/image/default.png',
-                                                        height: 65.h,
-                                                        width: 74.w,
-                                                        fit: BoxFit.cover);
-                                                  },
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 15.w,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 5.w,
+                                        ),
+                                        Column(
                                           children: [
-                                            Text(
-                                              newData[index]['title'],
-                                              overflow: TextOverflow.ellipsis,
-                                              style: robotoBold.copyWith(
-                                                  fontSize: 16.sp),
-                                            ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Text(
-                                              newData[index]['text'],
-                                              maxLines: 1,
-                                              overflow: TextOverflow.clip,
-                                              style: robotoMedium.copyWith(
-                                                fontSize: 12.sp,
-                                                color: const Color(0xff111111),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color:
+                                                        const Color(0x3f000000),
+                                                    blurRadius: 8.r,
+                                                    offset: const Offset(0, 0),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                            Text(
-                                              newData[index]['des'],
-                                              overflow: TextOverflow.ellipsis,
-                                              style: robotoMedium.copyWith(
-                                                fontSize: 9.sp,
-                                                color: Color(0xff808080),
-                                              ),
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r),
+                                                  child: Image.network(
+                                                    "${loc?.image}",
+                                                    height: 65.h,
+                                                    width: 74.w,
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return Image.asset(
+                                                          'assets/image/default.png',
+                                                          height: 65.h,
+                                                          width: 74.w,
+                                                          fit: BoxFit.cover);
+                                                    },
+                                                  )),
                                             ),
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                                        SizedBox(
+                                          width: 15.w,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${loc?.itemName}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: robotoBold.copyWith(
+                                                    fontSize: 16.sp),
+                                              ),
+                                              SizedBox(
+                                                height: 5.h,
+                                              ),
+                                              Text(
+                                                "${loc?.box}",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.clip,
+                                                style: robotoMedium.copyWith(
+                                                  fontSize: 12.sp,
+                                                  color:
+                                                      const Color(0xff111111),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                              Text(
+                                                "Item Added on: ${loc?.date}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: robotoMedium.copyWith(
+                                                  fontSize: 9.sp,
+                                                  color: Color(0xff808080),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Center(
+                                child: SpinKitFadingCircle(
+                                  color: Colors.blue,
+                                  size: 50.0,
+                                ),
+                              ),
                         SizedBox(
                           height: 8.h,
                         ),
