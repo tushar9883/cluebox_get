@@ -65,11 +65,14 @@ class AdditemScreen extends BaseView<AddItemController> {
                               Container(
                                   margin:
                                       EdgeInsets.symmetric(horizontal: 21.h),
-                                  child: Image.network(
-                                    controller.imgUrl.toString(),
-                                    height: 194.h,
-                                    width: 372.w,
-                                    fit: BoxFit.cover,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14.r),
+                                    child: Image.network(
+                                      controller.imgUrl.toString(),
+                                      height: 194.h,
+                                      width: 372.w,
+                                      fit: BoxFit.cover,
+                                    ),
                                   )),
                               InkWell(
                                 onTap: () {
@@ -144,9 +147,10 @@ class AdditemScreen extends BaseView<AddItemController> {
                             size: 30.h,
                             isLiked: controller.isFavorite,
                             onTap: (isLiked) {
-                              print(isLiked);
                               controller.isFavorite = !isLiked;
                               controller.update();
+                              print(
+                                  '22222222222222222${controller.isFavorite}');
                               return Future.value(controller.isFavorite);
                             },
                             likeBuilder: (isTapped) {

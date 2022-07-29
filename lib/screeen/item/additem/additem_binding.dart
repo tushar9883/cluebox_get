@@ -4,6 +4,7 @@ import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
+import 'package:clue_get/model/favorite_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/res/color.dart';
@@ -35,16 +36,12 @@ class AddItemController extends BaseController {
   TextfieldTagsController tagController = TextfieldTagsController();
   String locationID = '';
   bool isFavorite = false;
-
-  // String dropdownvalue = 'Item 1';
   BoxModel? boxvalue;
   LocationModel? locationvaluess;
   bool showBox = false;
   bool showLocation = false;
   bool hideBox = false;
-
   var userid = FirebaseAuth.instance.currentUser?.uid;
-
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
   File? profileImage;
@@ -54,6 +51,7 @@ class AddItemController extends BaseController {
   @override
   void onInit() {
     counter.text = "1";
+    print(">>>>>>>> favorite <<<<<<<<${isFavorite}");
     update();
     super.onInit();
     getAllLoc();
@@ -81,6 +79,7 @@ class AddItemController extends BaseController {
   }
 
   submit(BuildContext context) async {
+    showLoadingDialog();
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
     final taggs = tagController.getTags;
@@ -121,8 +120,10 @@ class AddItemController extends BaseController {
         selectedLocation =
             LocationModel(uid: docrefLoc.id, name: LocationName.text);
         update();
+        hideDialog();
       } else {
         selectedLocation = locationvaluess;
+        hideDialog();
       }
       if (boxvalue?.name == 'Add Box' ||
           locationvaluess?.name == 'Add Location') {
@@ -139,6 +140,23 @@ class AddItemController extends BaseController {
       } else {
         hideDialog();
         selectedBox = boxvalue;
+      }
+      if (isFavorite) {
+        await DbHelp().adfavorite(FavoriteModel(
+            userid: userid,
+            itemName: Nameitem.text,
+            tag: stringList,
+            locationId: selectedBox?.name,
+            locationName: selectedLocation?.name,
+            boxId: selectedBox?.uid,
+            boxName: selectedBox?.name,
+            quantity: counter.text,
+            image: imgUrl.toString(),
+            date: Localtime.toString()));
+        hideDialog();
+      } else {
+        print("<><?><>><>>> fav ${isFavorite}");
+        hideDialog();
       }
 
       await DbHelp().addItem(AddItemModel(
@@ -314,6 +332,7 @@ class AddItemController extends BaseController {
   }
 
   Future uplodeProfilePic() async {
+    showLoadingDialog();
     // setState(() {
     //   isLoading = !isLoading;
     // });
@@ -328,6 +347,7 @@ class AddItemController extends BaseController {
     //     isLoading = !isLoading;
     //   });
     // }
+    hideDialog();
     update();
   }
 }
