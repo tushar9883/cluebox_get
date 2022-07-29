@@ -18,8 +18,44 @@ class DbHelp {
       fromDS: (id, data) => AddItemModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
-  Future addlocation(AddItemModel addItemModel) async {
+  ///TODO Location Table Create
+  DatabaseService<LocationModel> locationdb = DatabaseService(Location_Db,
+      fromDS: (id, data) => LocationModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  ///TODO Box Table Create
+  DatabaseService<BoxModel> boxdb = DatabaseService(BOX_Db,
+      fromDS: (id, data) => BoxModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  ///TODO Tag Table Create
+  DatabaseService<TagModel> tagdb = DatabaseService(TAG_Db,
+      fromDS: (id, data) => TagModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  ///TODO User Table
+  DatabaseService<UserModel> userdb = DatabaseService(User_DB,
+      fromDS: (id, data) => UserModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  Future adduser(UserModel userModel) async {
+    await userdb.create(userModel.toJson());
+  }
+
+  Future adlocation(LocationModel locationModel) async {
+    return await locationdb.create(locationModel.toJson());
+  }
+
+  Future adbox(BoxModel boxModel) async {
+    return await boxdb.create(boxModel.toJson());
+  }
+
+  Future addItem(AddItemModel addItemModel) async {
     await additemdb.create(addItemModel.toJson());
+  }
+
+  Future adtag(TagModel tagModel) async {
+    await tagdb.create(tagModel.toJson());
   }
 
   Future<List<AddItemModel>> getAllItemList(String uids) async {
@@ -31,43 +67,34 @@ class DbHelp {
         )
       ],
       orderBy: [OrderBy("date", descending: true)],
+      limit: 10,
     );
     return res;
   }
 
-  ///TODO Location Table Create
-  DatabaseService<LocationModel> locationdb = DatabaseService(Location_Db,
-      fromDS: (id, data) => LocationModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
-  Future adlocation(LocationModel locationModel) async {
-    await locationdb.create(locationModel.toJson());
+  Future<List<LocationModel>> getAllLocation(String uids) async {
+    List<LocationModel> res = await locationdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "userid",
+          isEqualTo: uids,
+        )
+      ],
+      orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
   }
 
-  ///TODO Box Table Create
-  DatabaseService<BoxModel> boxdb = DatabaseService(BOX_Db,
-      fromDS: (id, data) => BoxModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
-  Future adbox(BoxModel boxModel) async {
-    await boxdb.create(boxModel.toJson());
-  }
-
-  ///TODO Tag Table Create
-  DatabaseService<TagModel> tagdb = DatabaseService(TAG_Db,
-      fromDS: (id, data) => TagModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
-  Future adtag(TagModel tagModel) async {
-    await tagdb.create(tagModel.toJson());
-  }
-
-  ///TODO User Table
-  DatabaseService<UserModel> userdb = DatabaseService(User_DB,
-      fromDS: (id, data) => UserModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
-  Future adduser(UserModel userModel) async {
-    await userdb.create(userModel.toJson());
+  Future<List<BoxModel>> getBoxLocationWise(String locID) async {
+    List<BoxModel> res = await boxdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "location_id",
+          isEqualTo: locID,
+        )
+      ],
+      orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
   }
 }

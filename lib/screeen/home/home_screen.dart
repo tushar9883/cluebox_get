@@ -353,7 +353,7 @@ class HomeScreen extends BaseView<HomeController> {
                                                 height: 5.h,
                                               ),
                                               Text(
-                                                "${loc?.box}",
+                                                "${loc?.boxName}",
                                                 maxLines: 1,
                                                 overflow: TextOverflow.clip,
                                                 style: robotoMedium.copyWith(
