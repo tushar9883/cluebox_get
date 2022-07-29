@@ -80,7 +80,7 @@ class AddItemController extends BaseController {
     update();
   }
 
-  submit() async {
+  submit(BuildContext context) async {
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
     final taggs = tagController.getTags;
