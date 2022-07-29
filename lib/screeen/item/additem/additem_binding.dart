@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
@@ -8,7 +10,12 @@ import 'package:clue_get/res/color.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+
+import '../../../res/style.dart';
+import '../../../services/storage_data.dart';
 
 class AddItemBinding implements Bindings {
   @override
@@ -54,6 +61,9 @@ class AddItemController extends BaseController {
 
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
+  File? profileImage;
+  final ImagePicker picker = ImagePicker();
+  var imgUrl;
 
   @override
   void onInit() {
@@ -83,136 +93,6 @@ class AddItemController extends BaseController {
     // allLocList?.addAll(allData);
     update();
   }
-
-  // additem() async {
-  //   final _utcTime = DateTime.now().toUtc();
-  //   final Localtime = _utcTime.toLocal();
-  //   final taggs = tagController.getTags;
-  //   var stringList = taggs?.join("");
-  //
-  //   showLoadingDialog();
-  //   if (showLocation == true) {
-  //     if (showBox == true) {
-  //       if (LocationName.text.isEmpty) {
-  //         hideDialog();
-  //         toastbar("Location name is required");
-  //       } else if (BoxName.text.isEmpty) {
-  //         hideDialog();
-  //         toastbar("Box name is required");
-  //       } else {
-  //         if (locationvaluess == 'Add Location' || boxvalue == 'Add New Box') {
-  //           await DbHelp().addlocation(AddItemModel(
-  //             userid: userid,
-  //             itemName: Nameitem.text,
-  //             tag: stringList,
-  //             box: BoxName.text,
-  //             location: LocationName.text,
-  //             quantity: counter.text,
-  //             date: Localtime.toString(),
-  //             image:
-  //                 "https://images.unsplash.com/photo-1535916707207-35f97e715e1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-  //           ));
-  //           await DbHelp().adlocation(LocationModel(
-  //             name: LocationName.text,
-  //             userid: userid,
-  //             date: Localtime.toString(),
-  //           ));
-  //           await DbHelp().adbox(BoxModel(
-  //             userid: userid,
-  //             name: BoxName.text,
-  //             date: Localtime.toString(),
-  //             locationName: LocationName.text,
-  //           ));
-  //           await DbHelp().adtag(TagModel(
-  //               userid: userid, name: stringList, date: Localtime.toString()));
-  //           print(
-  //               "?>?>?>?>>>>> ${LocationName.text} <?<?<??<?<?<?  ${BoxName.text}");
-  //         }
-  //         print(
-  //             'Boxname : ${BoxName.text} >>> Location Name: ${LocationName.text}');
-  //         hideDialog();
-  //         WidgetsBinding.instance.addPostFrameCallback((_) {
-  //           var controll = Get.find<HomeController>();
-  //           controll.getData();
-  //         });
-  //         Get.back();
-  //         Nameitem.clear();
-  //         BoxName.clear();
-  //         LocationName.clear();
-  //         update();
-  //       }
-  //     } else if (showBox == false) {
-  //       if (LocationName.text.isEmpty) {
-  //         hideDialog();
-  //         toastbar("Location name is required");
-  //       } else {
-  //         await DbHelp().addlocation(AddItemModel(
-  //             userid: userid,
-  //             itemName: Nameitem.text,
-  //             tag: stringList,
-  //             box: boxvalue,
-  //             location: LocationName.text,
-  //             quantity: counter.text,
-  //             date: Localtime.toString(),
-  //             image:
-  //                 "https://images.unsplash.com/photo-1535916707207-35f97e715e1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"));
-  //         await DbHelp().adlocation(LocationModel(
-  //             name: LocationName.text,
-  //             userid: userid,
-  //             date: Localtime.toString()));
-  //         await DbHelp().adbox(BoxModel(
-  //             userid: userid,
-  //             name: boxvalue,
-  //             date: Localtime.toString(),
-  //             locationName: LocationName.text));
-  //         await DbHelp().adtag(TagModel(
-  //             userid: userid, name: stringList, date: Localtime.toString()));
-  //         hideDialog();
-  //         WidgetsBinding.instance.addPostFrameCallback((_) {
-  //           var controll = Get.find<HomeController>();
-  //           controll.getData();
-  //         });
-  //         Get.back();
-  //         Nameitem.clear();
-  //         update();
-  //         print('>>>>> Only Location : ${LocationName.text}');
-  //       }
-  //     }
-  //   } else {
-  //     print(
-  //         ">>>>>>>>> ${stringList} ...... \n ${counter.text} <<<<<< \n ${Nameitem.text} ^^^^^^^^^ \n ${boxvalue} <><><><> \n ${locationvaluess}");
-  //     await DbHelp().addlocation(AddItemModel(
-  //         userid: userid,
-  //         itemName: Nameitem.text,
-  //         tag: stringList,
-  //         box: boxvalue,
-  //         location: locationvaluess?.name,
-  //         quantity: counter.text,
-  //         date: Localtime.toString(),
-  //         image:
-  //             "https://images.unsplash.com/photo-1535916707207-35f97e715e1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"));
-  //     await DbHelp().adlocation(LocationModel(
-  //         name: locationvaluess?.name,
-  //         userid: userid,
-  //         date: Localtime.toString()));
-  //     await DbHelp().adbox(BoxModel(
-  //         userid: userid,
-  //         name: boxvalue,
-  //         date: Localtime.toString(),
-  //         locationName: locationvaluess?.name));
-  //     await DbHelp().adtag(TagModel(
-  //         userid: userid, name: stringList, date: Localtime.toString()));
-  //
-  //     hideDialog();
-  //     WidgetsBinding.instance.addPostFrameCallback((_) {
-  //       var controll = Get.find<HomeController>();
-  //       controll.getData();
-  //     });
-  //     Get.back();
-  //     Nameitem.clear();
-  //     update();
-  //   }
-  // }
 
   submit() async {
     final _utcTime = DateTime.now().toUtc();
@@ -283,8 +163,7 @@ class AddItemController extends BaseController {
         locationName: selectedLocation?.name,
         quantity: counter.text,
         date: Localtime.toString(),
-        image:
-            "https://images.unsplash.com/photo-1535916707207-35f97e715e1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+        image: imgUrl.toString(),
         boxId: selectedBox?.uid,
         locationId: selectedLocation?.uid,
       ));
@@ -295,5 +174,98 @@ class AddItemController extends BaseController {
       });
       Get.back();
     }
+  }
+
+  showPicker(context, String imageType) {
+    showModalBottomSheet(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.r), topRight: Radius.circular(10.r)),
+        ),
+        context: context,
+        builder: (BuildContext bc) {
+          return Wrap(
+            children: <Widget>[
+              ListTile(
+                  leading: const Icon(Icons.photo_library),
+                  title: Text(
+                    'Gallery',
+                    style: robotoBold.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.sp,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onTap: () {
+                    _imgFromGallery(imageType);
+                    Navigator.of(context).pop();
+                  }),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: Text(
+                  'Camera',
+                  style: robotoBold.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  _imgFromCamera(imageType);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Future _imgFromGallery(String imageType) async {
+    final pickedImage =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 25);
+    if (pickedImage != null) {
+      switch (imageType) {
+        case 'profilePic':
+          profileImage = File(pickedImage.path);
+          uplodeProfilePic();
+          break;
+      }
+    }
+    update();
+  }
+
+  //image picker
+  Future _imgFromCamera(String imageType) async {
+    final pickedImage =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 25);
+    if (pickedImage != null) {
+      switch (imageType) {
+        case 'profilePic':
+          profileImage = File(pickedImage.path);
+          uplodeProfilePic();
+
+          break;
+      }
+    }
+    update();
+  }
+
+  Future uplodeProfilePic() async {
+    // setState(() {
+    //   isLoading = !isLoading;
+    // });
+    print("iiiiiiiiiiiiiiiii${XFile(profileImage!.path)}");
+    var result = await StorageData()
+        .uploadFile(xfile: XFile(profileImage!.path), folderName: 'images');
+    imgUrl = result["imageUrl"];
+    print('immmmmmmmmmmmm-------------${imgUrl}');
+
+    // if (mounted) {
+    //   setState(() {
+    //     isLoading = !isLoading;
+    //   });
+    // }
+    update();
   }
 }

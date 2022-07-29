@@ -58,36 +58,80 @@ class AdditemScreen extends BaseView<AddItemController> {
                     SizedBox(
                       height: 13.h,
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 21.h),
-                              child: Image.asset('assets/image/check.png')),
-                          Container(
+                    controller.imgUrl != null
+                        ? Stack(
                             alignment: Alignment.center,
-                            width: 153.w,
-                            height: 38.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.w,
+                            children: [
+                              Container(
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 21.h),
+                                  child: Image.network(
+                                    controller.imgUrl.toString(),
+                                    height: 194.h,
+                                    width: 372.w,
+                                    fit: BoxFit.cover,
+                                  )),
+                              InkWell(
+                                onTap: () {
+                                  controller.showPicker(context, 'profilePic');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 153.w,
+                                  height: 38.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 2.w,
+                                    ),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Text(
+                                    "Change Item Image",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              "Add Item Image",
-                              style: robotoBold.copyWith(
-                                color: Colors.black,
-                                fontSize: 16.sp,
+                            ],
+                          )
+                        : Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 21.h),
+                                  child: Image.asset('assets/image/check.png')),
+                              InkWell(
+                                onTap: () {
+                                  controller.showPicker(context, 'profilePic');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 153.w,
+                                  height: 38.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 2.w,
+                                    ),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Text(
+                                    "Add Item Image",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 16.h,
                     ),
@@ -358,6 +402,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                                 controller.showLocation = false;
                                 controller.showBox = false;
                                 controller.hideBox = true;
+                                controller.boxvalue = null;
                                 controller.LocationName.clear();
                                 controller.BoxName.clear();
                                 controller.getBoxLocWise();
