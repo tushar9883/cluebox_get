@@ -5,9 +5,12 @@ import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/res/color.dart';
+import 'package:clue_get/res/style.dart';
+import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 class AddItemBinding implements Bindings {
@@ -18,30 +21,13 @@ class AddItemBinding implements Bindings {
 }
 
 class AddItemController extends BaseController {
-  var boxss = [
-    'Add New Box',
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
-  var locationss = [
-    'Add Location',
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
   final counter = TextEditingController();
   final Nameitem = TextEditingController();
   final LocationName = TextEditingController();
   final BoxName = TextEditingController();
   TextfieldTagsController tagController = TextfieldTagsController();
   String locationID = '';
+  bool isFavorite = false;
 
   // String dropdownvalue = 'Item 1';
   BoxModel? boxvalue;
@@ -214,30 +200,32 @@ class AddItemController extends BaseController {
   //   }
   // }
 
-  submit() async {
+  submit(context) async {
+    showLoadingDialog();
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
     final taggs = tagController.getTags;
     var stringList = taggs?.join(", ");
 
     if (Nameitem.text.isEmpty) {
+      hideDialog();
       toastbar('Item name is required');
-    }
-    // else if (tagController.getTags == null ||
-    //     tagController.getTags!.isEmpty) {
-    //   toastbar('Tags are required');
-    // }
-    else if (locationvaluess == null) {
+    } else if (locationvaluess == null) {
+      hideDialog();
       toastbar('Please select/add Location');
     } else if (locationvaluess?.name == 'Add Location' &&
         LocationName.text.isEmpty) {
+      hideDialog();
       toastbar('Please enter Location Name');
     } else if (locationvaluess?.name == 'Add Location' &&
         BoxName.text.isEmpty) {
+      hideDialog();
       toastbar('Please enter Box Name');
     } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
+      hideDialog();
       toastbar('Please select/add Box');
     } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
+      hideDialog();
       toastbar('Please enter Box Name');
     } else {
       await DbHelp().adtag(TagModel(
@@ -257,9 +245,6 @@ class AddItemController extends BaseController {
       } else {
         selectedLocation = locationvaluess;
       }
-
-      // print("id of location ${docrefLoc.id}");
-
       if (boxvalue?.name == 'Add Box' ||
           locationvaluess?.name == 'Add Location') {
         var docrefBox = await DbHelp().adbox(BoxModel(
@@ -271,7 +256,9 @@ class AddItemController extends BaseController {
         ));
         update();
         selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
+        hideDialog();
       } else {
+        hideDialog();
         selectedBox = boxvalue;
       }
 
@@ -288,12 +275,88 @@ class AddItemController extends BaseController {
         boxId: selectedBox?.uid,
         locationId: selectedLocation?.uid,
       ));
-      toastbar('SUCCESS', isSuccess: true);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        var controll = Get.find<HomeController>();
-        controll.getData();
-      });
-      Get.back();
+      hideDialog();
+      showAlertDialog(context);
     }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.r))),
+      title: Center(
+        child: Text(
+          'Item Added Successfully!',
+          style: robotoBold.copyWith(
+            color: Colors.black,
+            fontSize: 20.sp,
+          ),
+        ),
+      ),
+      content: Image.asset(
+        'assets/image/verified.gif',
+        width: 154.w,
+        height: 154.h,
+      ),
+      actions: [
+        Column(
+          children: [
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Get.until((route) => Get.currentRoute == RouterName.home);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    var controll = Get.find<HomeController>();
+                    controll.getData();
+                  });
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    width: 75.w,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0x3f000000),
+                          blurRadius: 16.r,
+                          offset: const Offset(0, 0),
+                        ),
+                      ],
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xff4A00E0),
+                          Color(0xff8E2DE2),
+                        ],
+                        begin: Alignment(-1.0, 0),
+                        end: Alignment(1, 1),
+                      ),
+                    ),
+                    child: Text(
+                      "OK",
+                      textAlign: TextAlign.center,
+                      style: robotoBold.copyWith(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                      ),
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            )
+          ],
+        ),
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

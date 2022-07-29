@@ -98,6 +98,13 @@ class AdditemScreen extends BaseView<AddItemController> {
                           margin: EdgeInsets.only(right: 16.w),
                           child: LikeButton(
                             size: 30.h,
+                            isLiked: controller.isFavorite,
+                            onTap: (isLiked) {
+                              print(isLiked);
+                              controller.isFavorite = !isLiked;
+                              controller.update();
+                              return Future.value(controller.isFavorite);
+                            },
                             likeBuilder: (isTapped) {
                               return SvgPicture.asset(
                                 isTapped
@@ -671,7 +678,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                           InkWell(
                             onTap: () async {
                               // await controller.additem();
-                              await controller.submit();
+                              await controller.submit(context);
                             },
                             child: Center(
                               child: Container(

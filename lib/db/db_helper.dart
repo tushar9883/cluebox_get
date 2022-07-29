@@ -1,5 +1,6 @@
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
+import 'package:clue_get/model/favorite_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
@@ -12,10 +13,16 @@ class DbHelp {
   static const String Location_Db = "LOCATION";
   static const String BOX_Db = "BOX";
   static const String TAG_Db = "TAG";
+  static const String Favorite_Db = "FAVORITE";
 
   ///TODO Location Table
   DatabaseService<AddItemModel> additemdb = DatabaseService(Additem_DB,
       fromDS: (id, data) => AddItemModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
+  ///TODO Favorite Table
+  DatabaseService<FavoriteModel> favoritedb = DatabaseService(Favorite_Db,
+      fromDS: (id, data) => FavoriteModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
   ///TODO Location Table Create
@@ -44,6 +51,10 @@ class DbHelp {
 
   Future adlocation(LocationModel locationModel) async {
     return await locationdb.create(locationModel.toJson());
+  }
+
+  Future adfavorite(FavoriteModel favoriteModel) async {
+    return await favoritedb.create(favoriteModel.toJson());
   }
 
   Future adbox(BoxModel boxModel) async {
