@@ -58,7 +58,7 @@ class DbHelp {
     return tagdb.create(tagModel.toJson());
   }
 
-  Future<List<AddItemModel>> getAllItemList(String uids) async {
+  Future<List<AddItemModel>> getRecentItemList(String uids) async {
     List<AddItemModel> res = await additemdb.getQueryList(
       args: [
         QueryArgsV2(
@@ -113,17 +113,6 @@ class DbHelp {
 
   Future<List<TagModel>> getAllTags() async {
     List<TagModel> res = await tagdb.getQueryList(
-        // args: [
-        //   QueryArgsV2(
-        //     "location_id",
-        //     isEqualTo: locID,
-        //   )
-        // ],
-        // orderBy: [OrderBy("date", descending: true)],
-        );
-
-//get all items that contains 'demo' tag
-    additemdb.getQueryList(
       args: [
         QueryArgsV2(
           "tag",
@@ -131,7 +120,6 @@ class DbHelp {
         )
       ],
     );
-
     return res;
   }
 

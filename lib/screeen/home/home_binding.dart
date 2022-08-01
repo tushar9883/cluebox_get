@@ -25,8 +25,8 @@ class HomeController extends BaseController {
     "Medicines",
   ];
   Future<void> getData() async {
-    print("User ID >>>><<<<< $userid");
-    var allData = await DbHelp().getAllItemList(userid!);
+    print("User  >>>><<<<< $userid");
+    var allData = await DbHelp().getRecentItemList(userid!);
     itemlist?.clear();
     itemlist = allData;
     update();
@@ -34,13 +34,12 @@ class HomeController extends BaseController {
 
   @override
   void onInit() async {
-    itemlist?.clear();
+    super.onInit();
     getData();
     var check = await storagess.read(key: "uid");
     isLoggedIn = check;
     print(">>>>> User ID  ${check.toString()}  >>>>> ");
     update();
-    super.onInit();
   }
 
   late List<String> data;

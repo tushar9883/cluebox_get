@@ -19,7 +19,7 @@ class LoginController extends BaseController {
 
   login() async {
     if (email.text.isEmpty) {
-      toastbar("User name is required");
+      toastbar("Email is required");
     } else if (password.text.isEmpty) {
       toastbar("Password is required");
     } else {

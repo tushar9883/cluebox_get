@@ -230,31 +230,34 @@ class PersonalScreen extends BaseView<PersonalController> {
                 SizedBox(
                   height: 30.h,
                 ),
-                Center(
-                  child: Container(
-                    width: 113.w,
-                    height: 49.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0x3f000000),
-                          blurRadius: 16.r,
-                          offset: const Offset(0, 0),
+                InkWell(
+                  onTap: () {},
+                  child: Center(
+                    child: Container(
+                      width: 113.w,
+                      height: 49.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0x3f000000),
+                            blurRadius: 16.r,
+                            offset: const Offset(0, 0),
+                          ),
+                        ],
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xff4a00e0), Color(0xff8e2de2)],
                         ),
-                      ],
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color(0xff4a00e0), Color(0xff8e2de2)],
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Save",
-                        style: robotoBold.copyWith(
-                          color: Colors.white,
-                          fontSize: 20.sp,
+                      child: Center(
+                        child: Text(
+                          "Save",
+                          style: robotoBold.copyWith(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                          ),
                         ),
                       ),
                     ),

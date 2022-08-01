@@ -12,7 +12,7 @@ class FavoriteBinding implements Bindings {
 
 class FavoriteController extends BaseController {
   List<AddItemModel>? favoriteist;
-  bool isFavorite = true;
+  // bool isFavorite = true;
 
   var userid = FirebaseAuth.instance.currentUser?.uid;
 
@@ -24,23 +24,23 @@ class FavoriteController extends BaseController {
     update();
   }
 
-  favorritedata(String? id) async {
-    showLoadingDialog();
-    if (isFavorite == false) {
-      await DbHelp().updateFavorite(
-          AddItemModel(
-            favorite: isFavorite,
-          ),
-          id);
-      print('Value id true $isFavorite');
-      update();
-      getData();
-      hideDialog();
-    } else {
-      print('Value id true $isFavorite');
-      hideDialog();
-    }
-  }
+  // favorritedata(String? id) async {
+  //   showLoadingDialog();
+  //   if (isFavorite == false) {
+  //     await DbHelp().updateFavorite(
+  //         AddItemModel(
+  //           favorite: isFavorite,
+  //         ),
+  //         id);
+  //     print('Value id true $isFavorite');
+  //     update();
+  //     getData();
+  //     hideDialog();
+  //   } else {
+  //     print('Value id true $isFavorite');
+  //     hideDialog();
+  //   }
+  // }
 
   @override
   void onInit() async {

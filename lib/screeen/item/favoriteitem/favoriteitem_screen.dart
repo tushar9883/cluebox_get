@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/gradient.dart';
 import 'package:clue_get/res/style.dart';
@@ -519,23 +520,42 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                     ),
                                                     LikeButton(
                                                       size: 20.h,
-                                                      isLiked:
-                                                          controller.isFavorite,
-                                                      onTap: (isLiked) {
-                                                        controller.isFavorite =
+                                                      isLiked: loc?.favorite,
+                                                      onTap: (isLiked) async {
+                                                        loc?.favorite =
                                                             !isLiked;
                                                         controller.update();
                                                         print(
-                                                            '4444444${controller.isFavorite}');
-                                                        controller
-                                                            .favorritedata(id);
+                                                            '4444444${loc?.favorite}');
+                                                        if (loc?.favorite ==
+                                                            false) {
+                                                          controller
+                                                              .showLoadingDialog();
+                                                          await DbHelp()
+                                                              .updateFavorite(
+                                                                  AddItemModel(
+                                                                      favorite:
+                                                                          loc?.favorite),
+                                                                  id);
+                                                          print(
+                                                              'Value id true $loc?.favorite');
+                                                          controller.update();
+                                                          controller.getData();
+                                                          controller
+                                                              .hideDialog();
+                                                        } else {
+                                                          print(
+                                                              'Value id true $loc?.favorite');
+                                                          controller
+                                                              .hideDialog();
+                                                        }
+
                                                         return Future.value(
-                                                            controller
-                                                                .isFavorite);
+                                                            loc?.favorite);
                                                       },
                                                       likeBuilder: (isTapped) {
                                                         return SvgPicture.asset(
-                                                          isTapped
+                                                          isTapped == true
                                                               ? 'assets/svg/likes_fill.svg'
                                                               : 'assets/svg/like.svg',
                                                           height: 18.h,
