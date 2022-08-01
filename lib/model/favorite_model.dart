@@ -13,10 +13,12 @@ class FavoriteModel {
     this.userid,
     this.uid,
     this.itemName,
+    this.tag,
     this.locationId,
     this.locationName,
     this.boxId,
     this.boxName,
+    this.quantity,
     this.image,
     this.date,
   });
@@ -26,20 +28,24 @@ class FavoriteModel {
     userid = json['userid'];
     uid = mId;
     itemName = json['item_name'];
+    tag = json['tag'];
     locationId = json['location_id'];
     locationName = json['location_name'];
     boxId = json['box_id'];
     boxName = json['box_name'];
+    quantity = json['quantity'];
     image = json['image'];
     date = json['date '];
   }
   String? userid;
   String? uid;
   String? itemName;
+  String? tag;
   String? locationId;
   String? locationName;
   String? boxId;
   String? boxName;
+  String? quantity;
   String? image;
   String? date;
 
@@ -48,10 +54,12 @@ class FavoriteModel {
     map['userid'] = userid;
     map['uid'] = uid;
     map['item_name'] = itemName;
+    map['tag'] = tag;
     map['location_id'] = locationId;
     map['location_name'] = locationName;
     map['box_id'] = boxId;
     map['box_name'] = boxName;
+    map['quantity'] = quantity;
     map['image'] = image;
     map['date '] = date;
     return map;

@@ -83,6 +83,20 @@ class DbHelp {
     return res;
   }
 
+  Future<List<FavoriteModel>> getFavoriteList(String uids) async {
+    List<FavoriteModel> res = await favoritedb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "userid",
+          isEqualTo: uids,
+        )
+      ],
+      // orderBy: [OrderBy("date", descending: true)],
+      // limit: 10,
+    );
+    return res;
+  }
+
   Future<List<LocationModel>> getAllLocation(String uids) async {
     List<LocationModel> res = await locationdb.getQueryList(
       args: [

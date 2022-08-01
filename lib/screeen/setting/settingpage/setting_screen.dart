@@ -391,6 +391,7 @@ class SettingScreen extends BaseView<SettingController> {
                           await FirebaseAuth.instance.signOut();
                           await controller.storage.deleteAll();
                           print("firebase logout");
+                          controller.update();
                           Get.toNamed(RouterName.login);
                         },
                         child: Column(

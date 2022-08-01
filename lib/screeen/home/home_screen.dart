@@ -169,7 +169,7 @@ class HomeScreen extends BaseView<HomeController> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "325",
+                                        "${controller.itemlist?.length ?? "0"}",
                                         textAlign: TextAlign.center,
                                         style: robotoBold.copyWith(
                                           color: const Color(0xff4a00e0),
