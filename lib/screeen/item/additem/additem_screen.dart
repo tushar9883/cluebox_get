@@ -26,7 +26,7 @@ class AdditemScreen extends BaseView<AddItemController> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
+                    controller.back(context);
                   },
                   child: Container(
                       margin: EdgeInsets.only(left: 21.w),

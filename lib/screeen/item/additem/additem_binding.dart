@@ -4,7 +4,6 @@ import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
-import 'package:clue_get/model/favorite_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/res/color.dart';
@@ -57,6 +56,14 @@ class AddItemController extends BaseController {
     getAllLoc();
   }
 
+  back(BuildContext context) {
+    Navigator.of(context).pop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var controll = Get.find<HomeController>();
+      controll.getData();
+    });
+  }
+
   Future<void> getAllLoc() async {
     print("User ID >>>><<<<< $userid");
     var allData = await DbHelp().getAllLocation(userid ?? '');
@@ -82,8 +89,8 @@ class AddItemController extends BaseController {
     showLoadingDialog();
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
-    final taggs = tagController.getTags;
-    var stringList = taggs?.join(", ");
+    // final taggs = tagController.getTags;
+    // var stringList = taggs?.join(", ");
 
     if (Nameitem.text.isEmpty) {
       hideDialog();
@@ -107,7 +114,9 @@ class AddItemController extends BaseController {
       toastbar('Please enter Box Name');
     } else {
       await DbHelp().adtag(TagModel(
-          userid: userid, name: stringList, date: Localtime.toString()));
+          userid: userid,
+          name: tagController.getTags.toString(),
+          date: Localtime.toString()));
       BoxModel? selectedBox;
       LocationModel? selectedLocation;
 
@@ -138,39 +147,22 @@ class AddItemController extends BaseController {
         selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
         hideDialog();
       } else {
-        hideDialog();
         selectedBox = boxvalue;
-      }
-      if (isFavorite) {
-        await DbHelp().adfavorite(FavoriteModel(
-            userid: userid,
-            itemName: Nameitem.text,
-            tag: stringList,
-            locationId: selectedBox?.name,
-            locationName: selectedLocation?.name,
-            boxId: selectedBox?.uid,
-            boxName: selectedBox?.name,
-            quantity: counter.text,
-            image: imgUrl.toString(),
-            date: Localtime.toString()));
-        hideDialog();
-      } else {
-        print("<><?><>><>>> fav ${isFavorite}");
+        update();
         hideDialog();
       }
-
       await DbHelp().addItem(AddItemModel(
-        userid: userid,
-        itemName: Nameitem.text,
-        tag: stringList,
-        boxName: selectedBox?.name,
-        locationName: selectedLocation?.name,
-        quantity: counter.text,
-        date: Localtime.toString(),
-        image: imgUrl.toString(),
-        boxId: selectedBox?.uid,
-        locationId: selectedLocation?.uid,
-      ));
+          userid: userid,
+          itemName: Nameitem.text,
+          tag: tagController.getTags,
+          boxName: selectedBox?.name,
+          locationName: selectedLocation?.name,
+          quantity: counter.text,
+          date: Localtime.toString(),
+          image: imgUrl.toString(),
+          boxId: selectedBox?.uid,
+          locationId: selectedLocation?.uid,
+          favorite: isFavorite));
       hideDialog();
       showAlertDialog(context);
     }

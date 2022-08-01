@@ -9,19 +9,19 @@
 /// image : ""
 
 class AddItemModel {
-  AddItemModel({
-    this.uid,
-    this.userid,
-    this.itemName,
-    this.tag,
-    this.boxName,
-    this.locationName,
-    this.quantity,
-    this.date,
-    this.image,
-    this.boxId,
-    this.locationId,
-  });
+  AddItemModel(
+      {this.uid,
+      this.userid,
+      this.itemName,
+      this.tag,
+      this.boxName,
+      this.locationName,
+      this.quantity,
+      this.date,
+      this.image,
+      this.boxId,
+      this.locationId,
+      this.favorite});
 
   AddItemModel.fromJson(String mId, dynamic json) {
     print(">>>>> AddItem >>>> $mId");
@@ -36,11 +36,12 @@ class AddItemModel {
     image = json['image'];
     boxId = json['boxId'];
     locationId = json['location_id'];
+    favorite = json['favorite'];
   }
   String? uid;
   String? userid;
   String? itemName;
-  String? tag;
+  List? tag;
   String? boxName;
   String? locationName;
   String? quantity;
@@ -48,6 +49,7 @@ class AddItemModel {
   String? image;
   String? boxId;
   String? locationId;
+  bool? favorite;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -62,6 +64,7 @@ class AddItemModel {
     map['image'] = image;
     map['boxId'] = boxId;
     map['location_id'] = locationId;
+    map['favorite'] = favorite;
     return map;
   }
 }
