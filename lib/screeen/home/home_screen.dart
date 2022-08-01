@@ -283,6 +283,16 @@ class HomeScreen extends BaseView<HomeController> {
                                 itemCount: controller.itemlist?.length,
                                 itemBuilder: (BuildContext context, index) {
                                   var loc = controller.itemlist?[index];
+                                  var dates = loc?.date;
+                                  DateTime parseDate =
+                                      DateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                                          .parse(dates!);
+                                  var inputDate =
+                                      DateTime.parse(parseDate.toString());
+                                  var outputFormat = DateFormat('dd MMM yyyy');
+                                  var outputDate =
+                                      outputFormat.format(inputDate);
+                                  print(outputDate);
                                   return Container(
                                     margin: EdgeInsets.only(
                                         left: 21.h, right: 21.h, top: 15.h),
@@ -366,11 +376,12 @@ class HomeScreen extends BaseView<HomeController> {
                                                 height: 10.h,
                                               ),
                                               Text(
-                                                "Item Added on: ${loc?.date}",
+                                                "Item Added on: ${outputDate}",
                                                 overflow: TextOverflow.ellipsis,
                                                 style: robotoMedium.copyWith(
                                                   fontSize: 9.sp,
-                                                  color: Color(0xff808080),
+                                                  color:
+                                                      const Color(0xff808080),
                                                 ),
                                               ),
                                             ],
@@ -381,12 +392,7 @@ class HomeScreen extends BaseView<HomeController> {
                                   );
                                 },
                               )
-                            : const Center(
-                                child: SpinKitFadingCircle(
-                                  color: Colors.blue,
-                                  size: 50.0,
-                                ),
-                              ),
+                            : const SizedBox.shrink(),
                         SizedBox(
                           height: 8.h,
                         ),

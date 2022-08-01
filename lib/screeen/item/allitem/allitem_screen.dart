@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import '../../../base/base_view_view_model.dart';
 import 'allitem_binding.dart';
@@ -147,6 +148,16 @@ class AllItemScreen extends BaseView<AllItemController> {
                             itemCount: controller.itemlist?.length ?? 0,
                             itemBuilder: (BuildContext context, index) {
                               var loc = controller.itemlist?[index];
+                              var id = loc?.uid;
+                              var dates = loc?.date;
+                              DateTime parseDate =
+                                  DateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                                      .parse(dates!);
+                              var inputDate =
+                                  DateTime.parse(parseDate.toString());
+                              var outputFormat = DateFormat('dd MMM yyyy');
+                              var outputDate = outputFormat.format(inputDate);
+                              print(outputDate);
                               return Container(
                                 margin: EdgeInsets.only(
                                     left: 21.h, right: 21.h, top: 15.h),
@@ -330,24 +341,48 @@ class AllItemScreen extends BaseView<AllItemController> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Item Added on: ${loc?.date}",
+                                          "Item Added on: ${outputDate}",
                                           overflow: TextOverflow.ellipsis,
                                           style: robotoMedium.copyWith(
                                             fontSize: 9.sp,
                                             color: const Color(0xff808080),
                                           ),
                                         ),
-                                        LikeButton(
-                                          size: 20.h,
-                                          likeBuilder: (isTapped) {
-                                            return SvgPicture.asset(
-                                              isTapped
-                                                  ? 'assets/svg/likes_fill.svg'
-                                                  : 'assets/svg/like.svg',
-                                              height: 18.h,
-                                            );
-                                          },
-                                        ),
+                                        loc?.favorite == true
+                                            ? LikeButton(
+                                                size: 20.h,
+                                                likeBuilder: (isTapped) {
+                                                  return SvgPicture.asset(
+                                                    isTapped
+                                                        ? 'assets/svg/like.svg'
+                                                        : 'assets/svg/likes_fill.svg',
+                                                    height: 18.h,
+                                                  );
+                                                },
+                                              )
+                                            : LikeButton(
+                                                size: 20.h,
+                                                isLiked: controller.isFavorite,
+                                                onTap: (isLiked) {
+                                                  controller.isFavorite =
+                                                      !isLiked;
+                                                  controller.update();
+                                                  print(
+                                                      '00000 ${controller.isFavorite}');
+                                                  // controller
+                                                  //     .favorritedatafalse(id);
+                                                  return Future.value(
+                                                      controller.isFavorite);
+                                                },
+                                                likeBuilder: (isTapped) {
+                                                  return SvgPicture.asset(
+                                                    isTapped
+                                                        ? 'assets/svg/likes_fill.svg'
+                                                        : 'assets/svg/like.svg',
+                                                    height: 18.h,
+                                                  );
+                                                },
+                                              ),
                                       ],
                                     ),
                                     SizedBox(
@@ -363,12 +398,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                               );
                             },
                           )
-                        : const Center(
-                            child: SpinKitFadingCircle(
-                              color: Colors.blue,
-                              size: 50.0,
-                            ),
-                          ),
+                        : const SizedBox.shrink(),
                     SizedBox(
                       height: 8.h,
                     ),

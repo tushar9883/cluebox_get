@@ -1,15 +1,13 @@
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
-import 'package:clue_get/model/favorite_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
   static const String User_DB = "USER";
-  static const String Additem_DB = "ADDITEM";
+  static const String Additem_DB = "ITEM";
   static const String Location_Db = "LOCATION";
   static const String BOX_Db = "BOX";
   static const String TAG_Db = "TAG";
@@ -18,11 +16,6 @@ class DbHelp {
   ///TODO Location Table
   DatabaseService<AddItemModel> additemdb = DatabaseService(Additem_DB,
       fromDS: (id, data) => AddItemModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
-  ///TODO Favorite Table
-  DatabaseService<FavoriteModel> favoritedb = DatabaseService(Favorite_Db,
-      fromDS: (id, data) => FavoriteModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
   ///TODO Location Table Create
@@ -53,10 +46,6 @@ class DbHelp {
     return await locationdb.create(locationModel.toJson());
   }
 
-  Future adfavorite(FavoriteModel favoriteModel) async {
-    return await favoritedb.create(favoriteModel.toJson());
-  }
-
   Future adbox(BoxModel boxModel) async {
     return await boxdb.create(boxModel.toJson());
   }
@@ -83,16 +72,15 @@ class DbHelp {
     return res;
   }
 
-  Future<List<FavoriteModel>> getFavoriteList(String uids) async {
-    List<FavoriteModel> res = await favoritedb.getQueryList(
+  Future<List<AddItemModel>> getAllFavoriteList(String uids) async {
+    List<AddItemModel> res = await additemdb.getQueryList(
       args: [
         QueryArgsV2(
           "userid",
           isEqualTo: uids,
         )
       ],
-      // orderBy: [OrderBy("date", descending: true)],
-      // limit: 10,
+      orderBy: [OrderBy("date", descending: true)],
     );
     return res;
   }
@@ -145,5 +133,14 @@ class DbHelp {
     );
 
     return res;
+  }
+
+  Future updateFavorite(AddItemModel addItemModel, String? id) async {
+    print(">>>>>>> loc id $id");
+    await additemdb.updateData(
+      id ?? "",
+      {"favorite": addItemModel.favorite ?? false},
+      // {"favorite": addItemModel.favorite ?? false}, only single data update krva mate
+    );
   }
 }

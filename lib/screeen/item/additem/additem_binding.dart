@@ -4,7 +4,6 @@ import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
-import 'package:clue_get/model/favorite_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/res/color.dart';
@@ -59,6 +58,14 @@ class AddItemController extends BaseController {
     getAllLoc();
   }
 
+  back(BuildContext context) {
+    Navigator.of(context).pop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var controll = Get.find<HomeController>();
+      controll.getData();
+    });
+  }
+
   Future<void> getAllLoc() async {
     print("User ID >>>><<<<< $userid");
     var allData = await DbHelp().getAllLocation(userid ?? '');
@@ -104,24 +111,24 @@ class AddItemController extends BaseController {
       hideDialog();
       toastbar('Item name is required');
     }
-    // else if (locationvaluess == null) {
-    //   hideDialog();
-    //   toastbar('Please select/add Location');
-    // } else if (locationvaluess?.name == 'Add Location' &&
-    //     LocationName.text.isEmpty) {
-    //   hideDialog();
-    //   toastbar('Please enter Location Name');
-    // } else if (locationvaluess?.name == 'Add Location' &&
-    //     BoxName.text.isEmpty) {
-    //   hideDialog();
-    //   toastbar('Please enter Box Name');
-    // } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
-    //   hideDialog();
-    //   toastbar('Please select/add Box');
-    // } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
-    //   hideDialog();
-    //   toastbar('Please enter Box Name');
-    // }
+    else if (locationvaluess == null) {
+      hideDialog();
+      toastbar('Please select/add Location');
+    } else if (locationvaluess?.name == 'Add Location' &&
+        LocationName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Location Name');
+    } else if (locationvaluess?.name == 'Add Location' &&
+        BoxName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Box Name');
+    } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
+      hideDialog();
+      toastbar('Please select/add Box');
+    } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Box Name');
+    }
     else {
       var tagIds = [];
       for (var tag in tagController.getTags ?? []) {
@@ -160,40 +167,23 @@ class AddItemController extends BaseController {
         selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
         hideDialog();
       } else {
-        hideDialog();
         selectedBox = boxvalue;
-      }
-      if (isFavorite) {
-        await DbHelp().adfavorite(FavoriteModel(
-            userid: userid,
-            itemName: Nameitem.text,
-            tag: stringList,
-            locationId: selectedBox?.name,
-            locationName: selectedLocation?.name,
-            boxId: selectedBox?.uid,
-            boxName: selectedBox?.name,
-            quantity: counter.text,
-            image: imgUrl.toString(),
-            date: Localtime.toString()));
-        hideDialog();
-      } else {
-        print("<><?><>><>>> fav ${isFavorite}");
+        update();
         hideDialog();
       }
-
       await DbHelp().addItem(AddItemModel(
-        userid: userid,
-        itemName: Nameitem.text,
+          userid: userid,
+          itemName: Nameitem.text,
         // tag: tagController.getTags,
         tag: tagIds,
-        boxName: selectedBox?.name,
-        locationName: selectedLocation?.name,
-        quantity: counter.text,
-        date: Localtime.toString(),
-        image: imgUrl.toString(),
-        boxId: selectedBox?.uid,
-        locationId: selectedLocation?.uid,
-      ));
+          boxName: selectedBox?.name,
+          locationName: selectedLocation?.name,
+          quantity: counter.text,
+          date: Localtime.toString(),
+          image: imgUrl.toString(),
+          boxId: selectedBox?.uid,
+          locationId: selectedLocation?.uid,
+          favorite: isFavorite));
       hideDialog();
       showAlertDialog(context);
     }
