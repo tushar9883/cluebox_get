@@ -40,7 +40,7 @@ class AddItemModel {
   String? uid;
   String? userid;
   String? itemName;
-  String? tag;
+  List? tag;
   String? boxName;
   String? locationName;
   String? quantity;

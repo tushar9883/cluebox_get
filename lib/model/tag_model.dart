@@ -15,6 +15,12 @@ class TagModel {
     uid = mId;
     userid = json['userid'];
     name = json['name'];
+    // try {
+    //   name = json['name'] != null ? json['name'].toString().split(",") : [];
+    // } on Exception catch (e) {
+    //   name = [];
+    //   // TODO
+    // }
     date = json['date'];
   }
   String? uid;
@@ -27,6 +33,7 @@ class TagModel {
     map['uid'] = uid;
     map['userid'] = userid;
     map['name'] = name;
+    // map['name'] = name?.join(",");
     map['date'] = date;
     return map;
   }

@@ -47,6 +47,7 @@ class AddItemController extends BaseController {
 
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
+  List<TagModel>? allTagsList;
   File? profileImage;
   final ImagePicker picker = ImagePicker();
   var imgUrl;
@@ -56,6 +57,7 @@ class AddItemController extends BaseController {
     counter.text = "1";
     update();
     super.onInit();
+    // getAllTagsList();
     getAllLoc();
   }
 
@@ -80,35 +82,55 @@ class AddItemController extends BaseController {
     update();
   }
 
+  Future<void> getAllTagsList() async {
+    var allData = await DbHelp().getAllTags();
+    allTagsList?.clear();
+    allTagsList = allData;
+    print("________TagS Length_________ ${allTagsList?.length}");
+    update();
+  }
+
+  showTagSearch() {
+    var data = allTagsList?.where((element) => element.name!.contains('4'));
+    print(data?.length);
+  }
+
   submit(BuildContext context) async {
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
-    final taggs = tagController.getTags;
-    var stringList = taggs?.join(", ");
+    // final taggs = tagController.getTags;
+    // var stringList = taggs?.join(", ");
 
     if (Nameitem.text.isEmpty) {
       hideDialog();
       toastbar('Item name is required');
-    } else if (locationvaluess == null) {
-      hideDialog();
-      toastbar('Please select/add Location');
-    } else if (locationvaluess?.name == 'Add Location' &&
-        LocationName.text.isEmpty) {
-      hideDialog();
-      toastbar('Please enter Location Name');
-    } else if (locationvaluess?.name == 'Add Location' &&
-        BoxName.text.isEmpty) {
-      hideDialog();
-      toastbar('Please enter Box Name');
-    } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
-      hideDialog();
-      toastbar('Please select/add Box');
-    } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
-      hideDialog();
-      toastbar('Please enter Box Name');
-    } else {
-      await DbHelp().adtag(TagModel(
-          userid: userid, name: stringList, date: Localtime.toString()));
+    }
+    // else if (locationvaluess == null) {
+    //   hideDialog();
+    //   toastbar('Please select/add Location');
+    // } else if (locationvaluess?.name == 'Add Location' &&
+    //     LocationName.text.isEmpty) {
+    //   hideDialog();
+    //   toastbar('Please enter Location Name');
+    // } else if (locationvaluess?.name == 'Add Location' &&
+    //     BoxName.text.isEmpty) {
+    //   hideDialog();
+    //   toastbar('Please enter Box Name');
+    // } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
+    //   hideDialog();
+    //   toastbar('Please select/add Box');
+    // } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
+    //   hideDialog();
+    //   toastbar('Please enter Box Name');
+    // }
+    else {
+      var tagIds = [];
+      for (var tag in tagController.getTags ?? []) {
+        var docrefTags = await DbHelp().adtag(
+            TagModel(userid: userid, name: tag, date: Localtime.toString()));
+        tagIds.add(docrefTags.id);
+      }
+
       BoxModel? selectedBox;
       LocationModel? selectedLocation;
 
@@ -144,7 +166,8 @@ class AddItemController extends BaseController {
       await DbHelp().addItem(AddItemModel(
         userid: userid,
         itemName: Nameitem.text,
-        tag: stringList,
+        // tag: tagController.getTags,
+        tag: tagIds,
         boxName: selectedBox?.name,
         locationName: selectedLocation?.name,
         quantity: counter.text,
