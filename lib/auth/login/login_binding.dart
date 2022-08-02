@@ -29,7 +29,7 @@ class LoginController extends BaseController {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: email.text, password: password.text);
-        await storage.write(key: "uid", value: userCredential.user?.uid);
+        await storage.write(key: "userid", value: userCredential.user?.uid);
         hideDialog();
         Get.toNamed(RouterName.home);
         email.clear();

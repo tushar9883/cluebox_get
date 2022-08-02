@@ -38,13 +38,15 @@ class SingupController extends BaseController {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: email.text.trim(), password: pass.text.trim());
-        await storage.write(key: "uid", value: userCredential.user?.uid);
-        await DbHelp().adduser(UserModel(
+        await storage.write(key: "userid", value: userCredential.user?.uid);
+        var data = await DbHelp().adduser(UserModel(
           name: name.text.trim(),
           email: email.text.trim(),
           password: pass.text.trim(),
-          uid: FirebaseAuth.instance.currentUser?.uid,
+          userid: FirebaseAuth.instance.currentUser?.uid,
         ));
+        print("uid :- ${data.id}");
+        await storage.write(key: "uid", value: data.id);
         print(
             "Data Name : ${name.text} \n Email: ${email.text}\n User Id : ${FirebaseAuth.instance.currentUser?.uid} \n Password : ${pass.text}");
         hideDialog();

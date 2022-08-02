@@ -3,7 +3,6 @@ import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
-import 'package:clue_get/model/userinfo_model.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
@@ -40,13 +39,8 @@ class DbHelp {
       fromDS: (id, data) => UserModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
-  ///TODO User Personal Info
-  DatabaseService<UserinfoModel> userinfodb = DatabaseService(PersonalInfo_Db,
-      fromDS: (id, data) => UserinfoModel.fromJson(id, data),
-      toMap: (data) => data.toJson());
-
   Future adduser(UserModel userModel) async {
-    await userdb.create(userModel.toJson());
+    return await userdb.create(userModel.toJson());
   }
 
   Future adlocation(LocationModel locationModel) async {
@@ -65,10 +59,6 @@ class DbHelp {
     return tagdb.create(tagModel.toJson());
   }
 
-  Future personalinfo(UserinfoModel userinfoModel) async {
-    return await userinfodb.create(userinfoModel.toJson());
-  }
-
   Future<List<AddItemModel>> getRecentItemList(String uids) async {
     List<AddItemModel> res = await additemdb.getQueryList(
       args: [
@@ -79,19 +69,6 @@ class DbHelp {
       ],
       orderBy: [OrderBy("date", descending: true)],
       limit: 10,
-    );
-    return res;
-  }
-
-  Future<List<UserinfoModel>> getuserInfoList(String uids) async {
-    List<UserinfoModel> res = await userinfodb.getQueryList(
-      args: [
-        QueryArgsV2(
-          "userid",
-          isEqualTo: uids,
-        )
-      ],
-      //orderBy: [OrderBy("date", descending: true)],
     );
     return res;
   }
@@ -147,12 +124,37 @@ class DbHelp {
     return res;
   }
 
+  Future<List<UserModel>> getUserDetails(String user) async {
+    List<UserModel> res = await userdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "userid",
+          isEqualTo: user,
+        )
+      ],
+    );
+    return res;
+  }
+
   Future updateFavorite(AddItemModel addItemModel, String? id) async {
     print(">>>>>>> loc id $id");
     await additemdb.updateData(
       id ?? "",
       {"favorite": addItemModel.favorite ?? false},
       // {"favorite": addItemModel.favorite ?? false}, only single data update krva mate
+    );
+  }
+
+  Future updateUser(UserModel userModel, String? id) async {
+    print(">>>>>>> update id $id");
+    await userdb.updateData(
+      id ?? "",
+      {
+        "name": userModel.name,
+        "country": userModel.country,
+        "gender": userModel.gender,
+        "birthdate": userModel.birthdate,
+      },
     );
   }
 }

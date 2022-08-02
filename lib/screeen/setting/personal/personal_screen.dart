@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../model/country.dart';
+
 class PersonalScreen extends BaseView<PersonalController> {
   const PersonalScreen({Key? key}) : super(key: key);
 
@@ -212,8 +214,8 @@ class PersonalScreen extends BaseView<PersonalController> {
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 32.w),
-                        child: DropdownButton(
-                          value: controller.dropdownvalue,
+                        child: DropdownButton<Country>(
+                          value: controller.selectedCountry,
                           elevation: 16,
                           style: robotoRegular.copyWith(
                             color: const Color(0xff111111),
@@ -224,18 +226,22 @@ class PersonalScreen extends BaseView<PersonalController> {
                             height: 1.h,
                             color: const Color(0xFF999999),
                           ),
-                          hint: const Text('joh'),
+                          hint: const Text('Select Country'),
                           icon: const Icon(Icons.keyboard_arrow_down),
-                          items: controller.items.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            controller.dropdownvalue = newValue!;
+                          onChanged: (newValue) {
+                            controller.selectedCountry = (newValue!);
                             controller.update();
                           },
+                          items: (controller.jsonCountry ?? [])
+                              .map((Country value) => DropdownMenuItem<Country>(
+                                  value: value,
+                                  child: Text(
+                                    '${value.name}',
+                                    style: const TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )))
+                              .toList(),
                         ),
                       ),
                       SizedBox(
