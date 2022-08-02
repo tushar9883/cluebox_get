@@ -6,6 +6,7 @@ class TagModel {
   TagModel({
     this.uid,
     this.userid,
+    this.tagCount,
     this.name,
     this.date,
   });
@@ -15,6 +16,7 @@ class TagModel {
     uid = mId;
     userid = json['userid'];
     name = json['name'];
+    tagCount = json['tagCount'];
     // try {
     //   name = json['name'] != null ? json['name'].toString().split(",") : [];
     // } on Exception catch (e) {
@@ -25,6 +27,7 @@ class TagModel {
   }
   String? uid;
   String? userid;
+  int? tagCount;
   String? name;
   String? date;
 
@@ -32,6 +35,7 @@ class TagModel {
     final map = <String, dynamic>{};
     map['uid'] = uid;
     map['userid'] = userid;
+    map['tagCount'] = tagCount;
     map['name'] = name;
     // map['name'] = name?.join(",");
     map['date'] = date;

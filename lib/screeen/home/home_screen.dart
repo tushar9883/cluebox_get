@@ -88,58 +88,68 @@ class HomeScreen extends BaseView<HomeController> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 18.h,
-                ),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        SizedBox(
-                          height: 36.h,
-                          child: ListView.builder(
-                            shrinkWrap: false,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.items.length,
-                            itemBuilder: (BuildContext context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(left: 20.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.r),
-                                  color: Colors.black,
-                                ),
-                                // margin: EdgeInsets.symmetric(horizontal: 4.w),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w,
-                                  // vertical: 8.h,
-                                ),
-                                child: Center(
-                                  child: InkWell(
-                                    onTap: () {
-                                      print(
-                                          'Item:- ${controller.items[index]}');
-                                    },
-                                    child: Text(
-                                      controller.items[index],
-                                      textAlign: TextAlign.center,
-                                      style: robotoBold.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 13.sp,
-                                        // fontWeight: FontWeight.w700,
-                                      ),
+                        controller.tagList != null
+                            ? Column(
+                                children: [
+                                  SizedBox(
+                                    height: 34.h,
+                                  ),
+                                  SizedBox(
+                                    height: 36.h,
+                                    child: ListView.builder(
+                                      shrinkWrap: false,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          (controller.tagList?.length)! > 5
+                                              ? 5
+                                              : controller.tagList?.length,
+                                      itemBuilder:
+                                          (BuildContext context, index) {
+                                        return Container(
+                                          margin: EdgeInsets.only(left: 20.w),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25.r),
+                                            color: Colors.black,
+                                          ),
+                                          // margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w,
+                                            // vertical: 8.h,
+                                          ),
+                                          child: Center(
+                                            child: InkWell(
+                                              onTap: () {
+                                                print(
+                                                    'Item:- ${controller.tagList?[index]}');
+                                              },
+                                              child: Text(
+                                                controller
+                                                        .tagList?[index].name ??
+                                                    '',
+                                                textAlign: TextAlign.center,
+                                                style: robotoBold.copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 13.sp,
+                                                  // fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25.h,
-                        ),
+                                  SizedBox(
+                                    height: 25.h,
+                                  ),
+                                ],
+                              )
+                            : SizedBox.shrink(),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.symmetric(horizontal: 21.w),
@@ -169,7 +179,7 @@ class HomeScreen extends BaseView<HomeController> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "${controller.itemlist?.length ?? "0"}",
+                                        "${controller.itemList?.length ?? "0"}",
                                         textAlign: TextAlign.center,
                                         style: robotoBold.copyWith(
                                           color: const Color(0xff4a00e0),
@@ -276,13 +286,13 @@ class HomeScreen extends BaseView<HomeController> {
                             ),
                           ),
                         ),
-                        controller.itemlist != null
+                        controller.itemList != null
                             ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: controller.itemlist?.length,
+                                itemCount: controller.itemList?.length,
                                 itemBuilder: (BuildContext context, index) {
-                                  var loc = controller.itemlist?[index];
+                                  var loc = controller.itemList?[index];
                                   var dates = loc?.date;
                                   DateTime parseDate =
                                       DateFormat("yyyy-MM-dd HH:mm:ss.SSS")

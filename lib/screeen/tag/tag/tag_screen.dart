@@ -248,78 +248,85 @@ class TagScreen extends BaseView<TagController> {
                   SizedBox(
                     height: 14.h,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.jsonResult?.length ?? 0,
-                      itemBuilder: (BuildContext context, index) {
-                        return InkWell(
-                          onTap: () {
-                            var titlename =
-                                controller.jsonResult?[index]['title'];
-                            print(titlename);
-                            Get.toNamed(RouterName.tagitem);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 21.w, right: 21.w, top: 12.h),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                  controller.tagList != null
+                      ? Expanded(
+                          child: ListView.builder(
+                            // physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only(bottom: 200.h),
+                            itemCount: controller.tagList?.length ?? 0,
+                            itemBuilder: (BuildContext context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  var titlename =
+                                      controller.tagList?[index].name;
+                                  print(titlename);
+                                  Get.toNamed(RouterName.tagitem);
+                                },
+                                child: Column(
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        controller.jsonResult?[index]['title'],
-                                        overflow: TextOverflow.clip,
-                                        style: robotoMedium.copyWith(
-                                            fontSize: 16.sp,
-                                            color: Colors.black),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 21.w, right: 21.w, top: 12.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              controller.tagList?[index].name ??
+                                                  '',
+                                              overflow: TextOverflow.clip,
+                                              style: robotoMedium.copyWith(
+                                                  fontSize: 16.sp,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10.w,
+                                              vertical: 5.h,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25.r),
+                                              color: Colors.black,
+                                            ),
+                                            child: Text(
+                                              controller
+                                                      .tagList?[index].tagCount
+                                                      .toString() ??
+                                                  '0',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: robotoBold.copyWith(
+                                                  fontSize: 12.sp,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10.w,
+                                      height: 12.h,
                                     ),
                                     Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 10.w,
-                                        vertical: 5.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(25.r),
-                                        color: Colors.black,
-                                      ),
-                                      child: Text(
-                                        controller.jsonResult?[index]['count'],
-                                        overflow: TextOverflow.ellipsis,
-                                        style: robotoBold.copyWith(
-                                            fontSize: 12.sp,
-                                            color: Colors.white),
-                                      ),
+                                      color: const Color(0xffDEDEDE),
+                                      height: 1,
+                                      width: MediaQuery.of(context).size.width,
                                     ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    )
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 12.h,
-                              ),
-                              Container(
-                                color: const Color(0xffDEDEDE),
-                                height: 1,
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              )
-                            ],
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             )

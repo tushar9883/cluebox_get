@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
@@ -12,6 +13,7 @@ import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,35 +42,39 @@ class AddItemController extends BaseController {
   bool showBox = false;
   bool showLocation = false;
   bool hideBox = false;
-  var userid = FirebaseAuth.instance.currentUser?.uid;
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
   List<TagModel>? allTagsList;
   File? profileImage;
   final ImagePicker picker = ImagePicker();
   var imgUrl;
+  var userid;
+  List<TagModel>? tagList;
 
   @override
   void onInit() {
+    super.onInit();
+    userid = FirebaseAuth.instance.currentUser?.uid;
+    getAllLoc(userid);
+    getAllTags(userid);
     counter.text = "1";
     print(">>>>>>>> favorite <<<<<<<<${isFavorite}");
-    update();
-    super.onInit();
     // getAllTagsList();
-    getAllLoc();
+    update();
   }
 
   back(BuildContext context) {
     Navigator.of(context).pop();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var controll = Get.find<HomeController>();
-      controll.getData();
+      controll.getData(userid!);
+      controll.getAllTags(userid!);
     });
   }
 
-  Future<void> getAllLoc() async {
-    print("User ID >>>><<<<< $userid");
-    var allData = await DbHelp().getAllLocation(userid ?? '');
+  Future<void> getAllLoc(String userId) async {
+    print("User ID >>>><<<<< $userId");
+    var allData = await DbHelp().getAllLocation(userId);
     allLocList?.clear();
     allLocList = allData;
     allLocList!.insert(0, LocationModel(name: 'Add Location'));
@@ -87,11 +93,11 @@ class AddItemController extends BaseController {
     update();
   }
 
-  Future<void> getAllTagsList() async {
-    var allData = await DbHelp().getAllTags();
-    allTagsList?.clear();
-    allTagsList = allData;
-    print("________TagS Length_________ ${allTagsList?.length}");
+  Future<void> getAllTags(String userId) async {
+    var allTags = await DbHelp().getAllTagsByUser(userId);
+    tagList?.clear();
+    tagList = allTags;
+
     update();
   }
 
@@ -110,8 +116,7 @@ class AddItemController extends BaseController {
     if (Nameitem.text.isEmpty) {
       hideDialog();
       toastbar('Item name is required');
-    }
-    else if (locationvaluess == null) {
+    } else if (locationvaluess == null) {
       hideDialog();
       toastbar('Please select/add Location');
     } else if (locationvaluess?.name == 'Add Location' &&
@@ -128,13 +133,29 @@ class AddItemController extends BaseController {
     } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
       hideDialog();
       toastbar('Please enter Box Name');
-    }
-    else {
+    } else {
       var tagIds = [];
       for (var tag in tagController.getTags ?? []) {
-        var docrefTags = await DbHelp().adtag(
-            TagModel(userid: userid, name: tag, date: Localtime.toString()));
-        tagIds.add(docrefTags.id);
+        TagModel? tagData = await DbHelp()
+            .getTagData('${tag.toString().toLowerCase()}_$userid');
+
+        if (tagData != null) {
+          //Tag is already there in db
+          tagIds.add(tagData.uid);
+          tagData.tagCount = (tagData.tagCount ?? 0) + 1;
+          await DbHelp().addtag(tagData);
+          print("Present___________");
+        } else {
+          //Tag is not in db
+          await DbHelp().addtag(TagModel(
+              userid: userid,
+              tagCount: 1,
+              name: tag,
+              date: Localtime.toString(),
+              uid: '${tag.toString().toLowerCase()}_$userid'));
+          tagIds.add('${tag.toString().toLowerCase()}_$userid');
+          print("Not Present___________");
+        }
       }
 
       BoxModel? selectedBox;
@@ -174,8 +195,8 @@ class AddItemController extends BaseController {
       await DbHelp().addItem(AddItemModel(
           userid: userid,
           itemName: Nameitem.text,
-        // tag: tagController.getTags,
-        tag: tagIds,
+          // tag: tagController.getTags,
+          tag: tagIds,
           boxName: selectedBox?.name,
           locationName: selectedLocation?.name,
           quantity: counter.text,
@@ -217,7 +238,8 @@ class AddItemController extends BaseController {
                   Get.until((route) => Get.currentRoute == RouterName.home);
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     var controll = Get.find<HomeController>();
-                    controll.getData();
+                    controll.getData(userid!);
+                    controll.getAllTags(userid!);
                   });
                 },
                 child: Container(

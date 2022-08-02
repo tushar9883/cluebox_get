@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
@@ -12,6 +15,8 @@ class DbHelp {
   static const String BOX_Db = "BOX";
   static const String TAG_Db = "TAG";
   static const String Favorite_Db = "FAVORITE";
+
+  final db = FirebaseFirestore.instance;
 
   ///TODO Location Table
   DatabaseService<AddItemModel> additemdb = DatabaseService(Additem_DB,
@@ -54,8 +59,8 @@ class DbHelp {
     await additemdb.create(addItemModel.toJson());
   }
 
-  Future adtag(TagModel tagModel) async {
-    return tagdb.create(tagModel.toJson());
+  Future addtag(TagModel tagModel) async {
+    return tagdb.create(tagModel.toJson(), id: tagModel.uid);
   }
 
   Future<List<AddItemModel>> getAllItemList(String uids) async {
@@ -111,7 +116,7 @@ class DbHelp {
     return res;
   }
 
-  Future<List<TagModel>> getAllTags() async {
+  Future<List<TagModel>> getAllitms() async {
     List<TagModel> res = await tagdb.getQueryList(
         // args: [
         //   QueryArgsV2(
@@ -135,6 +140,11 @@ class DbHelp {
     return res;
   }
 
+  Future<TagModel?> getTagData(String id) async {
+    TagModel? res = await tagdb.getSingle(id);
+    return res;
+  }
+
   Future updateFavorite(AddItemModel addItemModel, String? id) async {
     print(">>>>>>> loc id $id");
     await additemdb.updateData(
@@ -142,5 +152,24 @@ class DbHelp {
       {"favorite": addItemModel.favorite ?? false},
       // {"favorite": addItemModel.favorite ?? false}, only single data update krva mate
     );
+  }
+
+  Future getAllTagsByUser(String userId) async {
+    try {
+      List<TagModel> res = await tagdb.getQueryList(
+        args: [
+          QueryArgsV2(
+            "userid",
+            isEqualTo: userId,
+          )
+        ],
+        orderBy: [OrderBy("date", descending: true)],
+      );
+      print('OOOOOOOOOOOOOOOOOOOOOOOO');
+      return res;
+    } catch (e, s) {
+      print("EEEEEEEEEEEEEEEE${e}");
+      print('SSSSSSSSSSSSSSSSSSSS${s}');
+    }
   }
 }
