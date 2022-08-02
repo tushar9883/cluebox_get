@@ -127,57 +127,59 @@ class SettingScreen extends BaseView<SettingController> {
                           ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Get.toNamed(RouterName.changemail);
-                        },
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 13.w, right: 16.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/mail.svg',
-                                        // width: 18.w,
-                                        // height: 20.h,
-                                      ),
-                                      SizedBox(
-                                        width: 17.w,
-                                      ),
-                                      Text(
-                                        "Change Email Id",
-                                        style: robotoMedium.copyWith(
-                                          color: Colors.black,
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/svg/next.svg',
-                                    height: 14.h,
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1.h,
-                                color: Colors.white),
-                          ],
-                        ),
-                      ),
+
+                      /// TODO Change Mail
+                      // InkWell(
+                      //   onTap: () {
+                      //     //Get.toNamed(RouterName.changemail);
+                      //   },
+                      //   child: Column(
+                      //     children: [
+                      //       SizedBox(
+                      //         height: 15.h,
+                      //       ),
+                      //       Container(
+                      //         margin: EdgeInsets.only(left: 13.w, right: 16.w),
+                      //         child: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 SvgPicture.asset(
+                      //                   'assets/svg/mail.svg',
+                      //                   // width: 18.w,
+                      //                   // height: 20.h,
+                      //                 ),
+                      //                 SizedBox(
+                      //                   width: 17.w,
+                      //                 ),
+                      //                 Text(
+                      //                   "Change Email Id",
+                      //                   style: robotoMedium.copyWith(
+                      //                     color: Colors.black,
+                      //                     fontSize: 16.sp,
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             SvgPicture.asset(
+                      //               'assets/svg/next.svg',
+                      //               height: 14.h,
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       SizedBox(
+                      //         height: 15.h,
+                      //       ),
+                      //       Container(
+                      //           width: MediaQuery.of(context).size.width,
+                      //           height: 1.h,
+                      //           color: Colors.white),
+                      //     ],
+                      //   ),
+                      // ),
                       InkWell(
                         onTap: () {
                           Get.toNamed(RouterName.changepass);

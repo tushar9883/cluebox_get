@@ -49,6 +49,7 @@ flutter:
     - assets/svg/
     - assets/image/
     - assets/json/check.json
+    - assets/json/country.json
   fonts:
     - family: Poppins-R
       fonts:
