@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
@@ -16,7 +15,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-
 import '../../../res/style.dart';
 import '../../../services/storage_data.dart';
 
@@ -110,8 +108,7 @@ class AddItemController extends BaseController {
     if (Nameitem.text.isEmpty) {
       hideDialog();
       toastbar('Item name is required');
-    }
-    else if (locationvaluess == null) {
+    } else if (locationvaluess == null) {
       hideDialog();
       toastbar('Please select/add Location');
     } else if (locationvaluess?.name == 'Add Location' &&
@@ -128,8 +125,7 @@ class AddItemController extends BaseController {
     } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
       hideDialog();
       toastbar('Please enter Box Name');
-    }
-    else {
+    } else {
       var tagIds = [];
       for (var tag in tagController.getTags ?? []) {
         var docrefTags = await DbHelp().adtag(
@@ -174,8 +170,8 @@ class AddItemController extends BaseController {
       await DbHelp().addItem(AddItemModel(
           userid: userid,
           itemName: Nameitem.text,
-        // tag: tagController.getTags,
-        tag: tagIds,
+          // tag: tagController.getTags,
+          tag: tagIds,
           boxName: selectedBox?.name,
           locationName: selectedLocation?.name,
           quantity: counter.text,

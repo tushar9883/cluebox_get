@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import '../../../base/base_view_view_model.dart';
+import '../additem/additem_binding.dart';
 import 'allitem_binding.dart';
 
 class AllItemScreen extends BaseView<AllItemController> {
@@ -69,6 +70,11 @@ class AllItemScreen extends BaseView<AllItemController> {
                       value: 0,
                       onTap: () {
                         // controller.itemlist?.first.itemName?.sort();
+                        Get.back();
+                        // WidgetsBinding.instance.addPostFrameCallback((_) {
+                        //   var controll = Get.find<AddItemController>();
+                        //   controll.getAllLoc();
+                        // });
                         // controller.itemlist?.sort();
                       },
                       child: Center(

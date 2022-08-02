@@ -3,6 +3,7 @@ import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
+import 'package:clue_get/model/userinfo_model.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
@@ -12,6 +13,7 @@ class DbHelp {
   static const String BOX_Db = "BOX";
   static const String TAG_Db = "TAG";
   static const String Favorite_Db = "FAVORITE";
+  static const String PersonalInfo_Db = "PERSONALINFO";
 
   ///TODO Location Table
   DatabaseService<AddItemModel> additemdb = DatabaseService(Additem_DB,
@@ -38,6 +40,11 @@ class DbHelp {
       fromDS: (id, data) => UserModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
+  ///TODO User Personal Info
+  DatabaseService<UserinfoModel> userinfodb = DatabaseService(PersonalInfo_Db,
+      fromDS: (id, data) => UserinfoModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
   Future adduser(UserModel userModel) async {
     await userdb.create(userModel.toJson());
   }
@@ -58,6 +65,10 @@ class DbHelp {
     return tagdb.create(tagModel.toJson());
   }
 
+  Future personalinfo(UserinfoModel userinfoModel) async {
+    return await userinfodb.create(userinfoModel.toJson());
+  }
+
   Future<List<AddItemModel>> getRecentItemList(String uids) async {
     List<AddItemModel> res = await additemdb.getQueryList(
       args: [
@@ -68,6 +79,19 @@ class DbHelp {
       ],
       orderBy: [OrderBy("date", descending: true)],
       limit: 10,
+    );
+    return res;
+  }
+
+  Future<List<UserinfoModel>> getuserInfoList(String uids) async {
+    List<UserinfoModel> res = await userinfodb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "userid",
+          isEqualTo: uids,
+        )
+      ],
+      //orderBy: [OrderBy("date", descending: true)],
     );
     return res;
   }
