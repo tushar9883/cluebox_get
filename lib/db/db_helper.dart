@@ -165,6 +165,14 @@ class DbHelp {
     );
   }
 
+  Future udpateUserData(UserModel userModel, String? id) async {
+    print(">>>>>>> loc id $id");
+    await userdb.updateData(
+      id ?? "",
+      {"item_Count": userModel.itemCount},
+    );
+  }
+
   Future getAllTagsByUser(String userId) async {
     try {
       List<TagModel> res = await tagdb.getQueryList(
@@ -182,5 +190,32 @@ class DbHelp {
       print("EEEEEEEEEEEEEEEE${e}");
       print('SSSSSSSSSSSSSSSSSSSS${s}');
     }
+  }
+
+  Future<List<UserModel>> getuserData(String uids) async {
+    List<UserModel> res = await userdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "uid",
+          isEqualTo: uids,
+        )
+      ],
+      limit: 1,
+      //orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
+  }
+
+  Future<List<AddItemModel>> getItemsFromTag(String tagId) async {
+    List<AddItemModel> res = await additemdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "tag",
+          arrayContains: tagId,
+        )
+      ],
+      orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
   }
 }

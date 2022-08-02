@@ -6,6 +6,7 @@ import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
+import 'package:clue_get/model/user_model.dart';
 import 'package:clue_get/res/color.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
@@ -148,7 +149,7 @@ class AddItemController extends BaseController {
           await DbHelp().addtag(TagModel(
               userid: userid,
               tagCount: 1,
-              name: tag,
+              name: tag.toString().toLowerCase(),
               date: Localtime.toString(),
               uid: '${tag.toString().toLowerCase()}_$userid'));
           tagIds.add('${tag.toString().toLowerCase()}_$userid');
@@ -199,10 +200,20 @@ class AddItemController extends BaseController {
           locationName: selectedLocation?.name,
           quantity: counter.text,
           date: Localtime.toString(),
-          image: imgUrl.toString(),
+          image: imgUrl,
           boxId: selectedBox?.uid,
           locationId: selectedLocation?.uid,
           favorite: isFavorite));
+
+      List<UserModel>? userData = await DbHelp().getuserData(userid);
+
+      if (userData.isNotEmpty) {
+        //To update item count of this user
+        userData.first.itemCount = (userData.first.itemCount ?? 0) + 1;
+        await DbHelp().udpateUserData(userData.first, userData.first.uid);
+        print("User itemCount updated___________");
+      }
+
       hideDialog();
       showAlertDialog(context);
     }
@@ -236,8 +247,9 @@ class AddItemController extends BaseController {
                   Get.until((route) => Get.currentRoute == RouterName.home);
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     var controll = Get.find<HomeController>();
-                    controll.getData(userid!);
-                    controll.getAllTags(userid!);
+                    controll.getData(userid);
+                    controll.getAllTags(userid);
+                    controll.getUserData(userid);
                   });
                 },
                 child: Container(

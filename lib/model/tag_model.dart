@@ -25,6 +25,21 @@ class TagModel {
     // }
     date = json['date'];
   }
+
+  TagModel.fromDb(dynamic json) {
+    uid = json['uid'];
+    userid = json['userid'];
+    name = json['name'];
+    tagCount = json['tagCount'];
+    // try {
+    //   name = json['name'] != null ? json['name'].toString().split(",") : [];
+    // } on Exception catch (e) {
+    //   name = [];
+    //   // TODO
+    // }
+    date = json['date'];
+  }
+
   String? uid;
   String? userid;
   int? tagCount;
