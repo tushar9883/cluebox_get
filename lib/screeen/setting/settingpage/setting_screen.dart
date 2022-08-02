@@ -388,11 +388,14 @@ class SettingScreen extends BaseView<SettingController> {
                     children: [
                       InkWell(
                         onTap: () async {
+                          controller.showLoadingDialog();
                           await FirebaseAuth.instance.signOut();
                           await controller.storage.deleteAll();
                           print("firebase logout");
                           controller.update();
+                          controller.hideDialog();
                           Get.toNamed(RouterName.login);
+                          // await Get.offAllNamed(RouterName.login); // badha page ne badh krva
                         },
                         child: Column(
                           children: [

@@ -12,7 +12,7 @@ class AllItemBinding implements Bindings {
 
 class AllItemController extends BaseController {
   var userid = FirebaseAuth.instance.currentUser?.uid;
-  bool isFavorite = true;
+  bool isFavoritetrue = true;
   List<AddItemModel>? itemlist;
 
   Future<void> getData() async {
@@ -23,20 +23,20 @@ class AllItemController extends BaseController {
     update();
   }
 
-  favorritedatafalse(String? id) async {
+  favorritedatatrue(String? id) async {
     showLoadingDialog();
-    if (isFavorite == false) {
+    if (isFavoritetrue == false) {
       await DbHelp().updateFavorite(
           AddItemModel(
-            favorite: isFavorite,
+            favorite: isFavoritetrue,
           ),
           id);
-      print('Value id true $isFavorite');
+      print('Value id true $isFavoritetrue');
       update();
       getData();
       hideDialog();
     } else {
-      print('favorite $isFavorite');
+      print('favorite $isFavoritetrue');
       hideDialog();
     }
   }

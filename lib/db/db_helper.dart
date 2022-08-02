@@ -4,8 +4,7 @@ import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:clue_get/model/userinfo_model.dart';
 import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
@@ -15,6 +14,7 @@ class DbHelp {
   static const String BOX_Db = "BOX";
   static const String TAG_Db = "TAG";
   static const String Favorite_Db = "FAVORITE";
+  static const String PersonalInfo_Db = "PERSONALINFO";
 
   final db = FirebaseFirestore.instance;
 
@@ -43,6 +43,11 @@ class DbHelp {
       fromDS: (id, data) => UserModel.fromJson(id, data),
       toMap: (data) => data.toJson());
 
+  ///TODO User Personal Info
+  DatabaseService<UserinfoModel> userinfodb = DatabaseService(PersonalInfo_Db,
+      fromDS: (id, data) => UserinfoModel.fromJson(id, data),
+      toMap: (data) => data.toJson());
+
   Future adduser(UserModel userModel) async {
     await userdb.create(userModel.toJson());
   }
@@ -63,7 +68,11 @@ class DbHelp {
     return tagdb.create(tagModel.toJson(), id: tagModel.uid);
   }
 
-  Future<List<AddItemModel>> getAllItemList(String uids) async {
+  Future personalinfo(UserinfoModel userinfoModel) async {
+    return await userinfodb.create(userinfoModel.toJson());
+  }
+
+  Future<List<AddItemModel>> getRecentItemList(String uids) async {
     List<AddItemModel> res = await additemdb.getQueryList(
       args: [
         QueryArgsV2(
@@ -73,6 +82,19 @@ class DbHelp {
       ],
       orderBy: [OrderBy("date", descending: true)],
       limit: 10,
+    );
+    return res;
+  }
+
+  Future<List<UserinfoModel>> getuserInfoList(String uids) async {
+    List<UserinfoModel> res = await userinfodb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "userid",
+          isEqualTo: uids,
+        )
+      ],
+      //orderBy: [OrderBy("date", descending: true)],
     );
     return res;
   }
@@ -118,17 +140,6 @@ class DbHelp {
 
   Future<List<TagModel>> getAllitms() async {
     List<TagModel> res = await tagdb.getQueryList(
-        // args: [
-        //   QueryArgsV2(
-        //     "location_id",
-        //     isEqualTo: locID,
-        //   )
-        // ],
-        // orderBy: [OrderBy("date", descending: true)],
-        );
-
-//get all items that contains 'demo' tag
-    additemdb.getQueryList(
       args: [
         QueryArgsV2(
           "tag",

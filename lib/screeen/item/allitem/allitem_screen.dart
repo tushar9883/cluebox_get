@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:clue_get/db/db_helper.dart';
+import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/gradient.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import '../../../base/base_view_view_model.dart';
+import '../additem/additem_binding.dart';
 import 'allitem_binding.dart';
 
 class AllItemScreen extends BaseView<AllItemController> {
@@ -15,6 +18,7 @@ class AllItemScreen extends BaseView<AllItemController> {
 
   @override
   Widget vBuilder(BuildContext context) {
+    var total;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -64,6 +68,15 @@ class AllItemScreen extends BaseView<AllItemController> {
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       value: 0,
+                      onTap: () {
+                        // controller.itemlist?.first.itemName?.sort();
+                        Get.back();
+                        // WidgetsBinding.instance.addPostFrameCallback((_) {
+                        //   var controll = Get.find<AddItemController>();
+                        //   controll.getAllLoc();
+                        // });
+                        // controller.itemlist?.sort();
+                      },
                       child: Center(
                         child: Text('A to Z',
                             style: robotoBold.copyWith(
@@ -148,6 +161,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                             itemCount: controller.itemlist?.length ?? 0,
                             itemBuilder: (BuildContext context, index) {
                               var loc = controller.itemlist?[index];
+                              total = loc;
                               var id = loc?.uid;
                               var dates = loc?.date;
                               DateTime parseDate =
@@ -348,41 +362,50 @@ class AllItemScreen extends BaseView<AllItemController> {
                                             color: const Color(0xff808080),
                                           ),
                                         ),
-                                        loc?.favorite == true
-                                            ? LikeButton(
-                                                size: 20.h,
-                                                likeBuilder: (isTapped) {
-                                                  return SvgPicture.asset(
-                                                    isTapped
-                                                        ? 'assets/svg/like.svg'
-                                                        : 'assets/svg/likes_fill.svg',
-                                                    height: 18.h,
-                                                  );
-                                                },
-                                              )
-                                            : LikeButton(
-                                                size: 20.h,
-                                                isLiked: controller.isFavorite,
-                                                onTap: (isLiked) {
-                                                  controller.isFavorite =
-                                                      !isLiked;
-                                                  controller.update();
-                                                  print(
-                                                      '00000 ${controller.isFavorite}');
-                                                  // controller
-                                                  //     .favorritedatafalse(id);
-                                                  return Future.value(
-                                                      controller.isFavorite);
-                                                },
-                                                likeBuilder: (isTapped) {
-                                                  return SvgPicture.asset(
-                                                    isTapped
-                                                        ? 'assets/svg/likes_fill.svg'
-                                                        : 'assets/svg/like.svg',
-                                                    height: 18.h,
-                                                  );
-                                                },
-                                              ),
+                                        // if (loc?.favorite == true)
+                                        LikeButton(
+                                          size: 20.h,
+                                          isLiked: loc?.favorite == true,
+                                          onTap: (isLiked) async {
+                                            loc?.favorite = !isLiked;
+                                            controller.update();
+                                            print(
+                                                '1111111111111111111111 ${loc?.favorite}');
+                                            if (loc?.favorite == true) {
+                                              controller.showLoadingDialog();
+                                              await DbHelp().updateFavorite(
+                                                  AddItemModel(
+                                                    favorite: loc?.favorite,
+                                                  ),
+                                                  id);
+                                              print(
+                                                  'Value id true $loc?.favorite');
+                                              controller.update();
+                                              controller.getData();
+                                              controller.hideDialog();
+                                            } else {
+                                              controller.showLoadingDialog();
+                                              await DbHelp().updateFavorite(
+                                                  AddItemModel(
+                                                      favorite: loc?.favorite),
+                                                  id);
+                                              print(
+                                                  'Value id true $loc?.favorite');
+                                              controller.update();
+                                              controller.getData();
+                                              controller.hideDialog();
+                                            }
+                                            return Future.value(loc?.favorite);
+                                          },
+                                          likeBuilder: (isTapped) {
+                                            return SvgPicture.asset(
+                                              isTapped == true
+                                                  ? 'assets/svg/likes_fill.svg'
+                                                  : 'assets/svg/like.svg',
+                                              height: 18.h,
+                                            );
+                                          },
+                                        )
                                       ],
                                     ),
                                     SizedBox(

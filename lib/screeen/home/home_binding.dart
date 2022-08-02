@@ -26,8 +26,8 @@ class HomeController extends BaseController {
   //   "Medicines",
   // ];
   Future<void> getData(String userId) async {
-    print("User ID >>>><<<<< $userId");
-    var allData = await DbHelp().getAllItemList(userId);
+    print("User  >>>><<<<< $userId");
+    var allData = await DbHelp().getRecentItemList(userId);
     itemList?.clear();
     itemList = allData;
     update();
@@ -47,6 +47,8 @@ class HomeController extends BaseController {
     var userid = FirebaseAuth.instance.currentUser?.uid;
     getData(userid!);
     getAllTags(userid);
+    super.onInit();
+    getData();
     var check = await storagess.read(key: "uid");
     isLoggedIn = check;
     print(">>>>> User ID  ${check.toString()}  >>>>> ");
