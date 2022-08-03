@@ -13,14 +13,17 @@ class FavoriteBinding implements Bindings {
 class FavoriteController extends BaseController {
   List<AddItemModel>? favoriteist;
   // bool isFavorite = true;
+  bool isLoading = false;
 
   var userid = FirebaseAuth.instance.currentUser?.uid;
 
   Future<void> getData() async {
+    isLoading = true;
     print("Favorite >>>><<<<< $userid");
     var allData = await DbHelp().getAllFavoriteList(userid!);
     favoriteist?.clear();
     favoriteist = allData;
+    isLoading = false;
     update();
   }
 

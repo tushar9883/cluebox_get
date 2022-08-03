@@ -17,6 +17,7 @@ class TagBinding implements Bindings {
 class TagController extends BaseController {
   // var jsonResult;
   List<TagModel>? tagList;
+  bool isLoading = false;
 
   loadJson() async {
     String data = await rootBundle.loadString('assets/json/check.json');
@@ -26,9 +27,11 @@ class TagController extends BaseController {
   }
 
   Future<void> getAllTags(String userId) async {
+    isLoading = true;
     var allTags = await DbHelp().getAllTagsByUser(userId);
     tagList?.clear();
     tagList = allTags;
+    isLoading = false;
     update();
   }
 
