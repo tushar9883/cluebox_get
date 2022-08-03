@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:clue_get/base/base_view_view_model.dart';
+import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../db/db_helper.dart';
@@ -15,6 +17,7 @@ class TagBinding implements Bindings {
 }
 
 class TagController extends BaseController {
+  var userid = FirebaseAuth.instance.currentUser?.uid;
   List<TagModel>? tagList;
   bool isLoading = false;
 
@@ -27,10 +30,19 @@ class TagController extends BaseController {
     update();
   }
 
+  back() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var controll = Get.find<HomeController>();
+      controll.getAllTags(userid!);
+      controll.getData(userid!);
+      controll.getUserData(userid!);
+    });
+    Get.back();
+  }
+
   @override
   void onInit() {
     super.onInit();
-    var userid = FirebaseAuth.instance.currentUser?.uid;
     getAllTags(userid!);
     update();
   }

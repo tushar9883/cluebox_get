@@ -515,11 +515,17 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                             InkWell(
                                                                           onTap:
                                                                               () async {
+                                                                            controller.showLoadingDialog();
                                                                             print('Delete');
                                                                             DbHelp().removeItem(id!);
                                                                             DbHelp().removeBox(boxid!);
                                                                             DbHelp().removeLocation(locationid!);
                                                                             controller.deleteitem();
+                                                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                                              var controll = Get.find<TagItemController>();
+                                                                              controll.getAllItemsFromTag();
+                                                                            });
+                                                                            controller.hideDialog();
                                                                             Navigator.of(context).pop();
                                                                           },
                                                                           child:

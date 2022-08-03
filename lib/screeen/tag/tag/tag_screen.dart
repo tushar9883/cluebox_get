@@ -51,7 +51,7 @@ class TagScreen extends BaseView<TagController> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).pop();
+                                controller.back();
                               },
                               child: Container(
                                   margin: EdgeInsets.only(left: 21.w),
