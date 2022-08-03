@@ -14,6 +14,7 @@ class TagItemBinding implements Bindings {
 class TagItemController extends BaseController {
   TagModel? tagModel;
   List<AddItemModel>? itemList;
+  bool isLoading = false;
 
   @override
   void onInit() {
@@ -23,11 +24,15 @@ class TagItemController extends BaseController {
   }
 
   Future<void> getAllItemsFromTag() async {
+    isLoading = true;
+
     tagModel = TagModel.fromDb(Get.arguments);
 
     print("<><><>>>>>TagID><><>><><><>${tagModel?.uid}");
     var allItems = await DbHelp().getItemsFromTag(tagModel?.uid ?? '');
     itemList = allItems;
+    print("<><><>>>>>><><>><><><>${itemList?.first.itemName}");
+    isLoading = false;
     update();
   }
 }

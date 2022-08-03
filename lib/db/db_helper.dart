@@ -233,4 +233,23 @@ class DbHelp {
   Future removeLocation(String id) async {
     await locationdb.removeItem(id);
   }
+
+  Future getAllLocationsByUser(String userId) async {
+    try {
+      List<LocationModel> res = await locationdb.getQueryList(
+        args: [
+          QueryArgsV2(
+            "userid",
+            isEqualTo: userId,
+          )
+        ],
+        orderBy: [OrderBy("date", descending: true)],
+      );
+      print('OOOOOOOOOOOOOOOOOOOOOOOO');
+      return res;
+    } catch (e, s) {
+      print("EEEEEEEEEEEEEEEE${e}");
+      print('SSSSSSSSSSSSSSSSSSSS${s}');
+    }
+  }
 }

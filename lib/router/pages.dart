@@ -15,6 +15,8 @@ import 'package:clue_get/screeen/item/allitem/allitem_screen.dart';
 import 'package:clue_get/screeen/item/edititem/edititem_screen.dart';
 import 'package:clue_get/screeen/item/favoriteitem/favorite_binding.dart';
 import 'package:clue_get/screeen/item/favoriteitem/favoriteitem_screen.dart';
+import 'package:clue_get/screeen/locations/my_locations.dart';
+import 'package:clue_get/screeen/locations/my_locations_binding.dart';
 import 'package:clue_get/screeen/search/search_binding.dart';
 import 'package:clue_get/screeen/search/search_screen.dart';
 import 'package:clue_get/screeen/setting/changemail/changemail_binding.dart';
@@ -98,7 +100,11 @@ class Pages {
       GetPage(
         name: RouterName.authcheck,
         page: () => const AuthCheckScreen(),
-      )
+      ),
+      GetPage(
+          name: RouterName.myLocation,
+          page: () => const MyLocation(),
+          binding: MyLocationBinding()),
 
       // GetPage(
       //     name: RouterName.search,
