@@ -252,7 +252,7 @@ class TagScreen extends BaseView<TagController> {
                                                       child: Text(
                                                         controller
                                                                 .tagList?[index]
-                                                                .tagCount
+                                                                .tagItemCount
                                                                 .toString() ??
                                                             '0',
                                                         overflow: TextOverflow

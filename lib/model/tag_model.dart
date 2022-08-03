@@ -6,7 +6,7 @@ class TagModel {
   TagModel({
     this.uid,
     this.userid,
-    this.tagCount,
+    this.tagItemCount,
     this.name,
     this.date,
   });
@@ -16,7 +16,7 @@ class TagModel {
     uid = mId;
     userid = json['userid'];
     name = json['name'];
-    tagCount = json['tagCount'];
+    tagItemCount = json['tagItemCount'];
     // try {
     //   name = json['name'] != null ? json['name'].toString().split(",") : [];
     // } on Exception catch (e) {
@@ -30,7 +30,7 @@ class TagModel {
     uid = json['uid'];
     userid = json['userid'];
     name = json['name'];
-    tagCount = json['tagCount'];
+    tagItemCount = json['tagItemCount'];
     // try {
     //   name = json['name'] != null ? json['name'].toString().split(",") : [];
     // } on Exception catch (e) {
@@ -42,7 +42,7 @@ class TagModel {
 
   String? uid;
   String? userid;
-  int? tagCount;
+  int? tagItemCount;
   String? name;
   String? date;
 
@@ -50,7 +50,7 @@ class TagModel {
     final map = <String, dynamic>{};
     map['uid'] = uid;
     map['userid'] = userid;
-    map['tagCount'] = tagCount;
+    map['tagItemCount'] = tagItemCount;
     map['name'] = name;
     // map['name'] = name?.join(",");
     map['date'] = date;

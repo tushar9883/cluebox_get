@@ -150,14 +150,14 @@ class AddItemController extends BaseController {
         if (tagData != null) {
           //Tag is already there in db
           tagIds.add(tagData.uid);
-          tagData.tagCount = (tagData.tagCount ?? 0) + 1;
+          tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
           await DbHelp().addtag(tagData);
           print("Present___________");
         } else {
           //Tag is not in db
           await DbHelp().addtag(TagModel(
               userid: userid,
-              tagCount: 1,
+              tagItemCount: 1,
               name: tag.toString().toLowerCase(),
               date: Localtime.toString(),
               uid: '${tag.toString().toLowerCase()}_$userid'));
