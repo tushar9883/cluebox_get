@@ -15,16 +15,8 @@ class TagBinding implements Bindings {
 }
 
 class TagController extends BaseController {
-  // var jsonResult;
   List<TagModel>? tagList;
   bool isLoading = false;
-
-  loadJson() async {
-    String data = await rootBundle.loadString('assets/json/check.json');
-    // jsonResult = json.decode(data);
-    update();
-    // print(jsonResult);
-  }
 
   Future<void> getAllTags(String userId) async {
     isLoading = true;
@@ -40,7 +32,6 @@ class TagController extends BaseController {
     super.onInit();
     var userid = FirebaseAuth.instance.currentUser?.uid;
     getAllTags(userid!);
-    // loadJson();
     update();
   }
 }

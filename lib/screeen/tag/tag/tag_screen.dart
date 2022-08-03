@@ -1,10 +1,12 @@
 import 'package:clue_get/base/base_view_view_model.dart';
+import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/res/gradient.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/tag/tag/tag_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -195,6 +197,9 @@ class TagScreen extends BaseView<TagController> {
                                           controller.tagList?.length ?? 0,
                                       itemBuilder:
                                           (BuildContext context, index) {
+                                        var loc = controller.tagList?[index];
+                                        var id = loc?.userid;
+                                        var uid = loc?.uid;
                                         return InkWell(
                                           onTap: () {
                                             var titlename =
@@ -214,57 +219,186 @@ class TagScreen extends BaseView<TagController> {
                                                     left: 21.w,
                                                     right: 21.w,
                                                     top: 12.h),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        controller
-                                                                .tagList?[index]
-                                                                .name ??
-                                                            '',
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        style: robotoMedium
-                                                            .copyWith(
-                                                                fontSize: 16.sp,
-                                                                color: Colors
-                                                                    .black),
+                                                child: Slidable(
+                                                  endActionPane: ActionPane(
+                                                    motion:
+                                                        const ScrollMotion(),
+                                                    extentRatio: 0.20,
+                                                    children: [
+                                                      SlidableAction(
+                                                        backgroundColor:
+                                                            Color(0xFFFE4A49),
+                                                        foregroundColor:
+                                                            Colors.white,
+                                                        icon: Icons.delete,
+                                                        // label: 'Delete',
+                                                        onPressed: (BuildContext
+                                                            context) {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                title: Center(
+                                                                  child: Text(
+                                                                    'Delete Item?',
+                                                                    style: robotoBold
+                                                                        .copyWith(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          26.sp,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(10.r))),
+                                                                content: Text(
+                                                                  "Are you sure you want to delete this item from local and online server?\n\nYou won’t be able to find your item then.",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: poppinsMedium
+                                                                      .copyWith(
+                                                                    color: const Color(
+                                                                        0xff8f8f8f),
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                  ),
+                                                                ),
+                                                                actions: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Center(
+                                                                        child:
+                                                                            InkWell(
+                                                                          onTap:
+                                                                              () async {
+                                                                            controller.showLoadingDialog();
+                                                                            print('Delete');
+                                                                            await DbHelp().removeTag(uid!);
+                                                                            // removeTag();
+                                                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                                              var controll = Get.find<TagController>();
+                                                                              controll.getAllTags(id!);
+                                                                            });
+                                                                            controller.hideDialog();
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            width:
+                                                                                93.w,
+                                                                            height:
+                                                                                46.h,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(9.r),
+                                                                              boxShadow: [
+                                                                                BoxShadow(
+                                                                                  color: const Color(0x3f000000),
+                                                                                  blurRadius: 16.r,
+                                                                                  offset: const Offset(0, 0),
+                                                                                ),
+                                                                              ],
+                                                                              gradient: const LinearGradient(
+                                                                                colors: [
+                                                                                  Color(0xff4A00E0),
+                                                                                  Color(0xff8E2DE2),
+                                                                                ],
+                                                                                begin: Alignment(-1.0, 0),
+                                                                                end: Alignment(1, 1),
+                                                                              ),
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              "Delete",
+                                                                              textAlign: TextAlign.center,
+                                                                              style: robotoBold.copyWith(
+                                                                                color: Colors.white,
+                                                                                fontSize: 18.sp,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            15.h,
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        },
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10.w,
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: 10.w,
-                                                        vertical: 5.h,
+                                                    ],
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          controller
+                                                                  .tagList?[
+                                                                      index]
+                                                                  .name ??
+                                                              '',
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                          style: robotoMedium
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      16.sp,
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
                                                       ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(25.r),
-                                                        color: Colors.black,
+                                                      SizedBox(
+                                                        width: 10.w,
                                                       ),
-                                                      child: Text(
-                                                        controller
-                                                                .tagList?[index]
-                                                                .tagItemCount
-                                                                .toString() ??
-                                                            '0',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style:
-                                                            robotoBold.copyWith(
-                                                                fontSize: 12.sp,
-                                                                color: Colors
-                                                                    .white),
+                                                      Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal: 10.w,
+                                                          vertical: 5.h,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      25.r),
+                                                          color: Colors.black,
+                                                        ),
+                                                        child: Text(
+                                                          controller
+                                                                  .tagList?[
+                                                                      index]
+                                                                  .tagItemCount
+                                                                  .toString() ??
+                                                              '0',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: robotoBold
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(

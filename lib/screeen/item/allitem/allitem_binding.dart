@@ -1,6 +1,7 @@
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
+import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,12 +62,19 @@ class AllItemController extends BaseController {
 
   deleteitem() async {
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
+    TagModel? tagData = await DbHelp().getTagData(userid!);
 
     if (userData.isNotEmpty) {
       //To update item count of this user
       userData.first.itemCount = (userData.first.itemCount ?? 0) - 1;
       await DbHelp().udpateUserData(userData.first, userData.first.uid);
       print("User itemCount updated___________");
+      // if (tagData != null) {
+      //   var id = tagData.uid;
+      //   tagData.tagItemCount = (tagData.tagItemCount ?? 0) - 1;
+      //   await DbHelp().updateTagItemcount(tagData, id!);
+      //   print("Tag itemCount updated___________");
+      // }
     }
   }
 

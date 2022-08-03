@@ -176,6 +176,13 @@ class DbHelp {
     );
   }
 
+  Future updateTagItemcount(TagModel tagModel, String id) async {
+    await tagdb.updateData(
+      id ?? "",
+      {"tagItemCount": tagModel.tagItemCount},
+    );
+  }
+
   Future getAllTagsByUser(String userId) async {
     try {
       List<TagModel> res = await tagdb.getQueryList(
@@ -222,18 +229,6 @@ class DbHelp {
     return res;
   }
 
-  Future removeItem(String id) async {
-    await additemdb.removeItem(id);
-  }
-
-  Future removeBox(String id) async {
-    await boxdb.removeItem(id);
-  }
-
-  Future removeLocation(String id) async {
-    await locationdb.removeItem(id);
-  }
-
   Future getAllLocationsByUser(String userId) async {
     try {
       List<LocationModel> res = await locationdb.getQueryList(
@@ -251,5 +246,21 @@ class DbHelp {
       print("EEEEEEEEEEEEEEEE${e}");
       print('SSSSSSSSSSSSSSSSSSSS${s}');
     }
+  }
+
+  Future removeItem(String id) async {
+    await additemdb.removeItem(id);
+  }
+
+  Future removeBox(String id) async {
+    await boxdb.removeItem(id);
+  }
+
+  Future removeLocation(String id) async {
+    await locationdb.removeItem(id);
+  }
+
+  Future removeTag(String id) async {
+    await tagdb.removeItem(id);
   }
 }
