@@ -28,7 +28,7 @@ class MyLocationController extends BaseController {
 
   Future<void> getAllLocations(String userId) async {
     isLoading = true;
-    var allLocations = await DbHelp().getAllLocationsByUser(userId);
+    var allLocations = await DbHelp().getAllLocation(userId);
     myLocationList?.clear();
     myLocationList = allLocations;
     isLoading = false;

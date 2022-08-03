@@ -1,6 +1,7 @@
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
+import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/user_model.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,9 +22,11 @@ class AllItemController extends BaseController {
 
   final number = ['one', 'four', 'two'];
 
+  BoxModel? myBox;
+
   Future<void> getData() async {
     print("Favorite >>>><<<<< $userid");
-    var allData = await DbHelp().getAllFavoriteList(userid!);
+    var allData = await DbHelp().getAllItemList(userid!, boxId: myBox?.uid);
     itemlist?.clear();
     itemlist = allData;
     update();
@@ -82,6 +85,11 @@ class AllItemController extends BaseController {
   @override
   void onInit() {
     itemlist?.clear();
+
+    if (Get.arguments != null) {
+      myBox = BoxModel.fromDB(Get.arguments);
+    }
+
     getData();
     update();
     super.onInit();

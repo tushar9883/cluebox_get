@@ -6,6 +6,8 @@ import 'package:clue_get/auth/login/login_screen.dart';
 import 'package:clue_get/auth/singup/singup_binding.dart';
 import 'package:clue_get/auth/singup/singup_screen.dart';
 import 'package:clue_get/router/router_name.dart';
+import 'package:clue_get/screeen/boxes/my_boxes.dart';
+import 'package:clue_get/screeen/boxes/my_boxes_binding.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:clue_get/screeen/home/home_screen.dart';
 import 'package:clue_get/screeen/item/additem/additem_binding.dart';
@@ -105,6 +107,10 @@ class Pages {
           name: RouterName.myLocation,
           page: () => const MyLocation(),
           binding: MyLocationBinding()),
+      GetPage(
+          name: RouterName.myBoxes,
+          page: () => const MyBoxes(),
+          binding: MyBoxBinding()),
 
       // GetPage(
       //     name: RouterName.search,

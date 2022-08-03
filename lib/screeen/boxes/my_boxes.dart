@@ -7,17 +7,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'my_locations_binding.dart';
+import 'my_boxes_binding.dart';
 
-class MyLocation extends BaseView<MyLocationController> {
-  const MyLocation({Key? key}) : super(key: key);
+class MyBoxes extends BaseView<MyBoxController> {
+  const MyBoxes({Key? key}) : super(key: key);
 
   @override
   Widget vBuilder(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-          // controller.myLocationList == null || controller.myLocationList!.isEmpty
+          // controller.myBoxList == null || controller.myBoxList!.isEmpty
           controller.isLoading == true
               ? Material(
                   color: Colors.black.withOpacity(0.5),
@@ -44,7 +44,7 @@ class MyLocation extends BaseView<MyLocationController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ///ToDo 2 Location
+                      ///ToDo 2 Box
                       Expanded(
                         child: Column(
                           children: [
@@ -63,7 +63,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                 Container(
                                   margin: EdgeInsets.only(left: 21.w),
                                   child: GradientText(
-                                    "All Locations",
+                                    "All Boxes",
                                     style: robotoBold.copyWith(
                                       color: const Color(0xff4A00E0),
                                       fontSize: 22.sp,
@@ -147,7 +147,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.go,
                                       decoration: InputDecoration(
-                                        hintText: 'Search your locations here.',
+                                        hintText: 'Search your boxes here.',
                                         hintStyle: TextStyle(
                                           color: const Color(0xff5a5a5a),
                                           fontSize: 12.sp,
@@ -162,8 +162,8 @@ class MyLocation extends BaseView<MyLocationController> {
                             SizedBox(
                               height: 14.h,
                             ),
-                            controller.myLocationList == null ||
-                                    controller.myLocationList!.isEmpty
+                            controller.myBoxList == null ||
+                                    controller.myBoxList!.isEmpty
                                 ? Expanded(
                                     child: Center(
                                         child: Column(
@@ -178,7 +178,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                           height: 20.h,
                                         ),
                                         Text(
-                                          'Create the locations to group the relevant items.',
+                                          'Create the boxes to group the relevant items.',
                                           style: robotoRegular.copyWith(
                                             color: const Color(0xffa8a8a8),
                                             fontSize: 10.sp,
@@ -193,21 +193,28 @@ class MyLocation extends BaseView<MyLocationController> {
                                       shrinkWrap: true,
                                       padding: EdgeInsets.only(bottom: 200.h),
                                       itemCount:
-                                          controller.myLocationList?.length ??
-                                              0,
+                                          controller.myBoxList?.length ?? 0,
                                       itemBuilder:
                                           (BuildContext context, index) {
                                         return InkWell(
                                           onTap: () {
                                             var titlename = controller
-                                                .myLocationList?[index].name;
+                                                .myBoxList?[index].name;
                                             print(titlename);
+
                                             Get.toNamed(
-                                              RouterName.myBoxes,
+                                              RouterName.allitem,
                                               arguments: controller
-                                                  .myLocationList?[index]
+                                                  .myBoxList?[index]
                                                   .toJson(),
                                             );
+
+                                            // Get.toNamed(
+                                            //   RouterName.locationScreen,
+                                            //   arguments: controller
+                                            //       .myBoxList?[index]
+                                            //       .toJson(),
+                                            // );
                                           },
                                           child: Column(
                                             children: [
@@ -224,7 +231,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                                     Expanded(
                                                       child: Text(
                                                         controller
-                                                                .myLocationList?[
+                                                                .myBoxList?[
                                                                     index]
                                                                 .name ??
                                                             '',
@@ -254,7 +261,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                                     //   ),
                                                     //   child: Text(
                                                     //     controller
-                                                    //         .myLocationList?[index]
+                                                    //         .myBoxList?[index]
                                                     //         .tagCount
                                                     //         .toString() ??
                                                     //         '0',
@@ -295,7 +302,7 @@ class MyLocation extends BaseView<MyLocationController> {
                     ],
                   ),
                 ),
-      // lgActionButton: InkWell(
+      // floatingActionButton: InkWell(
       //   onTap: () {
       //     showDialog(
       //       context: context,
@@ -303,7 +310,7 @@ class MyLocation extends BaseView<MyLocationController> {
       //         return AlertDialog(
       //           title: Center(
       //             child: Text(
-      //               'Create Location',
+      //               'Create Box',
       //               style: robotoBold.copyWith(
       //                 color: Colors.black,
       //                 fontSize: 26.sp,
@@ -318,7 +325,7 @@ class MyLocation extends BaseView<MyLocationController> {
       //             keyboardType: TextInputType.text,
       //             textInputAction: TextInputAction.go,
       //             decoration: InputDecoration(
-      //                 hintText: 'Location Name',
+      //                 hintText: 'Box Name',
       //                 hintStyle: poppinsMedium.copyWith(
       //                   color: const Color(0xff111111),
       //                   fontSize: 10.sp,

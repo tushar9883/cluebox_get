@@ -76,14 +76,44 @@ class DbHelp {
     return res;
   }
 
-  Future<List<AddItemModel>> getAllFavoriteList(String uids) async {
+  Future<List<AddItemModel>> getAllItemList(String uids,
+      {String? boxId}) async {
+    var args = [
+      QueryArgsV2(
+        "userid",
+        isEqualTo: uids,
+      )
+    ];
+
+    if (boxId != null) {
+      args.add(QueryArgsV2(
+        "boxId",
+        isEqualTo: boxId,
+      ));
+    }
+
     List<AddItemModel> res = await additemdb.getQueryList(
-      args: [
-        QueryArgsV2(
-          "userid",
-          isEqualTo: uids,
-        )
-      ],
+      args: args,
+      orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
+  }
+
+  Future<List<AddItemModel>> getAllFavoriteList(String uids) async {
+    var args = [
+      QueryArgsV2(
+        "userid",
+        isEqualTo: uids,
+      )
+    ];
+
+    args.add(QueryArgsV2(
+      "favorite",
+      isEqualTo: true,
+    ));
+
+    List<AddItemModel> res = await additemdb.getQueryList(
+      args: args,
       orderBy: [OrderBy("date", descending: true)],
     );
     return res;
@@ -222,6 +252,19 @@ class DbHelp {
     return res;
   }
 
+  Future<List<AddItemModel>> getItemsFromBox(String boxId) async {
+    List<AddItemModel> res = await additemdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "boxId",
+          isEqualTo: boxId,
+        )
+      ],
+      orderBy: [OrderBy("date", descending: true)],
+    );
+    return res;
+  }
+
   Future removeItem(String id) async {
     await additemdb.removeItem(id);
   }
@@ -232,24 +275,5 @@ class DbHelp {
 
   Future removeLocation(String id) async {
     await locationdb.removeItem(id);
-  }
-
-  Future getAllLocationsByUser(String userId) async {
-    try {
-      List<LocationModel> res = await locationdb.getQueryList(
-        args: [
-          QueryArgsV2(
-            "userid",
-            isEqualTo: userId,
-          )
-        ],
-        orderBy: [OrderBy("date", descending: true)],
-      );
-      print('OOOOOOOOOOOOOOOOOOOOOOOO');
-      return res;
-    } catch (e, s) {
-      print("EEEEEEEEEEEEEEEE${e}");
-      print('SSSSSSSSSSSSSSSSSSSS${s}');
-    }
   }
 }

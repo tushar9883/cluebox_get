@@ -23,6 +23,16 @@ class BoxModel {
     locationId = json['location_id'];
     locationName = json['location_name'];
   }
+
+  BoxModel.fromDB(dynamic json) {
+    uid = json['uid'];
+    userid = json['userid'];
+    name = json['name'];
+    date = json['date'];
+    locationId = json['location_id'];
+    locationName = json['location_name'];
+  }
+
   String? uid;
   String? userid;
   String? name;
