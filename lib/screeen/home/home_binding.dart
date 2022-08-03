@@ -49,7 +49,7 @@ class HomeController extends BaseController {
     var allTags = await DbHelp().getAllTagsByUser(userId);
     tagList?.clear();
     tagList = allTags;
-    // print("tags>>>><<<<< ${tagList?.first.name}");
+    print("tags>>>><<<<< ${tagList?.first.name}");
     update();
   }
 
@@ -59,7 +59,7 @@ class HomeController extends BaseController {
     var userid = FirebaseAuth.instance.currentUser?.uid;
     getUserData(userid ?? '');
     getData(userid!);
-    // getAllTags(userid);
+    getAllTags(userid);
     super.onInit();
     getData(userid);
     var check = await storagess.read(key: "userid");
