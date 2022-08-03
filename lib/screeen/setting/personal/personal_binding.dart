@@ -29,7 +29,6 @@ class PersonalController extends BaseController {
 
   loadJson() async {
     // showLoadingDialog();
-    print('<<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>>');
     var data = await rootBundle.loadString('assets/json/country.json');
     List res = jsonDecode(data);
     print('111111111111111111${res}');
@@ -69,7 +68,6 @@ class PersonalController extends BaseController {
     }
     await DbHelp().updateUser(
         UserModel(
-            uid: uidd.toString(),
             name: name.text,
             country: selectedCountry?.name,
             gender: valuegender,
@@ -80,7 +78,6 @@ class PersonalController extends BaseController {
 
   dataget() async {
     print("Personal >>>><<<<< $userid");
-
     var getUserData = await DbHelp().getUserDetails(userid ?? "");
     UserList?.clear();
     UserList = getUserData;
