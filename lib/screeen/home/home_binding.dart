@@ -19,22 +19,18 @@ class HomeController extends BaseController {
   FlutterSecureStorage storagess = const FlutterSecureStorage();
   List<AddItemModel>? itemList;
   List<UserModel>? userData;
-
   List<TagModel>? tagList;
   String? isLoggedIn;
-  // List<String> items = <String>[
-  //   "Electronics",
-  //   "Stationaries",
-  //   "Drinks",
-  //   "Medicines",
-  // ];
 
   Future<void> getUserData(String userId) async {
     print("<><><>>>>>User><><>><><><>$userId");
     var allData = await DbHelp().getuserData(userId);
     userData = allData;
-    // print("<><><>>>>>><><>><><><>${userData?.first.name}");
     update();
+  }
+
+  totalItem() {
+    userData?.first.itemCount ?? "0";
   }
 
   Future<void> getData(String userId) async {

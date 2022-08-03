@@ -221,4 +221,16 @@ class DbHelp {
     );
     return res;
   }
+
+  Future removeItem(String id) async {
+    await additemdb.removeItem(id);
+  }
+
+  Future removeBox(String id) async {
+    await boxdb.removeItem(id);
+  }
+
+  Future removeLocation(String id) async {
+    await locationdb.removeItem(id);
+  }
 }

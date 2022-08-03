@@ -319,6 +319,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                     const EdgeInsets.all(8),
                                                 child: InkWell(
                                                   onTap: () {
+                                                    print('${loc?.uid}');
                                                     Get.toNamed(
                                                         RouterName.edititem);
                                                   },
@@ -649,7 +650,12 @@ class FavoriteScreen extends BaseView<FavoriteController> {
               ),
             ),
       floatingActionButton: InkWell(
-        onTap: () {},
+        onTap: () {
+          // Get.offNamed(
+          //   RouterName.additem,
+          //   arguments: {"favorite": true},
+          // );
+        },
         child: Container(
           width: 60.w,
           height: 60.w,

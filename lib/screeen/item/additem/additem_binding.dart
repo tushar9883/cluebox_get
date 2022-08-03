@@ -50,6 +50,15 @@ class AddItemController extends BaseController {
   var userid;
   List<TagModel>? tagList;
 
+  // datacheck() {
+  //   var datafind = Get.arguments['favorite'];
+  //   if (datafind == true) {
+  //     isFavorite = true;
+  //   } else {
+  //     isFavorite = false;
+  //   }
+  // }
+
   @override
   void onInit() {
     super.onInit();
