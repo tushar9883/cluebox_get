@@ -176,13 +176,6 @@ class DbHelp {
     );
   }
 
-  Future updateTagItemcount(TagModel tagModel, String id) async {
-    await tagdb.updateData(
-      id ?? "",
-      {"tagItemCount": tagModel.tagItemCount},
-    );
-  }
-
   Future getAllTagsByUser(String userId) async {
     try {
       List<TagModel> res = await tagdb.getQueryList(
