@@ -233,8 +233,8 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                       child: InkWell(
                                                         onTap: () {
                                                           print('${loc?.uid}');
-                                                    Get.toNamed(
-                                                        RouterName.edititem);
+                                                          Get.toNamed(RouterName
+                                                              .edititem);
                                                         },
                                                         child: Column(
                                                           children: [

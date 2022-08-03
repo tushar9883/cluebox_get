@@ -28,7 +28,6 @@ class TagItemController extends BaseController {
     print("<><><>>>>>TagID><><>><><><>${tagModel?.uid}");
     var allItems = await DbHelp().getItemsFromTag(tagModel?.uid ?? '');
     itemList = allItems;
-    print("<><><>>>>>><><>><><><>${itemList?.first.itemName}");
     update();
   }
 }
