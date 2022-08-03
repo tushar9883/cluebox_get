@@ -14,7 +14,14 @@ class LocationModel {
     print(">>>>> Location >>>> $mId");
     name = json['name'];
     userid = json['userid'];
-    uid = uid = mId;
+    uid = mId;
+    date = json['date'];
+  }
+
+  LocationModel.fromDb(dynamic json) {
+    name = json['name'];
+    userid = json['userid'];
+    uid = json['uid'];
     date = json['date'];
   }
   String? name;
