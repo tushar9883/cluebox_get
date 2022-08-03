@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../model/country.dart';
+import '../../../res/color.dart';
 
 class PersonalBinding implements Bindings {
   @override
@@ -26,6 +27,7 @@ class PersonalController extends BaseController {
   Country? selectedCountry;
   List<Country>? jsonCountry;
   final storage = const FlutterSecureStorage();
+  bool isLoading = false;
 
   loadJson() async {
     // showLoadingDialog();
@@ -53,10 +55,11 @@ class PersonalController extends BaseController {
   }
 
   savedata() async {
+    showLoadingDialog();
     var valuegender;
     String? uidd = await storage.read(key: "uid");
     print("user id :- $uidd");
-    showLoadingDialog();
+
     print('Gender:- $radioSelected');
     print("selected country :- ${selectedCountry?.name}");
     if (radioSelected == 1) {
@@ -73,10 +76,12 @@ class PersonalController extends BaseController {
             gender: valuegender,
             birthdate: dateinput.text),
         uidd);
+    toastbar("Personal Info updated successfully", isSuccess: true);
     hideDialog();
   }
 
   dataget() async {
+    isLoading = true;
     print("Personal >>>><<<<< $userid");
     var getUserData = await DbHelp().getUserDetails(userid ?? "");
     UserList?.clear();
@@ -106,6 +111,7 @@ class PersonalController extends BaseController {
     print("gender ${UserList?.last.gender}");
     print("country ${UserList?.last.country}");
     print("birthdate ${UserList?.last.birthdate}");
+    isLoading = false;
     update();
   }
 }
