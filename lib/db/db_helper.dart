@@ -159,6 +159,7 @@ class DbHelp {
     await userdb.updateData(
       id ?? "",
       {
+        "uid": id,
         "name": userModel.name,
         "country": userModel.country,
         "gender": userModel.gender,

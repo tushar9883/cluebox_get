@@ -3,16 +3,16 @@
 /// uid : "12"
 
 class UserModel {
-  UserModel(
-      {this.name,
-      this.email,
-      this.uid,
-      this.password,
+  UserModel({
+    this.name,
+    this.email,
+    this.uid,
+    this.password,
     this.itemCount,
-        this.country,
-        this.gender,
-        this.userid,
-        this.birthdate,
+    this.country,
+    this.gender,
+    this.userid,
+    this.birthdate,
   });
 
   UserModel.fromJson(String mId, dynamic json) {
