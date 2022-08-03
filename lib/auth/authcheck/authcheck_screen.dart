@@ -24,7 +24,7 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
   }
 
   getUid() async {
-    var check = await storagess.read(key: "uid");
+    var check = await storagess.read(key: "userid");
     isLoggedIn = check;
     print(">>>>> User ID  ${check.toString()}  >>>>> ");
 
