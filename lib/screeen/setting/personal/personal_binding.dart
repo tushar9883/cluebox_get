@@ -54,17 +54,25 @@ class PersonalController extends BaseController {
   }
 
   savedata() async {
+    var valuegender;
     String? uidd = await storage.read(key: "uid");
     print("user id :- $uidd");
     showLoadingDialog();
-    print('Gender:- $radioVal');
+    print('Gender:- $radioSelected');
     print("selected country :- ${selectedCountry?.name}");
+    if (radioSelected == 1) {
+      valuegender = 'Male';
+    } else if (radioSelected == 2) {
+      valuegender = 'Female';
+    } else {
+      radioSelected = 0;
+    }
     await DbHelp().updateUser(
         UserModel(
-            uid: uidd,
+            uid: uidd.toString(),
             name: name.text,
             country: selectedCountry?.name,
-            gender: radioVal,
+            gender: valuegender,
             birthdate: dateinput.text),
         uidd);
     hideDialog();
@@ -91,8 +99,10 @@ class PersonalController extends BaseController {
 
     if (UserList?.first.gender == 'Male') {
       radioSelected = 1;
-    } else {
+    } else if (UserList?.first.gender == 'Female') {
       radioSelected = 2;
+    } else {
+      radioSelected = 0;
     }
     // jsonCountry = "fds";
     print("name ${UserList?.last.name}");

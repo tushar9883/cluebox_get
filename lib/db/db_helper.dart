@@ -198,7 +198,7 @@ class DbHelp {
     List<UserModel> res = await userdb.getQueryList(
       args: [
         QueryArgsV2(
-          "uid",
+          "userid",
           isEqualTo: uids,
         )
       ],

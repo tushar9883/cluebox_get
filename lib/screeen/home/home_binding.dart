@@ -49,7 +49,7 @@ class HomeController extends BaseController {
     var allTags = await DbHelp().getAllTagsByUser(userId);
     tagList?.clear();
     tagList = allTags;
-    print("tags>>>><<<<< ${tagList?.first.name}");
+    // print("tags>>>><<<<< ${tagList?.first.name}");
     update();
   }
 
@@ -62,7 +62,7 @@ class HomeController extends BaseController {
     getAllTags(userid);
     super.onInit();
     getData(userid);
-    var check = await storagess.read(key: "userid");
+    var check = await storagess.read(key: "uid");
     isLoggedIn = check;
     print(">>>>> User ID  ${check.toString()}  >>>>> ");
     update();
