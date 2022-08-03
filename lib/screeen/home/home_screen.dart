@@ -253,7 +253,8 @@ class HomeScreen extends BaseView<HomeController> {
                                               // color: Colors.red,
                                               child: InkWell(
                                                 onTap: () {
-                                                  // Get.toNamed(RouterName.tag);
+                                                  Get.toNamed(
+                                                      RouterName.myLocation);
                                                 },
                                                 child: Text(
                                                   "Locations",

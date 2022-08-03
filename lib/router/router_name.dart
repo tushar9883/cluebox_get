@@ -15,4 +15,5 @@ class RouterName {
   static const String tag = '/tag';
   static const String tagitem = '/tagitem';
   static const String authcheck = '/authcheck';
+  static const String myLocation = '/myLocation';
 }
