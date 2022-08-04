@@ -173,164 +173,387 @@ class HomeScreen extends BaseView<HomeController> {
                                           ),
                                         ),
                                         SizedBox(
-                                          height: 25.h,
+                                          height: 10.h,
                                         ),
                                       ],
                                     )
-                                  : SizedBox.shrink(),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 21.w),
-                                padding: EdgeInsets.only(bottom: 15.h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14.r),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(0x3f000000),
-                                      blurRadius: 16.r,
-                                      offset: const Offset(0, 0),
-                                    ),
-                                  ],
-                                  color: Colors.white,
-                                ),
-                                child: Padding(
-                                  padding:
+                                  : const SizedBox.shrink(),
+
+                              ///TODo changes
+                              InkWell(
+                                onTap: () {
+                                  Get.toNamed(RouterName.allitem);
+                                },
+                                child: Container(
+                                  margin:
                                       EdgeInsets.symmetric(horizontal: 21.w),
+                                  height: 133.h,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.r)),
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/image/allitem.png"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                   child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(
-                                        height: 15.h,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 8.h, right: 18.w),
+                                            child: Text(
+                                              "All Items",
+                                              textAlign: TextAlign.center,
+                                              style: robotoBold.copyWith(
+                                                color: Colors.white,
+                                                fontSize: 20.sp,
+                                                // fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Get.toNamed(RouterName.allitem);
-                                        },
-                                        child: Column(
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: 18.w,
+                                            right: 18.w,
+                                            bottom: 2.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "${controller.userData?.first.itemCount ?? "0"}",
                                               textAlign: TextAlign.center,
                                               style: robotoBold.copyWith(
-                                                color: const Color(0xff4a00e0),
+                                                color: Colors.white,
                                                 fontSize: 35.sp,
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 5.h,
-                                            ),
-                                            Text(
-                                              "All Items",
-                                              textAlign: TextAlign.center,
-                                              style: robotoMedium.copyWith(
-                                                color: const Color(0xff111111),
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
+                                            Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 12.h,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "View Items",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          robotoMedium.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 12.sp,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5.w,
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          top: 2.h),
+                                                      child: Image.asset(
+                                                        'assets/image/Arrow.png',
+                                                        color: Colors.white,
+                                                        width: 19.w,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 8.h,
-                                      ),
-                                      Container(
-                                        // margin: EdgeInsets.symmetric(horizontal: 21.w),
-                                        height: 1,
-                                        color: const Color(0xffCBCBCB),
-                                      ),
-                                      SizedBox(
-                                        height: 15.h,
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          // SizedBox(
-                                          //   width: 21.w,
-                                          // ),
-                                          Expanded(
-                                            child: Container(
-                                              // color: Colors.red,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Get.toNamed(
-                                                      RouterName.myLocation);
-                                                },
-                                                child: Text(
-                                                  "Locations",
-                                                  textAlign: TextAlign.center,
-                                                  style: robotoBold.copyWith(
-                                                    color:
-                                                        const Color(0xff4A00E0),
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 1,
-                                            height: 40,
-                                            color: const Color(0xffCBCBCB),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              // color: Colors.red,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Get.toNamed(RouterName.tag);
-                                                },
-                                                child: Text(
-                                                  "My Tags",
-                                                  textAlign: TextAlign.center,
-                                                  style: robotoBold.copyWith(
-                                                    color:
-                                                        const Color(0xff4A00E0),
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 1,
-                                            height: 40,
-                                            color: const Color(0xffCBCBCB),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              // color: Colors.green,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Get.toNamed(
-                                                      RouterName.favorite);
-                                                },
-                                                child: Text(
-                                                  "Favorites",
-                                                  textAlign: TextAlign.center,
-                                                  style: robotoBold.copyWith(
-                                                    color:
-                                                        const Color(0xff4A00E0),
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          // SizedBox(
-                                          //   width: 21.w,
-                                          // ),
-                                        ],
-                                      ),
-                                      // SizedBox(
-                                      //   height: 27.h,
-                                      // ),
                                     ],
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                height: 35.h,
+                                height: 20.h,
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 14.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouterName.myLocation);
+                                      },
+                                      child: Container(
+                                        height: 100.w,
+                                        width: 100.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.r)),
+                                          image: const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/image/location.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 10.w, bottom: 10.h),
+                                              child: Text(
+                                                "Location",
+                                                style: robotoBold.copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouterName.tag);
+                                      },
+                                      child: Container(
+                                        height: 100.w,
+                                        width: 100.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.r)),
+                                          image: const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/image/tag.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 10.w, bottom: 10.h),
+                                              child: Text(
+                                                "Tags",
+                                                style: robotoBold.copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed(RouterName.favorite);
+                                      },
+                                      child: Container(
+                                        height: 100.w,
+                                        width: 100.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.r)),
+                                          image: const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/image/favorite.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 10.w, bottom: 10.h),
+                                              child: Text(
+                                                "Favorite",
+                                                style: robotoBold.copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width,
+                              //   margin: EdgeInsets.symmetric(horizontal: 21.w),
+                              //   padding: EdgeInsets.only(bottom: 15.h),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(14.r),
+                              //     boxShadow: [
+                              //       BoxShadow(
+                              //         color: const Color(0x3f000000),
+                              //         blurRadius: 16.r,
+                              //         offset: const Offset(0, 0),
+                              //       ),
+                              //     ],
+                              //     color: Colors.white,
+                              //   ),
+                              //   child: Padding(
+                              //     padding:
+                              //         EdgeInsets.symmetric(horizontal: 21.w),
+                              //     child: Column(
+                              //       children: [
+                              //         SizedBox(
+                              //           height: 15.h,
+                              //         ),
+                              //         InkWell(
+                              //           onTap: () {
+                              //             Get.toNamed(RouterName.allitem);
+                              //           },
+                              //           child: Column(
+                              //             children: [
+                              //               Text(
+                              //                 "${controller.userData?.first.itemCount ?? "0"}",
+                              //                 textAlign: TextAlign.center,
+                              //                 style: robotoBold.copyWith(
+                              //                   color: const Color(0xff4a00e0),
+                              //                   fontSize: 35.sp,
+                              //                 ),
+                              //               ),
+                              //               SizedBox(
+                              //                 height: 5.h,
+                              //               ),
+                              //               Text(
+                              //                 "All Items",
+                              //                 textAlign: TextAlign.center,
+                              //                 style: robotoMedium.copyWith(
+                              //                   color: const Color(0xff111111),
+                              //                   fontSize: 12.sp,
+                              //                   fontWeight: FontWeight.w600,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //         SizedBox(
+                              //           height: 8.h,
+                              //         ),
+                              //         Container(
+                              //           // margin: EdgeInsets.symmetric(horizontal: 21.w),
+                              //           height: 1,
+                              //           color: const Color(0xffCBCBCB),
+                              //         ),
+                              //         SizedBox(
+                              //           height: 15.h,
+                              //         ),
+                              //         Row(
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.center,
+                              //           children: [
+                              //             // SizedBox(
+                              //             //   width: 21.w,
+                              //             // ),
+                              //             Expanded(
+                              //               child: Container(
+                              //                 // color: Colors.red,
+                              //                 child: InkWell(
+                              //                   onTap: () {
+                              //                     Get.toNamed(
+                              //                         RouterName.myLocation);
+                              //                   },
+                              //                   child: Text(
+                              //                     "Locations",
+                              //                     textAlign: TextAlign.center,
+                              //                     style: robotoBold.copyWith(
+                              //                       color:
+                              //                           const Color(0xff4A00E0),
+                              //                       fontSize: 14.sp,
+                              //                     ),
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //             Container(
+                              //               width: 1,
+                              //               height: 40,
+                              //               color: const Color(0xffCBCBCB),
+                              //             ),
+                              //             Expanded(
+                              //               child: Container(
+                              //                 // color: Colors.red,
+                              //                 child: InkWell(
+                              //                   onTap: () {
+                              //                     Get.toNamed(RouterName.tag);
+                              //                   },
+                              //                   child: Text(
+                              //                     "My Tags",
+                              //                     textAlign: TextAlign.center,
+                              //                     style: robotoBold.copyWith(
+                              //                       color:
+                              //                           const Color(0xff4A00E0),
+                              //                       fontSize: 14.sp,
+                              //                     ),
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //             Container(
+                              //               width: 1,
+                              //               height: 40,
+                              //               color: const Color(0xffCBCBCB),
+                              //             ),
+                              //             Expanded(
+                              //               child: Container(
+                              //                 // color: Colors.green,
+                              //                 child: InkWell(
+                              //                   onTap: () {
+                              //                     Get.toNamed(
+                              //                         RouterName.favorite);
+                              //                   },
+                              //                   child: Text(
+                              //                     "Favorites",
+                              //                     textAlign: TextAlign.center,
+                              //                     style: robotoBold.copyWith(
+                              //                       color:
+                              //                           const Color(0xff4A00E0),
+                              //                       fontSize: 14.sp,
+                              //                     ),
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //             // SizedBox(
+                              //             //   width: 21.w,
+                              //             // ),
+                              //           ],
+                              //         ),
+                              //         // SizedBox(
+                              //         //   height: 27.h,
+                              //         // ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              SizedBox(
+                                height: 26.h,
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 21.w),
