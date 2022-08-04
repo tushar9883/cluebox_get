@@ -629,28 +629,32 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                     borderRadius:
                                                                         BorderRadius.circular(
                                                                             12.r),
-                                                                    child: Image
-                                                                        .network(
-                                                                      data?.image ??
-                                                                          '',
-                                                                      // newData[index]['img'],
-                                                                      height:
-                                                                          180.h,
-                                                                      width:
-                                                                          110.w,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      errorBuilder: (context,
-                                                                          error,
-                                                                          stackTrace) {
-                                                                        return Image.asset(
+                                                                    child: data?.image ==
+                                                                            null
+                                                                        ? Image.asset(
                                                                             'assets/image/ser_1.png',
+                                                                            height: 180
+                                                                                .h,
+                                                                            width: 110
+                                                                                .w,
+                                                                            fit: BoxFit
+                                                                                .cover)
+                                                                        : Image
+                                                                            .network(
+                                                                            data?.image ??
+                                                                                '',
                                                                             height:
                                                                                 180.h,
-                                                                            width: 110.w,
-                                                                            fit: BoxFit.cover);
-                                                                      },
-                                                                    ),
+                                                                            width:
+                                                                                110.w,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            errorBuilder: (context,
+                                                                                error,
+                                                                                stackTrace) {
+                                                                              return Image.asset('assets/image/ser_1.png', height: 180.h, width: 110.w, fit: BoxFit.cover);
+                                                                            },
+                                                                          ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -835,7 +839,6 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                           children: [
                                                             Text(
                                                               'Item Added on: ${outputDate}',
-                                                              // newData[index]['des'],
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
