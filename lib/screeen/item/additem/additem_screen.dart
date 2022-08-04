@@ -28,9 +28,9 @@ class AdditemScreen extends BaseView<AddItemController> {
                       padding: REdgeInsets.all(10.0),
                       width: 100.w,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.r)),
-                      // child: const CircularProgressIndicator(),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                       child: const SpinKitFadingCircle(
                         color: Colors.blue,
                         size: 50.0,
@@ -86,18 +86,19 @@ class AdditemScreen extends BaseView<AddItemController> {
                                   alignment: Alignment.center,
                                   children: [
                                     Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 21.h),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(14.r),
-                                          child: Image.network(
-                                            controller.imgUrl.toString(),
-                                            height: 194.h,
-                                            width: 372.w,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 21.h),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(14.r),
+                                        child: Image.network(
+                                          controller.imgUrl.toString(),
+                                          height: 194.h,
+                                          width: 372.w,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
                                     InkWell(
                                       onTap: () {
                                         controller.showPicker(
@@ -131,10 +132,11 @@ class AdditemScreen extends BaseView<AddItemController> {
                                   alignment: Alignment.center,
                                   children: [
                                     Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 21.h),
-                                        child: Image.asset(
-                                            'assets/image/check.png')),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 21.h),
+                                      child:
+                                          Image.asset('assets/image/check.png'),
+                                    ),
                                     InkWell(
                                       onTap: () {
                                         controller.showPicker(
@@ -219,10 +221,11 @@ class AdditemScreen extends BaseView<AddItemController> {
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
-                                      focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff5566fd)),
-                                  )),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff5566fd)),
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 25.h,
@@ -495,10 +498,11 @@ class AdditemScreen extends BaseView<AddItemController> {
                                         keyboardType: TextInputType.text,
                                         textInputAction: TextInputAction.next,
                                         decoration: const InputDecoration(
-                                            focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xff5566fd)),
-                                        )),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xff5566fd)),
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 25.h,
@@ -660,10 +664,11 @@ class AdditemScreen extends BaseView<AddItemController> {
                                         keyboardType: TextInputType.text,
                                         textInputAction: TextInputAction.next,
                                         decoration: const InputDecoration(
-                                            focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xff5566fd)),
-                                        )),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xff5566fd)),
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 25.h,
@@ -698,10 +703,11 @@ class AdditemScreen extends BaseView<AddItemController> {
                                         ),
                                         textInputAction: TextInputAction.next,
                                         decoration: const InputDecoration(
-                                            focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xff5566fd)),
-                                        )),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xff5566fd)),
+                                          ),
+                                        ),
                                         controller: controller.counter,
                                         keyboardType: TextInputType.number,
                                         onChanged: (value) {

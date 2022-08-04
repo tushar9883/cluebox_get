@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 
 class TagItemScreen extends BaseView<TagItemController> {
@@ -445,6 +446,16 @@ class TagItemScreen extends BaseView<TagItemController> {
                                               var boxid = data?.boxId;
                                               var locationid = data?.locationId;
                                               var id = data?.uid;
+                                              var dates = data?.date;
+                                              DateTime parseDate = DateFormat(
+                                                      "yyyy-MM-dd HH:mm:ss.SSS")
+                                                  .parse(dates!);
+                                              var inputDate = DateTime.parse(
+                                                  parseDate.toString());
+                                              var outputFormat =
+                                                  DateFormat('dd MMM yyyy');
+                                              var outputDate = outputFormat
+                                                  .format(inputDate);
                                               return Container(
                                                 margin: EdgeInsets.only(
                                                     left: 21.w,
@@ -823,7 +834,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              'Item Added on: ${data?.date}',
+                                                              'Item Added on: ${outputDate}',
                                                               // newData[index]['des'],
                                                               overflow:
                                                                   TextOverflow
