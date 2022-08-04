@@ -5,6 +5,7 @@ import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/model/tag_model.dart';
+import 'package:clue_get/res/color.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/services/storage_data.dart';
@@ -48,7 +49,9 @@ class EditItemController extends BaseController {
   var userid;
   List<AddItemModel>? itemList;
   List<TagModel>? tagList;
-  var imagevalue;
+  var itemId;
+  var locationId;
+  var boxId;
 
   TagModel? tagModel;
 
@@ -88,14 +91,126 @@ class EditItemController extends BaseController {
     });
   }
 
+  savedata(BuildContext context) async {
+    showLoadingDialog();
+    final _utcTime = DateTime.now().toUtc();
+    final Localtime = _utcTime.toLocal();
+    if (Nameitem.text.isEmpty) {
+      hideDialog();
+      toastbar('Item name is required');
+    } else if (locationvaluess == null) {
+      hideDialog();
+      toastbar('Please select/add Location');
+    } else if (locationvaluess?.name == 'Add Location' &&
+        LocationName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Location Name');
+    } else if (locationvaluess?.name == 'Add Location' &&
+        BoxName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Box Name');
+    } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
+      hideDialog();
+      toastbar('Please select/add Box');
+    } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
+      hideDialog();
+      toastbar('Please enter Box Name');
+    } else {
+      print("hiiiiiiiiiiiii");
+      var tagIds = [];
+      for (var tag in tagController.getTags ?? []) {
+        TagModel? tagData = await DbHelp()
+            .getTagData('${tag.toString().toLowerCase()}_$userid');
+
+        if (tagData != null) {
+          //Tag is already there in db
+          tagIds.add(tagData.uid);
+          tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
+          await DbHelp().addtag(tagData);
+          print("Present___________");
+        } else {
+          //Tag is not in db
+          await DbHelp().addtag(TagModel(
+              userid: userid,
+              tagItemCount: 1,
+              name: tag.toString().toLowerCase(),
+              date: Localtime.toString(),
+              uid: '${tag.toString().toLowerCase()}_$userid'));
+          tagIds.add('${tag.toString().toLowerCase()}_$userid');
+          print("Not Present___________");
+        }
+      }
+      BoxModel? selectedBox;
+      LocationModel? selectedLocation;
+      if (locationvaluess?.name == 'Add Location') {
+        var docrefLoc = await DbHelp().adlocation(LocationModel(
+          name: LocationName.text,
+          userid: userid,
+          date: Localtime.toString(),
+        ));
+        selectedLocation =
+            LocationModel(uid: docrefLoc.id, name: LocationName.text);
+        update();
+        hideDialog();
+      } else {
+        selectedLocation = locationvaluess;
+        hideDialog();
+      }
+      if (boxvalue?.name == 'Add Box' ||
+          locationvaluess?.name == 'Add Location') {
+        var docrefBox = await DbHelp().adbox(BoxModel(
+          userid: userid,
+          name: BoxName.text,
+          date: Localtime.toString(),
+          locationName: selectedLocation?.name,
+          locationId: selectedLocation?.uid,
+        ));
+        update();
+        selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
+        hideDialog();
+      } else {
+        selectedBox = boxvalue;
+        update();
+        hideDialog();
+      }
+      AddItemModel? addItemModel;
+      print("sbdcdb${itemId}");
+      await DbHelp().updateItemdata(
+          AddItemModel(
+              image: imgUrl,
+              uid: itemId,
+              date: Localtime.toString(),
+              userid: userid,
+              tag: tagIds,
+              quantity: counter.text,
+              locationName: locationvaluess?.name,
+              itemName: Nameitem.text,
+              boxName: boxvalue?.name,
+              favorite: isFavorite,
+              locationId: locationId,
+              boxId: boxId),
+          itemId);
+      print(
+          "Data${imgUrl}>>${tags}><>${isFavorite}>>>${counter.text}   AAAA${Nameitem.text}");
+      print("Data${locationvaluess?.name}>>${boxvalue?.name}><>");
+      hideDialog();
+      showAlertDialog(context);
+    }
+  }
+
   getnewdata() async {
     if (Get.arguments != null) {
       itemModel = AddItemModel.fromDB(Get.arguments);
       print("444444444444444 ${itemModel?.tag}");
+      print("444444445555554444444 ${itemModel?.uid}");
       imgUrl = itemModel?.image;
+      itemId = itemModel?.uid;
+      boxId = itemModel?.boxId;
+      locationId = itemModel?.locationId;
       var name = itemModel?.itemName;
       var quantity = itemModel?.quantity;
       var like = itemModel?.favorite;
+
       Nameitem.text = name!;
       counter.text = quantity!;
       isFavorite = like!;

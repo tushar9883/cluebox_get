@@ -184,6 +184,11 @@ class DbHelp {
     );
   }
 
+  Future updateItemdata(AddItemModel addItemModel, String id) async {
+    print("Update data item $id");
+    await additemdb.updateData(id, addItemModel.toJson());
+  }
+
   Future updateUser(UserModel userModel, String? id) async {
     print(">>>>>>> update id $id");
     await userdb.updateData(

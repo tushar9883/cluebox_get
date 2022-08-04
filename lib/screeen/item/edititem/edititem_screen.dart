@@ -729,6 +729,7 @@ class EditItemScreen extends BaseView<EditItemController> {
                           ),
                           InkWell(
                             onTap: () async {
+                              await controller.savedata(context);
                               //await controller.submit(context);
                             },
                             child: Center(
