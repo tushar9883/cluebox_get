@@ -118,7 +118,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                                           color: Colors.transparent,
                                         ),
                                         child: Text(
-                                          "Change Item Image",
+                                          "Change Image",
                                           style: robotoBold.copyWith(
                                             color: Colors.black,
                                             fontSize: 16.sp,

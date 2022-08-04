@@ -38,6 +38,20 @@ class AddItemModel {
     locationId = json['location_id'];
     favorite = json['favorite'];
   }
+  AddItemModel.fromDB(dynamic json) {
+    uid = json['uid'];
+    userid = json['userid'];
+    itemName = json['item_name'];
+    tag = json['tag'];
+    boxName = json['box'];
+    locationName = json['location'];
+    quantity = json['quantity'];
+    date = json['date'];
+    image = json['image'];
+    boxId = json['boxId'];
+    locationId = json['location_id'];
+    favorite = json['favorite'];
+  }
   String? uid;
   String? userid;
   String? itemName;

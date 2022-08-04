@@ -88,35 +88,37 @@ class SearchScreen extends BaseView<SearchController> {
             ),
 
             ///ToDO 1 Search
-            Expanded(
-              child: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/image/Search.png',
-                    height: 92.h,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Text(
-                    'Let’s find the Clue for your item.',
-                    style: robotoRegular.copyWith(
-                      color: const Color(0xffa8a8a8),
-                      fontSize: 10.sp,
-                    ),
-                  )
-                ],
-              )),
-            )
+            // Expanded(
+            //   child: Center(
+            //       child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Image.asset(
+            //         'assets/image/Search.png',
+            //         height: 92.h,
+            //       ),
+            //       SizedBox(
+            //         height: 20.h,
+            //       ),
+            //       Text(
+            //         'Let’s find the Clue for your item.',
+            //         style: robotoRegular.copyWith(
+            //           color: const Color(0xffa8a8a8),
+            //           fontSize: 10.sp,
+            //         ),
+            //       )
+            //     ],
+            //   )),
+            // )
 
             ///ToDo 2 Seach
             // Column(
             //   mainAxisAlignment: MainAxisAlignment.start,
             //   crossAxisAlignment: CrossAxisAlignment.start,
             //   children: [
-            //     SizedBox(height: 60.h,),
+            //     SizedBox(
+            //       height: 60.h,
+            //     ),
             //     Container(
             //       margin: EdgeInsets.only(left: 22.w),
             //       child: Text(
@@ -127,22 +129,34 @@ class SearchScreen extends BaseView<SearchController> {
             //         ),
             //       ),
             //     ),
-            //     SizedBox(height: 30.h,),
+            //     SizedBox(
+            //       height: 30.h,
+            //     ),
             //     Container(
             //       margin: EdgeInsets.only(left: 22.w),
             //       child: SimpleTags(
             //         content: controller.content,
             //         wrapSpacing: 15,
             //         wrapRunSpacing: 6,
-            //         onTagPress: (tag) {print('pressed $tag');},
-            //         onTagLongPress: (tag) {print('long pressed $tag');},
-            //         onTagDoubleTap: (tag) {print('double tapped $tag');},
+            //         onTagPress: (tag) {
+            //           print('pressed $tag');
+            //         },
+            //         onTagLongPress: (tag) {
+            //           print('long pressed $tag');
+            //         },
+            //         onTagDoubleTap: (tag) {
+            //           print('double tapped $tag');
+            //         },
             //         tagContainerPadding: EdgeInsets.all(10.h),
-            //         tagTextStyle: robotoBold.copyWith(color: const Color(0xff7d7d7d),fontSize: 14.sp),
+            //         tagTextStyle: robotoBold.copyWith(
+            //             color: const Color(0xff7d7d7d), fontSize: 14.sp),
             //         // tagIcon: Icon(Icons.clear, size: 12),
             //         tagContainerDecoration: BoxDecoration(
             //           color: Colors.white,
-            //           border: Border.all(color: const Color(0xff7d7d7d), width: 1, ),
+            //           border: Border.all(
+            //             color: const Color(0xff7d7d7d),
+            //             width: 1,
+            //           ),
             //           borderRadius: BorderRadius.all(
             //             Radius.circular(20.r),
             //           ),

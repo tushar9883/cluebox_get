@@ -1,3 +1,5 @@
+import 'package:clue_get/model/box_model.dart';
+import 'package:clue_get/model/location_model.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/screeen/item/edititem/edititem_binding.dart';
 import 'package:flutter/material.dart';
@@ -54,36 +56,83 @@ class EditItemScreen extends BaseView<EditItemController> {
                     SizedBox(
                       height: 13.h,
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 21.h),
-                              child: Image.asset('assets/image/edt_bg.png')),
-                          Container(
+                    controller.imgUrl != null
+                        ? Stack(
                             alignment: Alignment.center,
-                            width: 135.w,
-                            height: 38.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.w,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 21.h),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(14.r),
+                                  child: Image.network(
+                                    controller.imgUrl.toString(),
+                                    height: 194.h,
+                                    width: 372.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              "Change Image",
-                              style: robotoBold.copyWith(
-                                color: Colors.black,
-                                fontSize: 16.sp,
+                              InkWell(
+                                onTap: () {
+                                  controller.showPicker(context, 'profilePic');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 153.w,
+                                  height: 38.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 2.w,
+                                    ),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Text(
+                                    "Change Image",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
+                          )
+                        : Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 21.h),
+                                child: Image.asset('assets/image/check.png'),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  controller.showPicker(context, 'profilePic');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 153.w,
+                                  height: 38.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 2.w,
+                                    ),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Text(
+                                    "Add Item Image",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 16.h,
                     ),
@@ -94,6 +143,14 @@ class EditItemScreen extends BaseView<EditItemController> {
                           margin: EdgeInsets.only(right: 16.w),
                           child: LikeButton(
                             size: 30.h,
+                            isLiked: controller.isFavorite,
+                            onTap: (isLiked) {
+                              controller.isFavorite = !isLiked;
+                              controller.update();
+                              print(
+                                  '22222222222222222${controller.isFavorite}');
+                              return Future.value(controller.isFavorite);
+                            },
                             likeBuilder: (isTapped) {
                               return SvgPicture.asset(
                                 isTapped
@@ -123,6 +180,7 @@ class EditItemScreen extends BaseView<EditItemController> {
                           ),
                           TextField(
                             cursorColor: const Color(0xff5566fd),
+                            controller: controller.Nameitem,
                             style: robotoRegular.copyWith(
                               color: const Color(0xff111111),
                               fontSize: 14.sp,
@@ -130,9 +188,11 @@ class EditItemScreen extends BaseView<EditItemController> {
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.next,
                             decoration: const InputDecoration(
-                                focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xff5566fd)),
-                            )),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Color(0xff5566fd)),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 25.h,
@@ -146,6 +206,7 @@ class EditItemScreen extends BaseView<EditItemController> {
                           ),
                           TextFieldTags(
                             textfieldTagsController: controller.tagController,
+                            initialTags: controller.tags,
                             textSeparators: const [' ', ','],
                             letterCase: LetterCase.normal,
                             validator: (String tag) {
@@ -242,111 +303,20 @@ class EditItemScreen extends BaseView<EditItemController> {
                           SizedBox(
                             height: 25.h,
                           ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Box Number/Name",
-                                style: robotoBold.copyWith(
-                                  color: Colors.black,
-                                  fontSize: 18.sp,
-                                ),
-                              ),
                               InkWell(
                                 onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        // title: Text('Welcome'),
-                                        content: Text(
-                                          'Where are you putting your items?',
-                                          style: robotoRegular.copyWith(
-                                            color: Colors.black,
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'OK'),
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                                  // print(controller.allLocList?.length);
                                 },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 20.w,
-                                  width: 20.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: const Color(0x3f000000),
-                                        blurRadius: 16.r,
-                                        offset: const Offset(0, 0),
-                                      ),
-                                    ],
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xff4a00e0),
-                                        Color(0xff8e2de2)
-                                      ],
-                                    ),
+                                child: Text(
+                                  "Location",
+                                  style: robotoBold.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
                                   ),
-                                  child: Text(
-                                    '?',
-                                    textAlign: TextAlign.center,
-                                    style: robotoBold.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          DropdownButton(
-                            value: controller.dropdownvalue,
-                            elevation: 16,
-                            style: robotoRegular.copyWith(
-                              color: const Color(0xff111111),
-                              fontSize: 14.sp,
-                            ),
-                            isExpanded: true,
-                            underline: Container(
-                              height: 1.h,
-                              color: const Color(0xFF999999),
-                            ),
-                            hint: const Text('joh'),
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            items: controller.items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              controller.dropdownvalue = newValue!;
-                              controller.update();
-                            },
-                          ),
-                          SizedBox(
-                            height: 25.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Location",
-                                style: robotoBold.copyWith(
-                                  color: Colors.black,
-                                  fontSize: 18.sp,
                                 ),
                               ),
                               InkWell(
@@ -409,7 +379,7 @@ class EditItemScreen extends BaseView<EditItemController> {
                             ],
                           ),
                           DropdownButton(
-                            value: controller.dropdownvaluess,
+                            value: controller.locationvaluess,
                             elevation: 16,
                             isExpanded: true,
                             style: robotoRegular.copyWith(
@@ -420,19 +390,239 @@ class EditItemScreen extends BaseView<EditItemController> {
                               height: 1.h,
                               color: const Color(0xFF999999),
                             ),
-                            hint: const Text('joh'),
+                            hint: const Text('Select Location'),
                             icon: const Icon(Icons.keyboard_arrow_down),
-                            items: controller.itemsss.map((String itemsss) {
+                            items: controller.allLocList
+                                ?.map((LocationModel itemsss) {
                               return DropdownMenuItem(
                                 value: itemsss,
-                                child: Text(itemsss),
+                                child: Text(itemsss.name ?? ''),
                               );
                             }).toList(),
-                            onChanged: (String? newValue) {
-                              controller.dropdownvaluess = newValue!;
-                              controller.update();
+                            onChanged: (newValue) {
+                              controller.locationvaluess =
+                                  (newValue as LocationModel);
+                              print(
+                                  '----------------${controller.locationvaluess?.name}');
+                              if (newValue.name == 'Add Location') {
+                                controller.showLocation = true;
+                                controller.showBox = true;
+                                controller.hideBox = false;
+                                controller.update();
+                                print('>>>>>>${controller.locationvaluess}');
+                              } else {
+                                controller.showLocation = false;
+                                controller.showBox = false;
+                                // controller.boxvalue = null;
+                                // controller.LocationName.clear();
+                                // controller.BoxName.clear();
+                                // controller.getBoxLocWise();
+                                controller.update();
+                                print(controller.locationvaluess);
+                              }
                             },
                           ),
+
+                          ///ToDo Location TextField
+                          Visibility(
+                            visible: controller.showLocation,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Text(
+                                  "Location Name",
+                                  style: robotoBold.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                TextField(
+                                  cursorColor: const Color(0xff5566fd),
+                                  controller: controller.LocationName,
+                                  style: robotoRegular.copyWith(
+                                    color: const Color(0xff111111),
+                                    fontSize: 14.sp,
+                                  ),
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff5566fd)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25.h,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          Visibility(
+                            visible: controller.hideBox,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Box Number/Name",
+                                      style: robotoBold.copyWith(
+                                        color: Colors.black,
+                                        fontSize: 18.sp,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              // title: Text('Welcome'),
+                                              content: Text(
+                                                'Where are you putting your items?',
+                                                style: robotoRegular.copyWith(
+                                                  color: Colors.black,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'OK'),
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 20.w,
+                                        width: 20.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16.r),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color(0x3f000000),
+                                              blurRadius: 16.r,
+                                              offset: const Offset(0, 0),
+                                            ),
+                                          ],
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xff4a00e0),
+                                              Color(0xff8e2de2)
+                                            ],
+                                          ),
+                                        ),
+                                        child: Text(
+                                          '?',
+                                          textAlign: TextAlign.center,
+                                          style: robotoBold.copyWith(
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+
+                                ///TODo AddValue
+                                DropdownButton(
+                                  value: controller.boxvalue,
+                                  elevation: 16,
+                                  isExpanded: true,
+                                  style: robotoRegular.copyWith(
+                                    color: const Color(0xff111111),
+                                    fontSize: 14.sp,
+                                  ),
+                                  underline: Container(
+                                    height: 1.h,
+                                    color: const Color(0xFF999999),
+                                  ),
+                                  hint: const Text('Select Box'),
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: controller.allBoxList
+                                      ?.map((BoxModel items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items.name ?? ''),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    controller.boxvalue =
+                                        (newValue as BoxModel);
+                                    if (newValue.name == 'Add Box') {
+                                      controller.showBox = true;
+                                      controller.update();
+                                      print('>>>>>>${controller.boxvalue}');
+                                    } else {
+                                      controller.showBox = false;
+                                      controller.update();
+                                      print(controller.boxvalue);
+                                    }
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          ///TODo Box Name TextField
+
+                          Visibility(
+                            visible: controller.showBox,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Box Name",
+                                  style: robotoBold.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                TextField(
+                                  cursorColor: const Color(0xff5566fd),
+                                  controller: controller.BoxName,
+                                  style: robotoRegular.copyWith(
+                                    color: const Color(0xff111111),
+                                    fontSize: 14.sp,
+                                  ),
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff5566fd)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25.h,
+                                ),
+                              ],
+                            ),
+                          ),
+
                           SizedBox(
                             height: 25.h,
                           ),
@@ -459,13 +649,16 @@ class EditItemScreen extends BaseView<EditItemController> {
                                   ),
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
-                                      focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff5566fd)),
-                                  )),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff5566fd)),
+                                    ),
+                                  ),
                                   controller: controller.counter,
                                   keyboardType: TextInputType.number,
-                                  onChanged: (String) {
+                                  onChanged: (value) {
+                                    // controller.counter.text = value;
+                                    // controller.update();
                                     print(controller.counter.text);
                                   },
                                 ),
@@ -507,9 +700,9 @@ class EditItemScreen extends BaseView<EditItemController> {
                                   print("Setting state");
                                   currentValue--;
                                   controller.counter.text =
-                                      (currentValue > 0 ? currentValue : 0)
+                                      (currentValue > 1 ? currentValue : 1)
                                           .toString();
-                                  controller..update();
+                                  controller.update();
                                 },
                                 child: Container(
                                   width: 30.w,
@@ -534,34 +727,39 @@ class EditItemScreen extends BaseView<EditItemController> {
                           SizedBox(
                             height: 40.h,
                           ),
-                          Center(
-                            child: Container(
-                              width: 114.w,
-                              height: 48.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0x3f000000),
-                                    blurRadius: 16.r,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xff4a00e0),
-                                    Color(0xff8e2de2)
+                          InkWell(
+                            onTap: () async {
+                              //await controller.submit(context);
+                            },
+                            child: Center(
+                              child: Container(
+                                width: 110.w,
+                                height: 48.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.r),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0x3f000000),
+                                      blurRadius: 16.r,
+                                      offset: const Offset(0, 0),
+                                    ),
                                   ],
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xff4a00e0),
+                                      Color(0xff8e2de2)
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Save",
-                                  style: robotoBold.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
+                                child: Center(
+                                  child: Text(
+                                    "Save",
+                                    style: robotoBold.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 20.sp,
+                                    ),
                                   ),
                                 ),
                               ),
