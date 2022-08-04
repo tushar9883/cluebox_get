@@ -8,6 +8,7 @@ import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/res/color.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
+import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:clue_get/services/storage_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -264,13 +265,13 @@ class EditItemController extends BaseController {
             Center(
               child: InkWell(
                 onTap: () {
-                  // Get.until((route) => Get.currentRoute == RouterName.home);
-                  // WidgetsBinding.instance.addPostFrameCallback((_) {
-                  //   var controll = Get.find<HomeController>();
-                  //   controll.getData(userid);
-                  //   controll.getAllTags(userid);
-                  //   controll.getUserData(userid);
-                  // });
+                  Get.until((route) => Get.currentRoute == RouterName.home);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    var controll = Get.find<HomeController>();
+                    controll.getData(userid);
+                    controll.getAllTags(userid);
+                    controll.getUserData(userid);
+                  });
                 },
                 child: Container(
                     alignment: Alignment.center,
