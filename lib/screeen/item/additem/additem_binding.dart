@@ -44,20 +44,21 @@ class AddItemController extends BaseController {
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
   List<TagModel>? allTagsList;
+
   File? profileImage;
   final ImagePicker picker = ImagePicker();
   var imgUrl;
   var userid;
   List<TagModel>? tagList;
 
-  // datacheck() {
-  //   var datafind = Get.arguments['favorite'];
-  //   if (datafind == true) {
-  //     isFavorite = true;
-  //   } else {
-  //     isFavorite = false;
-  //   }
-  // }
+  getArgdata() async {
+    if (Get.arguments != null) {
+      isFavorite = Get.arguments['favorite'];
+      print("Do It");
+      print("dataaaaaaaaaaaa${Get.arguments}");
+      update();
+    }
+  }
 
   @override
   void onInit() {
@@ -67,6 +68,7 @@ class AddItemController extends BaseController {
     getAllTags(userid);
     counter.text = "1";
     print(">>>>>>>> favorite <<<<<<<<${isFavorite}");
+    getArgdata();
     // getAllTagsList();
     update();
   }
@@ -118,9 +120,6 @@ class AddItemController extends BaseController {
     showLoadingDialog();
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
-    // final taggs = tagController.getTags;
-    // var stringList = taggs?.join(", ");
-
     if (Nameitem.text.isEmpty) {
       hideDialog();
       toastbar('Item name is required');

@@ -227,13 +227,12 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                     right: 21.h,
                                                     top: 15.h),
                                                 padding:
-                                                const EdgeInsets.all(
-                                                    8),
+                                                    const EdgeInsets.all(8),
                                                 child: InkWell(
                                                   onTap: () {
                                                     print('${loc?.uid}');
-                                                    Get.toNamed(RouterName
-                                                        .edititem);
+                                                    Get.toNamed(
+                                                        RouterName.edititem);
                                                   },
                                                   child: Column(
                                                     children: [
@@ -241,46 +240,55 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                         children: [
                                                           Column(
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               Container(
                                                                 decoration:
-                                                                BoxDecoration(
+                                                                    BoxDecoration(
                                                                   boxShadow: [
                                                                     BoxShadow(
-                                                                      color:
-                                                                      const Color(0x3f000000),
+                                                                      color: const Color(
+                                                                          0x3f000000),
                                                                       blurRadius:
-                                                                      10.r,
+                                                                          10.r,
                                                                       offset:
-                                                                      const Offset(0, 0),
+                                                                          const Offset(
+                                                                              0,
+                                                                              0),
                                                                     ),
                                                                   ],
                                                                 ),
                                                                 child:
-                                                                ClipRRect(
+                                                                    ClipRRect(
                                                                   borderRadius:
-                                                                  BorderRadius.circular(12.r),
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12.r),
                                                                   child: Image
                                                                       .network(
                                                                     "${loc?.image}",
                                                                     height:
-                                                                    180.h,
+                                                                        180.h,
                                                                     width:
-                                                                    110.w,
+                                                                        110.w,
                                                                     fit: BoxFit
                                                                         .fill,
-                                                                    errorBuilder: (context,
-                                                                        error,
-                                                                        stackTrace) {
-                                                                      return Image.asset('assets/image/ser_1.png',
-                                                                          height: 180.h,
-                                                                          width: 110.w,
-                                                                          fit: BoxFit.cover);
+                                                                    errorBuilder:
+                                                                        (context,
+                                                                            error,
+                                                                            stackTrace) {
+                                                                      return Image.asset(
+                                                                          'assets/image/ser_1.png',
+                                                                          height: 180
+                                                                              .h,
+                                                                          width: 110
+                                                                              .w,
+                                                                          fit: BoxFit
+                                                                              .cover);
                                                                     },
                                                                   ),
                                                                 ),
@@ -293,23 +301,24 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                           Expanded(
                                                             child: Column(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                                  MainAxisAlignment
+                                                                      .start,
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 Text(
                                                                   "${loc?.itemName}",
                                                                   overflow:
-                                                                  TextOverflow.clip,
-                                                                  style: robotoBold.copyWith(
-                                                                      fontSize:
-                                                                      18.sp),
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                  style: robotoBold
+                                                                      .copyWith(
+                                                                          fontSize:
+                                                                              18.sp),
                                                                 ),
                                                                 SizedBox(
-                                                                  height:
-                                                                  20.h,
+                                                                  height: 20.h,
                                                                 ),
                                                                 Row(
                                                                   children: [
@@ -317,27 +326,29 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                                         .asset(
                                                                       'assets/svg/box_1.svg',
                                                                       height:
-                                                                      12.h,
+                                                                          12.h,
                                                                     ),
                                                                     SizedBox(
                                                                       width:
-                                                                      5.w,
+                                                                          5.w,
                                                                     ),
                                                                     Expanded(
                                                                       child:
-                                                                      Text(
+                                                                          Text(
                                                                         "BOX NUMBER/NAME",
-                                                                        style: robotoMedium.copyWith(
-                                                                          color: const Color(0xff7d7d7d),
-                                                                          fontSize: 8.sp,
+                                                                        style: robotoMedium
+                                                                            .copyWith(
+                                                                          color:
+                                                                              const Color(0xff7d7d7d),
+                                                                          fontSize:
+                                                                              8.sp,
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                                 SizedBox(
-                                                                  height:
-                                                                  8.h,
+                                                                  height: 8.h,
                                                                 ),
                                                                 Row(
                                                                   children: [
@@ -345,57 +356,66 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                                         .asset(
                                                                       'assets/svg/box_1.svg',
                                                                       height:
-                                                                      12.h,
-                                                                      color:
-                                                                      Colors.white,
+                                                                          12.h,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                     SizedBox(
                                                                       width:
-                                                                      5.w,
+                                                                          5.w,
                                                                     ),
                                                                     Expanded(
                                                                       child:
-                                                                      Text(
+                                                                          Text(
                                                                         "${loc?.boxName}",
-                                                                        maxLines: 1,
-                                                                        overflow: TextOverflow.clip,
-                                                                        style: robotoBold.copyWith(
-                                                                          fontSize: 14.sp,
-                                                                          color: const Color(0xff4a00e0),
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow.clip,
+                                                                        style: robotoBold
+                                                                            .copyWith(
+                                                                          fontSize:
+                                                                              14.sp,
+                                                                          color:
+                                                                              const Color(0xff4a00e0),
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                                 SizedBox(
-                                                                  height:
-                                                                  20.h,
+                                                                  height: 20.h,
                                                                 ),
                                                                 Row(
                                                                   children: [
                                                                     Container(
-                                                                        margin: EdgeInsets.only(left: 3.w),
-                                                                        child: SvgPicture.asset(
+                                                                        margin: EdgeInsets.only(
+                                                                            left: 3
+                                                                                .w),
+                                                                        child: SvgPicture
+                                                                            .asset(
                                                                           'assets/svg/loc.svg',
-                                                                          height: 12.h,
+                                                                          height:
+                                                                              12.h,
                                                                         )),
                                                                     SizedBox(
                                                                       width:
-                                                                      7.w,
+                                                                          7.w,
                                                                     ),
                                                                     Text(
                                                                       "LOCATION",
-                                                                      style:
-                                                                      robotoMedium.copyWith(
-                                                                        color: const Color(0xff7d7d7d),
-                                                                        fontSize: 8.sp,
+                                                                      style: robotoMedium
+                                                                          .copyWith(
+                                                                        color: const Color(
+                                                                            0xff7d7d7d),
+                                                                        fontSize:
+                                                                            8.sp,
                                                                       ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                                 SizedBox(
-                                                                  height:
-                                                                  8.h,
+                                                                  height: 8.h,
                                                                 ),
                                                                 Row(
                                                                   children: [
@@ -403,23 +423,28 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                                         .asset(
                                                                       'assets/svg/box_1.svg',
                                                                       height:
-                                                                      12.h,
-                                                                      color:
-                                                                      Colors.white,
+                                                                          12.h,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                     SizedBox(
                                                                       width:
-                                                                      5.w,
+                                                                          5.w,
                                                                     ),
                                                                     Expanded(
                                                                       child:
-                                                                      Text(
+                                                                          Text(
                                                                         "${loc?.locationName}",
-                                                                        maxLines: 1,
-                                                                        overflow: TextOverflow.clip,
-                                                                        style: robotoBold.copyWith(
-                                                                          fontSize: 14.sp,
-                                                                          color: const Color(0xff4a00e0),
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow.clip,
+                                                                        style: robotoBold
+                                                                            .copyWith(
+                                                                          fontSize:
+                                                                              14.sp,
+                                                                          color:
+                                                                              const Color(0xff4a00e0),
                                                                         ),
                                                                       ),
                                                                     ),
@@ -435,30 +460,29 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                       ),
                                                       Row(
                                                         mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Text(
                                                             "Item Added on: ${outputDate}",
                                                             overflow:
-                                                            TextOverflow
-                                                                .ellipsis,
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: robotoMedium
                                                                 .copyWith(
-                                                              fontSize:
-                                                              9.sp,
+                                                              fontSize: 9.sp,
                                                               color: const Color(
                                                                   0xff808080),
                                                             ),
                                                           ),
                                                           LikeButton(
                                                             size: 20.h,
-                                                            isLiked: loc
-                                                                ?.favorite,
+                                                            isLiked:
+                                                                loc?.favorite,
                                                             onTap:
                                                                 (isLiked) async {
                                                               loc?.favorite =
-                                                              !isLiked;
+                                                                  !isLiked;
                                                               controller
                                                                   .update();
                                                               print(
@@ -469,7 +493,8 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                                     .showLoadingDialog();
                                                                 await DbHelp().updateFavorite(
                                                                     AddItemModel(
-                                                                        favorite: loc?.favorite),
+                                                                        favorite:
+                                                                            loc?.favorite),
                                                                     id);
                                                                 print(
                                                                     'Value id true $loc?.favorite');
@@ -488,18 +513,16 @@ class FavoriteScreen extends BaseView<FavoriteController> {
 
                                                               return Future
                                                                   .value(loc
-                                                                  ?.favorite);
+                                                                      ?.favorite);
                                                             },
                                                             likeBuilder:
                                                                 (isTapped) {
                                                               return SvgPicture
                                                                   .asset(
-                                                                isTapped ==
-                                                                    true
+                                                                isTapped == true
                                                                     ? 'assets/svg/likes_fill.svg'
                                                                     : 'assets/svg/like.svg',
-                                                                height:
-                                                                18.h,
+                                                                height: 18.h,
                                                               );
                                                             },
                                                           ),
@@ -509,9 +532,8 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                         height: 16.h,
                                                       ),
                                                       Container(
-                                                        width:
-                                                        MediaQuery.of(
-                                                            context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
                                                         height: 2,
@@ -539,10 +561,10 @@ class FavoriteScreen extends BaseView<FavoriteController> {
             ),
       floatingActionButton: InkWell(
         onTap: () {
-          // Get.offNamed(
-          //   RouterName.additem,
-          //   arguments: {"favorite": true},
-          // );
+          Get.offNamed(
+            RouterName.additem,
+            arguments: {"favorite": true},
+          );
         },
         child: Container(
           width: 60.w,

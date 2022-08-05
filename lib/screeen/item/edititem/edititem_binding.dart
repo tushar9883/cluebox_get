@@ -126,7 +126,7 @@ class EditItemController extends BaseController {
         if (tagData != null) {
           //Tag is already there in db
           tagIds.add(tagData.uid);
-          tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
+          // tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
           await DbHelp().addtag(tagData);
           print("Present___________");
         } else {
