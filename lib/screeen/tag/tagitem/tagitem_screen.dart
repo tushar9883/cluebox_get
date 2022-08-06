@@ -376,13 +376,17 @@ class TagItemScreen extends BaseView<TagItemController> {
                                   Expanded(
                                     child: TextField(
                                       cursorColor: const Color(0xff5566fd),
+                                      controller: controller.search,
                                       style: robotoRegular.copyWith(
                                         color: const Color(0xff111111),
                                         fontSize: 14.sp,
                                       ),
+                                      onSubmitted: (value) {
+                                        controller.searching();
+                                      },
                                       autofocus: false,
                                       keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.go,
+                                      textInputAction: TextInputAction.search,
                                       decoration: InputDecoration(
                                         hintText:
                                             'Search your items in “alley” here.',
@@ -391,6 +395,22 @@ class TagItemScreen extends BaseView<TagItemController> {
                                           fontSize: 12.sp,
                                         ),
                                         border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (controller.search.text.isEmpty) {
+                                        Get.offNamed(RouterName.home);
+                                      } else {
+                                        controller.search.clear();
+                                      }
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(right: 10.w),
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Color(0xff5a5a5a),
                                       ),
                                     ),
                                   ),

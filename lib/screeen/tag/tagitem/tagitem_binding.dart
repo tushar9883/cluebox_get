@@ -2,6 +2,7 @@ import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../db/db_helper.dart';
 import '../../../model/additem_model.dart';
@@ -16,6 +17,7 @@ class TagItemBinding implements Bindings {
 class TagItemController extends BaseController {
   TagModel? tagModel;
   List<AddItemModel>? itemList;
+  final search = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
   bool isLoading = false;
 
@@ -33,6 +35,17 @@ class TagItemController extends BaseController {
     var allItems = await DbHelp().getItemsFromTag(tagModel?.uid ?? '');
     itemList = allItems;
     isLoading = false;
+    update();
+  }
+
+  searching() {
+    final suggestion = itemList?.where((element) {
+      final title = element.itemName?.toLowerCase();
+      final inpute = search.text.toLowerCase();
+
+      return title!.contains(inpute);
+    }).toList();
+    itemList = suggestion;
     update();
   }
 
