@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/style.dart';
+import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/search/search_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -101,7 +102,11 @@ class SearchScreen extends BaseView<SearchController> {
                   ),
                   InkWell(
                     onTap: () {
-                      controller.search.clear();
+                      if (controller.search.text.isEmpty) {
+                        Get.offNamed(RouterName.home);
+                      } else {
+                        controller.search.clear();
+                      }
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 10.w),
