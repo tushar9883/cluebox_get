@@ -31,6 +31,19 @@ class TagController extends BaseController {
     update();
   }
 
+  delete() async {
+    var tagIds = [];
+    // TagModel? tagData =
+    //     await DbHelp().getTagData('${tag.toString().toLowerCase()}_$userid');
+    // if (tagData != null) {
+    //   //Tag is already there in db
+    //   tagIds.add(tagData.uid);
+    //   tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
+    //   await DbHelp().addtag(tagData);
+    //   print("Present___________");
+    // }
+  }
+
   searching() {
     final suggestion = tagList?.where((element) {
       final title = element.name?.toLowerCase();

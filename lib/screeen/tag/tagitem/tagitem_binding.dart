@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../../../db/db_helper.dart';
 import '../../../model/additem_model.dart';
+import '../../../router/router_name.dart';
+import '../../home/home_binding.dart';
+import '../tag/tag_binding.dart';
 
 class TagItemBinding implements Bindings {
   @override
@@ -57,6 +60,25 @@ class TagItemController extends BaseController {
       userData.first.itemCount = (userData.first.itemCount ?? 0) - 1;
       await DbHelp().udpateUserData(userData.first, userData.first.uid);
       print("User itemCount updated___________");
+
+      TagModel? tagData = await DbHelp().getTagData('${tagModel?.uid}');
+      var tagIds = [];
+      if (tagData != null) {
+        tagIds.add(tagData.uid);
+        tagData.tagItemCount = (tagData.tagItemCount ?? 0) - 1;
+        await DbHelp().addtag(tagData);
+        print("Removed____tagItemCount_________");
+      }
+
+      // Get.until((route) => Get.currentRoute == RouterName.tag);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        var controlH = Get.find<HomeController>();
+        controlH.getData(userid!);
+        controlH.getAllTags(userid!);
+        controlH.getUserData(userid!);
+        var controll = Get.find<TagController>();
+        controll.getAllTags(userid!);
+      });
     }
   }
 }
