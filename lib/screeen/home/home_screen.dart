@@ -157,10 +157,8 @@ class HomeScreen extends BaseView<HomeController> {
                                                             25.r),
                                                     color: Colors.black,
                                                   ),
-                                                  // margin: EdgeInsets.symmetric(horizontal: 4.w),
                                                   padding: EdgeInsets.symmetric(
                                                     horizontal: 12.w,
-                                                    // vertical: 8.h,
                                                   ),
                                                   child: Center(
                                                     child: Text(
@@ -173,7 +171,6 @@ class HomeScreen extends BaseView<HomeController> {
                                                           robotoBold.copyWith(
                                                         color: Colors.white,
                                                         fontSize: 13.sp,
-                                                        // fontWeight: FontWeight.w700,
                                                       ),
                                                     ),
                                                   ),
