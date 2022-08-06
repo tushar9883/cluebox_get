@@ -14,26 +14,6 @@ class SearchBinding implements Bindings {
 class SearchController extends BaseController {
   final search = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
-  List<String> items = <String>[
-    "Electronics",
-    "Stationaries",
-    "Drinks",
-    "Medicines",
-  ];
-  final List<String> content = [
-    'iPhone Cover',
-    'Plastic Whistle',
-    'Football Air Pump',
-    'Torch',
-    'Lighter',
-    'Locker Key',
-    'Red Flower Vase',
-    'Dice',
-    'Smoke Pump ',
-    'Spider Man T-Shirt',
-    'Silver Specs'
-  ];
-  late List<String> data;
   List<AddItemModel>? searchModel;
 
   getSeachResult() async {

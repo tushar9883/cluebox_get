@@ -33,6 +33,8 @@ class AllItemController extends BaseController {
     update();
   }
 
+  search() {}
+
   // favorritedatatrue(String? id) async {
   //   showLoadingDialog();
   //   if (isFavoritetrue == false) {
