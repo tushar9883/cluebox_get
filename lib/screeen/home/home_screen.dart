@@ -133,26 +133,36 @@ class HomeScreen extends BaseView<HomeController> {
                                                 : controller.tagList?.length,
                                             itemBuilder:
                                                 (BuildContext context, index) {
-                                              return Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 20.w),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25.r),
-                                                  color: Colors.black,
-                                                ),
-                                                // margin: EdgeInsets.symmetric(horizontal: 4.w),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 12.w,
-                                                  // vertical: 8.h,
-                                                ),
-                                                child: Center(
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      print(
-                                                          'Item:- ${controller.tagList?[index]}');
-                                                    },
+                                              return InkWell(
+                                                onTap: () {
+                                                  print("101010101010");
+                                                  var titlename = controller
+                                                      .tagList?[index].name;
+                                                  print(titlename);
+                                                  Get.toNamed(
+                                                    RouterName.tagitem,
+                                                    arguments: controller
+                                                        .tagList?[index]
+                                                        .toJson(),
+                                                  );
+                                                  print(
+                                                      'Item:- ${controller.tagList?[index]}');
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      left: 20.w),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.r),
+                                                    color: Colors.black,
+                                                  ),
+                                                  // margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 12.w,
+                                                    // vertical: 8.h,
+                                                  ),
+                                                  child: Center(
                                                     child: Text(
                                                       controller.tagList?[index]
                                                               .name ??
