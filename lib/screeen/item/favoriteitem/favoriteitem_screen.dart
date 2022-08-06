@@ -94,6 +94,11 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 value: 0,
+                                onTap: () {
+                                  controller.favoriteist?.sort((a, b) =>
+                                      a.itemName!.compareTo(b.itemName!));
+                                  controller.update();
+                                },
                                 child: Center(
                                   child: Text('A to Z',
                                       style: robotoBold.copyWith(
@@ -104,6 +109,11 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                               ),
                               PopupMenuItem(
                                 value: 1,
+                                onTap: () {
+                                  controller.favoriteist?.sort(
+                                      (a, b) => a.date!.compareTo(b.date!));
+                                  controller.update();
+                                },
                                 child: Center(
                                   child: Text('Date Added',
                                       style: robotoBold.copyWith(

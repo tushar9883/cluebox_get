@@ -21,9 +21,6 @@ class AllItemController extends BaseController {
   bool isFavoritetrue = true;
   List<AddItemModel>? itemlist;
   AddItemModel? item;
-
-  final number = ['one', 'four', 'two'];
-
   BoxModel? myBox;
 
   Future<void> getData() async {
@@ -45,36 +42,6 @@ class AllItemController extends BaseController {
     update();
   }
 
-  // favorritedatatrue(String? id) async {
-  //   showLoadingDialog();
-  //   if (isFavoritetrue == false) {
-  //     await DbHelp().updateFavorite(
-  //         AddItemModel(
-  //           favorite: isFavoritetrue,
-  //         ),
-  //         id);
-  //     print('Value id true $isFavoritetrue');
-  //     update();
-  //     getData();
-  //     hideDialog();
-  //   } else {
-  //     print('favorite $isFavoritetrue');
-  //     hideDialog();
-  //   }
-  // }
-
-  sortAscending() {
-    final numbers = <String>['two', 'three', 'four'];
-    numbers.sort((a, b) => a.length.compareTo(b.length));
-    print(numbers);
-    // itemlist?.clear();
-    // getData();
-    // itemlist?.sort();
-    // var data = number.sort((a, b) => a.length.compareTo(b.length));
-    // // print(data);
-    // update();
-  }
-
   deleteitem() async {
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
     TagModel? tagData = await DbHelp().getTagData(userid!);
@@ -84,12 +51,6 @@ class AllItemController extends BaseController {
       userData.first.itemCount = (userData.first.itemCount ?? 0) - 1;
       await DbHelp().udpateUserData(userData.first, userData.first.uid);
       print("User itemCount updated___________");
-      // if (tagData != null) {
-      //   var id = tagData.uid;
-      //   tagData.tagItemCount = (tagData.tagItemCount ?? 0) - 1;
-      //   await DbHelp().updateTagItemcount(tagData, id!);
-      //   print("Tag itemCount updated___________");
-      // }
     }
   }
 

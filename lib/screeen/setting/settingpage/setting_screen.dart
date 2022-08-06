@@ -396,7 +396,8 @@ class SettingScreen extends BaseView<SettingController> {
                           print("firebase logout");
                           controller.update();
                           controller.hideDialog();
-                          Get.toNamed(RouterName.login);
+
+                          await Get.offAllNamed(RouterName.login);
                           // await Get.offAllNamed(RouterName.login); // badha page ne badh krva
                         },
                         child: Column(

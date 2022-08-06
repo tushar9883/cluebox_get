@@ -92,6 +92,12 @@ class MyLocation extends BaseView<MyLocationController> {
                                   itemBuilder: (context) => [
                                     PopupMenuItem(
                                       value: 0,
+                                      onTap: () {
+                                        controller.myLocationList?.sort(
+                                            (a, b) =>
+                                                a.name!.compareTo(b.name!));
+                                        controller.update();
+                                      },
                                       child: Center(
                                         child: Text('A to Z',
                                             style: robotoBold.copyWith(
@@ -102,6 +108,12 @@ class MyLocation extends BaseView<MyLocationController> {
                                     ),
                                     PopupMenuItem(
                                       value: 1,
+                                      onTap: () {
+                                        controller.myLocationList?.sort(
+                                            (a, b) =>
+                                                a.date!.compareTo(b.date!));
+                                        controller.update();
+                                      },
                                       child: Center(
                                         child: Text('Date Added',
                                             style: robotoBold.copyWith(

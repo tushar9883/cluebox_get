@@ -71,14 +71,9 @@ class AllItemScreen extends BaseView<AllItemController> {
                     PopupMenuItem(
                       value: 0,
                       onTap: () {
-                        // controller.itemlist?.first.itemName?.sort();
-                        Get.back();
-                        // controller.sortAscending();
-                        // WidgetsBinding.instance.addPostFrameCallback((_) {
-                        //   var controll = Get.find<AddItemController>();
-                        //   controll.getAllLoc();
-                        // });
-                        // controller.itemlist?.sort();
+                        controller.itemlist?.sort(
+                            (a, b) => a.itemName!.compareTo(b.itemName!));
+                        controller.update();
                       },
                       child: Center(
                         child: Text('A to Z',
@@ -90,6 +85,11 @@ class AllItemScreen extends BaseView<AllItemController> {
                     ),
                     PopupMenuItem(
                       value: 1,
+                      onTap: () {
+                        controller.itemlist
+                            ?.sort((a, b) => a.date!.compareTo(b.date!));
+                        controller.update();
+                      },
                       child: Center(
                         child: Text('Date Added',
                             style: robotoBold.copyWith(
@@ -182,6 +182,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
+                            // reverse: controller.oder,
                             itemCount: controller.itemlist?.length ?? 0,
                             itemBuilder: (BuildContext context, index) {
                               var loc = controller.itemlist?[index];
@@ -383,20 +384,28 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             12.r),
-                                                    child: Image.network(
-                                                      "${loc?.image}",
-                                                      height: 180.h,
-                                                      width: 110.w,
-                                                      fit: BoxFit.fill,
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        return Image.asset(
+                                                    child: loc?.image == null
+                                                        ? Image.asset(
                                                             'assets/image/ser_1.png',
                                                             height: 180.h,
                                                             width: 110.w,
-                                                            fit: BoxFit.cover);
-                                                      },
-                                                    ),
+                                                            fit: BoxFit.cover)
+                                                        : Image.network(
+                                                            "${loc?.image}",
+                                                            height: 180.h,
+                                                            width: 110.w,
+                                                            fit: BoxFit.fill,
+                                                            errorBuilder:
+                                                                (context, error,
+                                                                    stackTrace) {
+                                                              return Image.asset(
+                                                                  'assets/image/ser_1.png',
+                                                                  height: 180.h,
+                                                                  width: 110.w,
+                                                                  fit: BoxFit
+                                                                      .cover);
+                                                            },
+                                                          ),
                                                   ),
                                                 ),
                                               ],
