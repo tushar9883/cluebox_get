@@ -232,7 +232,11 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                   onTap: () {
                                                     print('${loc?.uid}');
                                                     Get.toNamed(
-                                                        RouterName.edititem);
+                                                      RouterName.edititem,
+                                                      arguments: controller
+                                                          .favoriteist?[index]
+                                                          .toJson(),
+                                                    );
                                                   },
                                                   child: Column(
                                                     children: [
