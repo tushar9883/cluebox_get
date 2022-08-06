@@ -17,6 +17,7 @@ class TagBinding implements Bindings {
 }
 
 class TagController extends BaseController {
+  final search = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
   List<TagModel>? tagList;
   bool isLoading = false;
@@ -27,6 +28,17 @@ class TagController extends BaseController {
     tagList?.clear();
     tagList = allTags;
     isLoading = false;
+    update();
+  }
+
+  searching() {
+    final suggestion = tagList?.where((element) {
+      final title = element.name?.toLowerCase();
+      final inpute = search.text.toLowerCase();
+
+      return title!.contains(inpute);
+    }).toList();
+    tagList = suggestion;
     update();
   }
 
