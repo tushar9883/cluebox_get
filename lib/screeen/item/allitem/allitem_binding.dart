@@ -17,6 +17,7 @@ class AllItemBinding implements Bindings {
 
 class AllItemController extends BaseController {
   var userid = FirebaseAuth.instance.currentUser?.uid;
+  final search = TextEditingController();
   bool isFavoritetrue = true;
   List<AddItemModel>? itemlist;
   AddItemModel? item;
@@ -33,7 +34,16 @@ class AllItemController extends BaseController {
     update();
   }
 
-  search() {}
+  searching() {
+    final suggestion = itemlist?.where((element) {
+      final title = element.itemName?.toLowerCase();
+      final inpute = search.text.toLowerCase();
+
+      return title!.contains(inpute);
+    }).toList();
+    itemlist = suggestion;
+    update();
+  }
 
   // favorritedatatrue(String? id) async {
   //   showLoadingDialog();
