@@ -76,6 +76,26 @@ class DbHelp {
     return res;
   }
 
+  Future<List<AddItemModel>> getsearch(String queryText, String uid) async {
+    List<AddItemModel> res = await additemdb.getQueryList(
+      args: [
+        QueryArgsV2(
+          "item_name",
+          isGreaterThanOrEqualTo: queryText,
+        ),
+        QueryArgsV2(
+          "item_name",
+          isLessThan: "${queryText}z",
+        ),
+        QueryArgsV2(
+          "userid",
+          isEqualTo: uid,
+        ),
+      ],
+    );
+    return res;
+  }
+
   Future<List<AddItemModel>> getAllItemList(String uids,
       {String? boxId}) async {
     var args = [
