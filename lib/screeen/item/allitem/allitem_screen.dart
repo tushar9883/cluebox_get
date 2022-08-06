@@ -170,15 +170,16 @@ class AllItemScreen extends BaseView<AllItemController> {
             SizedBox(
               height: 14.h,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    controller.itemlist != null
-                        ? ListView.builder(
+            controller.itemlist != null &&
+                    controller.itemlist?.isNotEmpty == true
+                ? Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: controller.itemlist?.length ?? 0,
@@ -612,15 +613,37 @@ class AllItemScreen extends BaseView<AllItemController> {
                                 ),
                               );
                             },
-                          )
-                        : const SizedBox.shrink(),
-                    SizedBox(
-                      height: 8.h,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/image/Search.png',
+                            height: 92.h,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Text(
+                            'Add your favorite items here.',
+                            style: robotoRegular.copyWith(
+                              color: const Color(0xffa8a8a8),
+                              fontSize: 10.sp,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
