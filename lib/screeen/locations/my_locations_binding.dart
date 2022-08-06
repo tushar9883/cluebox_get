@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/model/location_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../db/db_helper.dart';
@@ -15,6 +16,7 @@ class MyLocationBinding implements Bindings {
 }
 
 class MyLocationController extends BaseController {
+  final search = TextEditingController();
   // var jsonResult;
   List<LocationModel>? myLocationList;
   bool isLoading = false;
@@ -32,6 +34,17 @@ class MyLocationController extends BaseController {
     myLocationList?.clear();
     myLocationList = allLocations;
     isLoading = false;
+    update();
+  }
+
+  searching() {
+    final suggestion = myLocationList?.where((element) {
+      final title = element.name?.toLowerCase();
+      final inpute = search.text.toLowerCase();
+
+      return title!.contains(inpute);
+    }).toList();
+    myLocationList = suggestion;
     update();
   }
 
