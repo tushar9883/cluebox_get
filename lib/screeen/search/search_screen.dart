@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:clue_get/db/db_helper.dart';
+import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/screeen/search/search_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:simple_tags/simple_tags.dart';
 import '../../base/base_view_view_model.dart';
@@ -30,6 +33,16 @@ class SearchScreen extends BaseView<SearchController> {
                   child: Container(
                       margin: EdgeInsets.only(left: 21.w),
                       child: SvgPicture.asset('assets/svg/back.svg')),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 21.w),
+                  child: Text(
+                    "Search Item",
+                    style: robotoBold.copyWith(
+                      color: Colors.black,
+                      fontSize: 22.sp,
+                    ),
+                  ),
                 ),
                 SvgPicture.asset(
                   'assets/svg/layout.svg',
@@ -194,281 +207,271 @@ class SearchScreen extends BaseView<SearchController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 25.h,
-                              ),
-                              SizedBox(
-                                height: 36.h,
-                                child: ListView.builder(
-                                  shrinkWrap: false,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: controller.items.length,
-                                  itemBuilder: (BuildContext context, index) {
-                                    return Container(
-                                      margin: EdgeInsets.only(left: 21.w),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(25.r),
-                                        color: Colors.black,
-                                      ),
-                                      // margin: EdgeInsets.symmetric(horizontal: 4.w),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w,
-                                        vertical: 8.h,
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          print(
-                                              'Item:- ${controller.items[index]}');
-                                        },
-                                        child: Text(
-                                          controller.items[index],
-                                          textAlign: TextAlign.center,
-                                          style: robotoBold.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 13.sp,
-                                            // fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: 25.h,
-                              ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: controller.searchModel?.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  var loc = controller.searchModel?[index];
-                                  return Container(
-                                    margin: EdgeInsets.only(
-                                        left: 21.h, right: 21.h, top: 15.h),
-                                    padding: const EdgeInsets.all(8),
-                                    child: Column(
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.searchModel?.length,
+                            itemBuilder: (BuildContext context, index) {
+                              var loc = controller.searchModel?[index];
+                              var id = loc?.uid;
+                              var dates = loc?.date;
+                              DateTime parseDate =
+                                  DateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                                      .parse(dates!);
+                              var inputDate =
+                                  DateTime.parse(parseDate.toString());
+                              var outputFormat = DateFormat('dd MMM yyyy');
+                              var outputDate = outputFormat.format(inputDate);
+                              print(outputDate);
+                              return Container(
+                                margin: EdgeInsets.only(
+                                    left: 21.h, right: 21.h, top: 15.h),
+                                padding: const EdgeInsets.all(8),
+                                child: Column(
+                                  children: [
+                                    Row(
                                       children: [
-                                        Row(
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: const Color(
-                                                            0x3f000000),
-                                                        blurRadius: 10.r,
-                                                        offset:
-                                                            const Offset(0, 0),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.r),
-                                                    child: Image.network(
-                                                      "${loc?.image}",
-                                                      height: 180.h,
-                                                      width: 110.w,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        return Image.asset(
-                                                            'assets/image/ser_1.png',
-                                                            height: 180.h,
-                                                            width: 110.w,
-                                                            fit: BoxFit.cover);
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              width: 15.w,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "${loc?.itemName}",
-                                                    overflow: TextOverflow.clip,
-                                                    style: robotoBold.copyWith(
-                                                        fontSize: 18.sp),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        'assets/svg/box_1.svg',
-                                                        height: 12.h,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          "BOX NUMBER/NAME",
-                                                          style: robotoMedium
-                                                              .copyWith(
-                                                            color: Color(
-                                                                0xff7d7d7d),
-                                                            fontSize: 8.sp,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        'assets/svg/box_1.svg',
-                                                        height: 12.h,
-                                                        color: Colors.white,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          "${loc?.boxName}",
-                                                          maxLines: 1,
-                                                          overflow:
-                                                              TextOverflow.clip,
-                                                          style: robotoBold
-                                                              .copyWith(
-                                                            fontSize: 14.sp,
-                                                            color: const Color(
-                                                                0xff4a00e0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 3.w),
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            'assets/svg/loc.svg',
-                                                            height: 12.h,
-                                                          )),
-                                                      SizedBox(
-                                                        width: 7.w,
-                                                      ),
-                                                      Text(
-                                                        "LOCATION",
-                                                        style: robotoMedium
-                                                            .copyWith(
-                                                          color:
-                                                              Color(0xff7d7d7d),
-                                                          fontSize: 8.sp,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        'assets/svg/box_1.svg',
-                                                        height: 12.h,
-                                                        color: Colors.white,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5.w,
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          "${loc?.locationName}",
-                                                          maxLines: 1,
-                                                          overflow:
-                                                              TextOverflow.clip,
-                                                          style: robotoBold
-                                                              .copyWith(
-                                                            fontSize: 14.sp,
-                                                            color: const Color(
-                                                                0xff4a00e0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color:
+                                                        const Color(0x3f000000),
+                                                    blurRadius: 10.r,
+                                                    offset: const Offset(0, 0),
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "${loc?.date}",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: robotoMedium.copyWith(
-                                                fontSize: 9.sp,
-                                                color: const Color(0xff808080),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                                child: Image.network(
+                                                  "${loc?.image}",
+                                                  height: 180.h,
+                                                  width: 110.w,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.asset(
+                                                        'assets/image/ser_1.png',
+                                                        height: 180.h,
+                                                        width: 110.w,
+                                                        fit: BoxFit.cover);
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                            LikeButton(
-                                              size: 20.h,
-                                              likeBuilder: (isTapped) {
-                                                return SvgPicture.asset(
-                                                  isTapped
-                                                      ? 'assets/svg/likes_fill.svg'
-                                                      : 'assets/svg/like.svg',
-                                                  height: 18.h,
-                                                );
-                                              },
-                                            ),
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 16.h,
+                                          width: 15.w,
                                         ),
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 2,
-                                          color: const Color(0xffDEDEDE),
-                                        )
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${loc?.itemName}",
+                                                overflow: TextOverflow.clip,
+                                                style: robotoBold.copyWith(
+                                                    fontSize: 18.sp),
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/svg/box_1.svg',
+                                                    height: 12.h,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      "BOX NUMBER/NAME",
+                                                      style:
+                                                          robotoMedium.copyWith(
+                                                        color:
+                                                            Color(0xff7d7d7d),
+                                                        fontSize: 8.sp,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 8.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/svg/box_1.svg',
+                                                    height: 12.h,
+                                                    color: Colors.white,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      "${loc?.boxName}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      style:
+                                                          robotoBold.copyWith(
+                                                        fontSize: 14.sp,
+                                                        color: const Color(
+                                                            0xff4a00e0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 20.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: 3.w),
+                                                      child: SvgPicture.asset(
+                                                        'assets/svg/loc.svg',
+                                                        height: 12.h,
+                                                      )),
+                                                  SizedBox(
+                                                    width: 7.w,
+                                                  ),
+                                                  Text(
+                                                    "LOCATION",
+                                                    style:
+                                                        robotoMedium.copyWith(
+                                                      color: Color(0xff7d7d7d),
+                                                      fontSize: 8.sp,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 8.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/svg/box_1.svg',
+                                                    height: 12.h,
+                                                    color: Colors.white,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      "${loc?.locationName}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      style:
+                                                          robotoBold.copyWith(
+                                                        fontSize: 14.sp,
+                                                        color: const Color(
+                                                            0xff4a00e0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  );
-                                },
-                              )
-                            ],
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Item Added on: ${outputDate}",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: robotoMedium.copyWith(
+                                            fontSize: 9.sp,
+                                            color: const Color(0xff808080),
+                                          ),
+                                        ),
+                                        LikeButton(
+                                          size: 20.h,
+                                          isLiked: loc?.favorite == true,
+                                          onTap: (isLiked) async {
+                                            loc?.favorite = !isLiked;
+                                            controller.update();
+                                            print(
+                                                "1111111111111111111111110.0000012131313");
+                                            print(
+                                                '1111111111111111111111 ${loc?.favorite}');
+                                            if (loc?.favorite == true) {
+                                              controller.showLoadingDialog();
+                                              await DbHelp().updateFavorite(
+                                                  AddItemModel(
+                                                    favorite: loc?.favorite,
+                                                  ),
+                                                  id);
+                                              print(
+                                                  'Value id true ${loc?.favorite}');
+                                              controller.update();
+                                              controller.getSeachResult();
+                                              controller.hideDialog();
+                                            } else {
+                                              controller.showLoadingDialog();
+                                              await DbHelp().updateFavorite(
+                                                  AddItemModel(
+                                                      favorite: loc?.favorite),
+                                                  id);
+                                              print(
+                                                  'Value id true $loc?.favorite');
+                                              controller.update();
+                                              controller.getSeachResult();
+                                              controller.hideDialog();
+                                            }
+                                            return Future.value(loc?.favorite);
+                                          },
+                                          likeBuilder: (isTapped) {
+                                            return SvgPicture.asset(
+                                              isTapped == true
+                                                  ? 'assets/svg/likes_fill.svg'
+                                                  : 'assets/svg/like.svg',
+                                              height: 18.h,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 16.h,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 2,
+                                      color: const Color(0xffDEDEDE),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
                           )
                         ],
                       ),

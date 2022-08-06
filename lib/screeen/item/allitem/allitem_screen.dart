@@ -524,7 +524,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                     ),
                                                     id);
                                                 print(
-                                                    'Value id true $loc?.favorite');
+                                                    'Value id true ${loc?.favorite}');
                                                 controller.update();
                                                 controller.getData();
                                                 controller.hideDialog();

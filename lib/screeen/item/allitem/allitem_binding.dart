@@ -33,23 +33,23 @@ class AllItemController extends BaseController {
     update();
   }
 
-  favorritedatatrue(String? id) async {
-    showLoadingDialog();
-    if (isFavoritetrue == false) {
-      await DbHelp().updateFavorite(
-          AddItemModel(
-            favorite: isFavoritetrue,
-          ),
-          id);
-      print('Value id true $isFavoritetrue');
-      update();
-      getData();
-      hideDialog();
-    } else {
-      print('favorite $isFavoritetrue');
-      hideDialog();
-    }
-  }
+  // favorritedatatrue(String? id) async {
+  //   showLoadingDialog();
+  //   if (isFavoritetrue == false) {
+  //     await DbHelp().updateFavorite(
+  //         AddItemModel(
+  //           favorite: isFavoritetrue,
+  //         ),
+  //         id);
+  //     print('Value id true $isFavoritetrue');
+  //     update();
+  //     getData();
+  //     hideDialog();
+  //   } else {
+  //     print('favorite $isFavoritetrue');
+  //     hideDialog();
+  //   }
+  // }
 
   sortAscending() {
     final numbers = <String>['two', 'three', 'four'];
