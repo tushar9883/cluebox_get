@@ -238,6 +238,7 @@ class AdditemScreen extends BaseView<AddItemController> {
                                   ),
                                 ),
                                 TextFieldTags(
+                                  initialTags: controller.initalTags,
                                   textfieldTagsController:
                                       controller.tagController,
                                   textSeparators: const [' ', ','],

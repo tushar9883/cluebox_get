@@ -44,6 +44,7 @@ class AddItemController extends BaseController {
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
   List<TagModel>? allTagsList;
+  List<String> initalTags = [];
 
   File? profileImage;
   final ImagePicker picker = ImagePicker();
@@ -51,11 +52,19 @@ class AddItemController extends BaseController {
   var userid;
   List<TagModel>? tagList;
 
+  // var tag = Get.arguments['tag'];
+
   getArgdata() async {
-    if (Get.arguments != null) {
+    // print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
+    if (Get.arguments['favorite'] != null) {
+      print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
       isFavorite = Get.arguments['favorite'];
       print("Do It");
-      print("dataaaaaaaaaaaa${Get.arguments}");
+      print("dataaaaaaaaaaaa${isFavorite}");
+    }
+    if (Get.arguments['tag'] != null) {
+      print("uygvuygb  ${Get.arguments['tag']}");
+      initalTags = [Get.arguments['tag']];
       update();
     }
   }
@@ -69,7 +78,6 @@ class AddItemController extends BaseController {
     counter.text = "1";
     print(">>>>>>>> favorite <<<<<<<<${isFavorite}");
     getArgdata();
-    // getAllTagsList();
     update();
   }
 

@@ -34,7 +34,6 @@ class TagItemScreen extends BaseView<TagItemController> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10.r)),
-                          // child: const CircularProgressIndicator(),
                           child: const SpinKitFadingCircle(
                             color: Colors.blue,
                             size: 50.0,
@@ -932,7 +931,11 @@ class TagItemScreen extends BaseView<TagItemController> {
                 ),
       floatingActionButton: InkWell(
         onTap: () {
-          Get.toNamed(RouterName.additem);
+          print("404040${controller.tagModel?.name}");
+          Get.toNamed(
+            RouterName.additem,
+            arguments: {"tag": controller.tagModel?.name},
+          );
         },
         child: Container(
           width: 60.w,
