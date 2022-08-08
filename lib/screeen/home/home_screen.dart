@@ -111,12 +111,15 @@ class HomeScreen extends BaseView<HomeController> {
                         ),
                       ),
                       SizedBox(
-                        height: 32.h,
+                        height: 16.h,
                       ),
                       Expanded(
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: 16.h,
+                              ),
                               controller.tagList != null &&
                                       controller.tagList!.isNotEmpty == true
                                   ? Column(
