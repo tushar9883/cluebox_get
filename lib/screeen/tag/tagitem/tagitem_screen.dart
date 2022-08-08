@@ -213,6 +213,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                             ),
                                             keyboardType: TextInputType.text,
                                             textInputAction: TextInputAction.go,
+                                            controller: controller.tagName,
                                             decoration: InputDecoration(
                                               hintText: 'Tag Name',
                                               hintStyle: poppinsMedium.copyWith(

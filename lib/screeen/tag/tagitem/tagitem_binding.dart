@@ -21,6 +21,7 @@ class TagItemController extends BaseController {
   TagModel? tagModel;
   List<AddItemModel>? itemList;
   final search = TextEditingController();
+  final tagName = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
   bool isLoading = false;
 
@@ -29,6 +30,7 @@ class TagItemController extends BaseController {
     // TODO: implement onInit
     super.onInit();
     getAllItemsFromTag();
+    tagName.text = tagModel!.name!;
   }
 
   Future<void> getAllItemsFromTag() async {
@@ -45,7 +47,6 @@ class TagItemController extends BaseController {
     final suggestion = itemList?.where((element) {
       final title = element.itemName?.toLowerCase();
       final inpute = search.text.toLowerCase();
-
       return title!.contains(inpute);
     }).toList();
     itemList = suggestion;
