@@ -128,11 +128,13 @@ class HomeScreen extends BaseView<HomeController> {
                                           height: 36.h,
                                           child: ListView.builder(
                                             shrinkWrap: false,
+                                            padding:
+                                                EdgeInsets.only(left: 12.w),
                                             scrollDirection: Axis.horizontal,
                                             itemCount: (controller
                                                         .tagList?.length)! >
-                                                    5
-                                                ? 5
+                                                    10
+                                                ? 10
                                                 : controller.tagList?.length,
                                             itemBuilder:
                                                 (BuildContext context, index) {
@@ -153,7 +155,7 @@ class HomeScreen extends BaseView<HomeController> {
                                                 },
                                                 child: Container(
                                                   margin: EdgeInsets.only(
-                                                      left: 20.w),
+                                                      left: 10.w),
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -165,9 +167,7 @@ class HomeScreen extends BaseView<HomeController> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      controller.tagList?[index]
-                                                              .name ??
-                                                          '',
+                                                      "#${controller.tagList?[index].name}",
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -460,111 +460,125 @@ class HomeScreen extends BaseView<HomeController> {
                                               width: 1,
                                             ),
                                           ),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 5.w,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: const Color(
-                                                              0x3f000000),
-                                                          blurRadius: 8.r,
-                                                          offset: const Offset(
-                                                              0, 0),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.r),
-                                                        child: loc?.image ==
-                                                                null
-                                                            ? Image.asset(
-                                                                'assets/image/default.png',
-                                                                height: 65.h,
-                                                                width: 74.w,
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : Image.network(
-                                                                "${loc?.image}",
-                                                                height: 65.h,
-                                                                width: 74.w,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                errorBuilder:
-                                                                    (context,
-                                                                        error,
-                                                                        stackTrace) {
-                                                                  return Image.asset(
-                                                                      'assets/image/default.png',
-                                                                      height:
-                                                                          65.h,
-                                                                      width:
-                                                                          74.w,
-                                                                      fit: BoxFit
-                                                                          .cover);
-                                                                },
-                                                              )),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 15.w,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Get.toNamed(
+                                                RouterName.edititem,
+                                                arguments: controller
+                                                    .itemList?[index]
+                                                    .toJson(),
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Column(
                                                   children: [
-                                                    Text(
-                                                      "${loc?.itemName}",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style:
-                                                          robotoBold.copyWith(
-                                                              fontSize: 16.sp),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5.h,
-                                                    ),
-                                                    Text(
-                                                      "${loc?.boxName}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                      style:
-                                                          robotoMedium.copyWith(
-                                                        fontSize: 12.sp,
-                                                        color: const Color(
-                                                            0xff111111),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: const Color(
+                                                                0x3f000000),
+                                                            blurRadius: 8.r,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 0),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10.h,
-                                                    ),
-                                                    Text(
-                                                      "Item Added on: ${outputDate}",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style:
-                                                          robotoMedium.copyWith(
-                                                        fontSize: 9.sp,
-                                                        color: const Color(
-                                                            0xff808080),
-                                                      ),
+                                                      child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.r),
+                                                          child: loc?.image ==
+                                                                  null
+                                                              ? Image.asset(
+                                                                  'assets/image/default.png',
+                                                                  height: 65.h,
+                                                                  width: 74.w,
+                                                                  fit: BoxFit
+                                                                      .cover)
+                                                              : Image.network(
+                                                                  "${loc?.image}",
+                                                                  height: 65.h,
+                                                                  width: 74.w,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  errorBuilder:
+                                                                      (context,
+                                                                          error,
+                                                                          stackTrace) {
+                                                                    return Image.asset(
+                                                                        'assets/image/default.png',
+                                                                        height: 65
+                                                                            .h,
+                                                                        width: 74
+                                                                            .w,
+                                                                        fit: BoxFit
+                                                                            .cover);
+                                                                  },
+                                                                )),
                                                     ),
                                                   ],
                                                 ),
-                                              )
-                                            ],
+                                                SizedBox(
+                                                  width: 15.w,
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${loc?.itemName}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style:
+                                                            robotoBold.copyWith(
+                                                                fontSize:
+                                                                    16.sp),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5.h,
+                                                      ),
+                                                      Text(
+                                                        "${loc?.boxName}",
+                                                        maxLines: 1,
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                        style: robotoMedium
+                                                            .copyWith(
+                                                          fontSize: 12.sp,
+                                                          color: const Color(
+                                                              0xff111111),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10.h,
+                                                      ),
+                                                      Text(
+                                                        "Item Added on: ${outputDate}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: robotoMedium
+                                                            .copyWith(
+                                                          fontSize: 9.sp,
+                                                          color: const Color(
+                                                              0xff808080),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         );
                                       },

@@ -89,6 +89,7 @@ class EditItemController extends BaseController {
       await getAllLoc(userid);
       hideDialog();
       await getnewdata();
+      await itemloc();
       await getBoxLocWise();
       await itemboxes();
     });
@@ -217,8 +218,8 @@ class EditItemController extends BaseController {
       Nameitem.text = name!;
       counter.text = quantity!;
       isFavorite = like!;
-      locationvaluess = allLocList
-          ?.firstWhere((element) => element.uid == itemModel?.locationId);
+      // locationvaluess = allLocList
+      //     ?.firstWhere((element) => element.uid == itemModel?.locationId);
 
       if (itemModel?.tag != null) {
         tags.clear();
@@ -232,6 +233,12 @@ class EditItemController extends BaseController {
       }
       update();
     }
+  }
+
+  itemloc() {
+    print("111");
+    locationvaluess = allLocList
+        ?.firstWhere((element) => element.uid == itemModel?.locationId);
   }
 
   itemboxes() {
