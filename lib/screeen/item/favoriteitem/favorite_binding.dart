@@ -13,7 +13,8 @@ class FavoriteBinding implements Bindings {
 
 class FavoriteController extends BaseController {
   final search = TextEditingController();
-  List<AddItemModel>? favoriteist;
+  List<AddItemModel>? favoritelist;
+  List<AddItemModel>? favoritedatalist;
   // bool isFavorite = true;
   bool isLoading = false;
 
@@ -23,20 +24,21 @@ class FavoriteController extends BaseController {
     isLoading = true;
     print("Favorite >>>><<<<< $userid");
     var allData = await DbHelp().getAllFavoriteList(userid!);
-    favoriteist?.clear();
-    favoriteist = allData;
+    favoritelist?.clear();
+    favoritelist = allData;
+    favoritedatalist = allData;
     isLoading = false;
     update();
   }
 
   searching() {
-    final suggestion = favoriteist?.where((element) {
+    final suggestion = favoritelist?.where((element) {
       final title = element.itemName?.toLowerCase();
       final inpute = search.text.toLowerCase();
 
       return title!.contains(inpute);
     }).toList();
-    favoriteist = suggestion;
+    favoritedatalist = suggestion;
     update();
   }
 

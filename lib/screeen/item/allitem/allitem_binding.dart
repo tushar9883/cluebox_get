@@ -20,31 +20,40 @@ class AllItemController extends BaseController {
   final search = TextEditingController();
   bool isFavoritetrue = true;
   List<AddItemModel>? itemlist;
+  List<AddItemModel>? storage;
+
+  TagModel? tagModel;
   AddItemModel? item;
   BoxModel? myBox;
+  bool isLoading = false;
 
   Future<void> getData() async {
+    isLoading == true;
     print("Favorite >>>><<<<< $userid");
     var allData = await DbHelp().getAllItemList(userid!, boxId: myBox?.uid);
     itemlist?.clear();
     itemlist = allData;
+    storage = allData;
     update();
+    isLoading == false;
   }
 
   searching() {
-    final suggestion = itemlist?.where((element) {
-      final title = element.itemName?.toLowerCase();
-      final inpute = search.text.toLowerCase();
+    if (search.text.isNotEmpty) {
+      final suggestion = itemlist?.where((element) {
+        final title = element.itemName?.toLowerCase();
+        final inpute = search.text.toLowerCase();
 
-      return title!.contains(inpute);
-    }).toList();
-    itemlist = suggestion;
-    update();
+        return title!.contains(inpute);
+      }).toList();
+      storage = suggestion;
+      update();
+      print('1314484646464561${suggestion?.length}');
+    }
   }
 
   deleteitem() async {
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
-    TagModel? tagData = await DbHelp().getTagData(userid!);
 
     if (userData.isNotEmpty) {
       //To update item count of this user
@@ -70,7 +79,6 @@ class AllItemController extends BaseController {
     if (Get.arguments != null) {
       myBox = BoxModel.fromDB(Get.arguments);
     }
-
     getData();
     update();
     super.onInit();

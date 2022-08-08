@@ -15,11 +15,13 @@ class SearchController extends BaseController {
   final search = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
   List<AddItemModel>? searchModel;
+  bool result = false;
 
   getSeachResult() async {
     var allresult = await DbHelp().getsearch(search.text, userid!);
     searchModel?.clear();
     searchModel = allresult;
+    print("sdicbf${allresult}");
     update();
   }
 

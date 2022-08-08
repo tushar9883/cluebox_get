@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import '../../../db/db_helper.dart';
 import '../../../model/tag_model.dart';
 
@@ -20,6 +16,7 @@ class TagController extends BaseController {
   final search = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
   List<TagModel>? tagList;
+  List<TagModel>? tagdataList;
   bool isLoading = false;
 
   Future<void> getAllTags(String userId) async {
@@ -27,21 +24,9 @@ class TagController extends BaseController {
     var allTags = await DbHelp().getAllTagsByUser(userId);
     tagList?.clear();
     tagList = allTags;
+    tagdataList = allTags;
     isLoading = false;
     update();
-  }
-
-  delete() async {
-    var tagIds = [];
-    // TagModel? tagData =
-    //     await DbHelp().getTagData('${tag.toString().toLowerCase()}_$userid');
-    // if (tagData != null) {
-    //   //Tag is already there in db
-    //   tagIds.add(tagData.uid);
-    //   tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
-    //   await DbHelp().addtag(tagData);
-    //   print("Present___________");
-    // }
   }
 
   searching() {
@@ -51,7 +36,7 @@ class TagController extends BaseController {
 
       return title!.contains(inpute);
     }).toList();
-    tagList = suggestion;
+    tagdataList = suggestion;
     update();
   }
 

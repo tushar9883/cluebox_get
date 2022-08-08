@@ -19,6 +19,7 @@ class MyLocationController extends BaseController {
   final search = TextEditingController();
   // var jsonResult;
   List<LocationModel>? myLocationList;
+  List<LocationModel>? mydataLocationList;
   bool isLoading = false;
 
   loadJson() async {
@@ -33,6 +34,7 @@ class MyLocationController extends BaseController {
     var allLocations = await DbHelp().getAllLocation(userId);
     myLocationList?.clear();
     myLocationList = allLocations;
+    mydataLocationList = allLocations;
     isLoading = false;
     update();
   }
@@ -44,7 +46,7 @@ class MyLocationController extends BaseController {
 
       return title!.contains(inpute);
     }).toList();
-    myLocationList = suggestion;
+    mydataLocationList = suggestion;
     update();
   }
 

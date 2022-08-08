@@ -102,11 +102,7 @@ class SearchScreen extends BaseView<SearchController> {
                   ),
                   InkWell(
                     onTap: () {
-                      if (controller.search.text.isEmpty) {
-                        Get.offNamed(RouterName.home);
-                      } else {
-                        controller.search.clear();
-                      }
+                      controller.search.clear();
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 10.w),

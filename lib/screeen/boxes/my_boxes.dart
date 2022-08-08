@@ -17,7 +17,7 @@ class MyBoxes extends BaseView<MyBoxController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-          // controller.myBoxList == null || controller.myBoxList!.isEmpty
+          // controller.mydataBoxList == null || controller.mydataBoxList!.isEmpty
           controller.isLoading == true
               ? Material(
                   color: Colors.black.withOpacity(0.5),
@@ -93,7 +93,7 @@ class MyBoxes extends BaseView<MyBoxController> {
                                     PopupMenuItem(
                                       value: 0,
                                       onTap: () {
-                                        controller.myBoxList?.sort((a, b) =>
+                                        controller.mydataBoxList?.sort((a, b) =>
                                             a.name!.compareTo(b.name!));
                                         controller.update();
                                       },
@@ -108,7 +108,7 @@ class MyBoxes extends BaseView<MyBoxController> {
                                     PopupMenuItem(
                                       value: 1,
                                       onTap: () {
-                                        controller.myBoxList?.sort((a, b) =>
+                                        controller.mydataBoxList?.sort((a, b) =>
                                             a.date!.compareTo(b.date!));
                                         controller.update();
                                       },
@@ -172,11 +172,7 @@ class MyBoxes extends BaseView<MyBoxController> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      if (controller.search.text.isEmpty) {
-                                        Get.offNamed(RouterName.home);
-                                      } else {
-                                        controller.search.clear();
-                                      }
+                                      controller.search.clear();
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(right: 10.w),
@@ -192,8 +188,8 @@ class MyBoxes extends BaseView<MyBoxController> {
                             SizedBox(
                               height: 14.h,
                             ),
-                            controller.myBoxList == null ||
-                                    controller.myBoxList!.isEmpty
+                            controller.mydataBoxList == null ||
+                                    controller.mydataBoxList!.isEmpty
                                 ? Expanded(
                                     child: Center(
                                         child: Column(
@@ -223,26 +219,26 @@ class MyBoxes extends BaseView<MyBoxController> {
                                       shrinkWrap: true,
                                       padding: EdgeInsets.only(bottom: 200.h),
                                       itemCount:
-                                          controller.myBoxList?.length ?? 0,
+                                          controller.mydataBoxList?.length ?? 0,
                                       itemBuilder:
                                           (BuildContext context, index) {
                                         return InkWell(
                                           onTap: () {
                                             var titlename = controller
-                                                .myBoxList?[index].name;
+                                                .mydataBoxList?[index].name;
                                             print(titlename);
 
                                             Get.toNamed(
                                               RouterName.allitem,
                                               arguments: controller
-                                                  .myBoxList?[index]
+                                                  .mydataBoxList?[index]
                                                   .toJson(),
                                             );
 
                                             // Get.toNamed(
                                             //   RouterName.locationScreen,
                                             //   arguments: controller
-                                            //       .myBoxList?[index]
+                                            //       .mydataBoxList?[index]
                                             //       .toJson(),
                                             // );
                                           },
@@ -261,7 +257,7 @@ class MyBoxes extends BaseView<MyBoxController> {
                                                     Expanded(
                                                       child: Text(
                                                         controller
-                                                                .myBoxList?[
+                                                                .mydataBoxList?[
                                                                     index]
                                                                 .name ??
                                                             '',
@@ -291,7 +287,7 @@ class MyBoxes extends BaseView<MyBoxController> {
                                                     //   ),
                                                     //   child: Text(
                                                     //     controller
-                                                    //         .myBoxList?[index]
+                                                    //         .mydataBoxList?[index]
                                                     //         .tagCount
                                                     //         .toString() ??
                                                     //         '0',

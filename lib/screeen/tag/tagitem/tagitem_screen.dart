@@ -21,7 +21,7 @@ class TagItemScreen extends BaseView<TagItemController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-          // controller.itemList == null || controller.itemList!.isEmpty
+          // controller.itemdataList == null || controller.itemdataList!.isEmpty
           controller.isLoading == true
               ? Material(
                   color: Colors.black.withOpacity(0.5),
@@ -190,126 +190,26 @@ class TagItemScreen extends BaseView<TagItemController> {
                                       child: SvgPicture.asset(
                                           'assets/svg/back.svg')),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Center(
-                                            child: Text(
-                                              'Change Tag Name',
-                                              style: robotoBold.copyWith(
-                                                color: Colors.black,
-                                                fontSize: 26.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          content: TextField(
-                                            cursorColor:
-                                                const Color(0xff5566fd),
-                                            style: poppinsMedium.copyWith(
-                                              fontSize: 14.sp,
-                                            ),
-                                            keyboardType: TextInputType.text,
-                                            textInputAction: TextInputAction.go,
-                                            controller: controller.tagName,
-                                            decoration: InputDecoration(
-                                              hintText: 'Tag Name',
-                                              hintStyle: poppinsMedium.copyWith(
-                                                color: const Color(0xff111111),
-                                                fontSize: 10.sp,
-                                              ),
-                                              focusedBorder:
-                                                  const UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Color(0xff5566fd)),
-                                              ),
-                                            ),
-                                          ),
-                                          actions: [
-                                            Column(
-                                              children: [
-                                                Center(
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      width: 93.w,
-                                                      height: 46.h,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(9.r),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: const Color(
-                                                                0x3f000000),
-                                                            blurRadius: 16.r,
-                                                            offset:
-                                                                const Offset(
-                                                                    0, 0),
-                                                          ),
-                                                        ],
-                                                        gradient:
-                                                            const LinearGradient(
-                                                          colors: [
-                                                            Color(0xff4A00E0),
-                                                            Color(0xff8E2DE2),
-                                                          ],
-                                                          begin: Alignment(
-                                                              -1.0, 0),
-                                                          end: Alignment(1, 1),
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        "Save",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            robotoBold.copyWith(
-                                                          color: Colors.white,
-                                                          fontSize: 18.sp,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 15.h,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(left: 21.w),
-                                        child: Text(
-                                          "@${controller.tagModel?.name}",
-                                          style: robotoBold.copyWith(
-                                            color: Colors.black,
-                                            fontSize: 18.sp,
-                                          ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 21.w),
+                                      child: Text(
+                                        "#${controller.tagModel?.name}",
+                                        style: robotoBold.copyWith(
+                                          color: Colors.black,
+                                          fontSize: 18.sp,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 5.w,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/svg/edit.svg',
-                                        height: 12.h,
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/svg/edit.svg',
+                                      height: 12.h,
+                                    )
+                                  ],
                                 ),
                                 PopupMenuButton(
                                   padding: EdgeInsets.zero,
@@ -326,7 +226,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                     PopupMenuItem(
                                       value: 0,
                                       onTap: () {
-                                        controller.itemList?.sort((a, b) =>
+                                        controller.itemdataList?.sort((a, b) =>
                                             a.itemName!.compareTo(b.itemName!));
                                         controller.update();
                                       },
@@ -343,7 +243,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                     PopupMenuItem(
                                       value: 1,
                                       onTap: () {
-                                        controller.itemList?.sort((a, b) =>
+                                        controller.itemdataList?.sort((a, b) =>
                                             a.date!.compareTo(b.date!));
                                         controller.update();
                                       },
@@ -399,7 +299,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                       textInputAction: TextInputAction.search,
                                       decoration: InputDecoration(
                                         hintText:
-                                            'Search your items in “alley” here.',
+                                            'Search your items in “#${controller.tagModel?.name}” here.',
                                         hintStyle: TextStyle(
                                           color: const Color(0xff5a5a5a),
                                           fontSize: 12.sp,
@@ -410,11 +310,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      if (controller.search.text.isEmpty) {
-                                        Get.offNamed(RouterName.home);
-                                      } else {
-                                        controller.search.clear();
-                                      }
+                                      controller.search.clear();
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(right: 10.w),
@@ -430,8 +326,8 @@ class TagItemScreen extends BaseView<TagItemController> {
                             SizedBox(
                               height: 14.h,
                             ),
-                            controller.itemList == null ||
-                                    controller.itemList!.isEmpty
+                            controller.itemdataList == null ||
+                                    controller.itemdataList!.isEmpty
                                 ? Expanded(
                                     child: Center(
                                       child: Column(
@@ -446,7 +342,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                             height: 20.h,
                                           ),
                                           Text(
-                                            'Add relevant items to “Alley”.',
+                                            'Add relevant items to “#${controller.tagModel?.name}”.',
                                             style: robotoRegular.copyWith(
                                               color: const Color(0xffa8a8a8),
                                               fontSize: 10.sp,
@@ -468,11 +364,11 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                 const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             itemCount:
-                                                controller.itemList?.length,
+                                                controller.itemdataList?.length,
                                             itemBuilder:
                                                 (BuildContext context, index) {
-                                              var data =
-                                                  controller.itemList?[index];
+                                              var data = controller
+                                                  .itemdataList?[index];
                                               var boxid = data?.boxId;
                                               var locationid = data?.locationId;
                                               var id = data?.uid;
@@ -627,7 +523,8 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                       Get.toNamed(
                                                         RouterName.edititem,
                                                         arguments: controller
-                                                            .itemList?[index]
+                                                            .itemdataList?[
+                                                                index]
                                                             .toJson(),
                                                       );
                                                     },

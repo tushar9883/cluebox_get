@@ -18,6 +18,7 @@ class MyBoxBinding implements Bindings {
 
 class MyBoxController extends BaseController {
   List<BoxModel>? myBoxList;
+  List<BoxModel>? mydataBoxList;
   bool isLoading = false;
   LocationModel? locationModel;
   final search = TextEditingController();
@@ -30,6 +31,7 @@ class MyBoxController extends BaseController {
     var allData = await DbHelp().getBoxLocationWise(locationModel?.uid ?? '');
     myBoxList?.clear();
     myBoxList = allData;
+    mydataBoxList = allData;
     isLoading = false;
     update();
   }
@@ -41,14 +43,13 @@ class MyBoxController extends BaseController {
 
       return title!.contains(inpute);
     }).toList();
-    myBoxList = suggestion;
+    mydataBoxList = suggestion;
     update();
   }
 
   @override
   void onInit() {
     super.onInit();
-    var userid = FirebaseAuth.instance.currentUser?.uid;
     getBoxLocWise();
     update();
   }

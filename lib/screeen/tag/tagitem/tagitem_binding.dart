@@ -18,6 +18,7 @@ class TagItemBinding implements Bindings {
 class TagItemController extends BaseController {
   TagModel? tagModel;
   List<AddItemModel>? itemList;
+  List<AddItemModel>? itemdataList;
   final search = TextEditingController();
   final tagName = TextEditingController();
   var userid = FirebaseAuth.instance.currentUser?.uid;
@@ -36,6 +37,7 @@ class TagItemController extends BaseController {
     tagModel = TagModel.fromDb(Get.arguments);
     var allItems = await DbHelp().getItemsFromTag(tagModel?.uid ?? '');
     itemList = allItems;
+    itemdataList = allItems;
     isLoading = false;
     update();
   }
@@ -46,7 +48,7 @@ class TagItemController extends BaseController {
       final inpute = search.text.toLowerCase();
       return title!.contains(inpute);
     }).toList();
-    itemList = suggestion;
+    itemdataList = suggestion;
     update();
   }
 

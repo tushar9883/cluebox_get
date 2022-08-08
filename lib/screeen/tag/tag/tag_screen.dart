@@ -91,7 +91,7 @@ class TagScreen extends BaseView<TagController> {
                                 PopupMenuItem(
                                   value: 0,
                                   onTap: () {
-                                    controller.tagList?.sort(
+                                    controller.tagdataList?.sort(
                                         (a, b) => a.name!.compareTo(b.name!));
                                     controller.update();
                                   },
@@ -106,7 +106,7 @@ class TagScreen extends BaseView<TagController> {
                                 PopupMenuItem(
                                   value: 1,
                                   onTap: () {
-                                    controller.tagList?.sort(
+                                    controller.tagdataList?.sort(
                                         (a, b) => a.date!.compareTo(b.date!));
                                     controller.update();
                                   },
@@ -170,11 +170,7 @@ class TagScreen extends BaseView<TagController> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  if (controller.search.text.isEmpty) {
-                                    Get.offNamed(RouterName.home);
-                                  } else {
-                                    controller.search.clear();
-                                  }
+                                  controller.search.clear();
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(right: 10.w),
@@ -190,8 +186,8 @@ class TagScreen extends BaseView<TagController> {
                         SizedBox(
                           height: 14.h,
                         ),
-                        controller.tagList == null ||
-                                controller.tagList!.isEmpty
+                        controller.tagdataList == null ||
+                                controller.tagdataList!.isEmpty
                             ? Expanded(
                                 child: Center(
                                     child: Column(
@@ -218,19 +214,21 @@ class TagScreen extends BaseView<TagController> {
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   padding: EdgeInsets.only(bottom: 200.h),
-                                  itemCount: controller.tagList?.length ?? 0,
+                                  itemCount:
+                                      controller.tagdataList?.length ?? 0,
                                   itemBuilder: (BuildContext context, index) {
-                                    var loc = controller.tagList?[index];
+                                    var loc = controller.tagdataList?[index];
                                     var id = loc?.userid;
                                     var uid = loc?.uid;
                                     return InkWell(
                                       onTap: () {
                                         var titlename =
-                                            controller.tagList?[index].name;
+                                            controller.tagdataList?[index].name;
                                         print(titlename);
                                         Get.toNamed(
                                           RouterName.tagitem,
-                                          arguments: controller.tagList?[index]
+                                          arguments: controller
+                                              .tagdataList?[index]
                                               .toJson(),
                                         );
                                       },
@@ -385,7 +383,9 @@ class TagScreen extends BaseView<TagController> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      controller.tagList?[index]
+                                                      controller
+                                                              .tagdataList?[
+                                                                  index]
                                                               .name ??
                                                           '',
                                                       overflow:
@@ -413,7 +413,9 @@ class TagScreen extends BaseView<TagController> {
                                                       color: Colors.black,
                                                     ),
                                                     child: Text(
-                                                      controller.tagList?[index]
+                                                      controller
+                                                              .tagdataList?[
+                                                                  index]
                                                               .tagItemCount
                                                               .toString() ??
                                                           '0',

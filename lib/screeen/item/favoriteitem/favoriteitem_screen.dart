@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/gradient.dart';
@@ -95,7 +93,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                               PopupMenuItem(
                                 value: 0,
                                 onTap: () {
-                                  controller.favoriteist?.sort((a, b) =>
+                                  controller.favoritelist?.sort((a, b) =>
                                       a.itemName!.compareTo(b.itemName!));
                                   controller.update();
                                 },
@@ -110,7 +108,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                               PopupMenuItem(
                                 value: 1,
                                 onTap: () {
-                                  controller.favoriteist?.sort(
+                                  controller.favoritelist?.sort(
                                       (a, b) => a.date!.compareTo(b.date!));
                                   controller.update();
                                 },
@@ -163,8 +161,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                 keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.search,
                                 decoration: InputDecoration(
-                                  hintText:
-                                      'Search your items in “alley” here.',
+                                  hintText: 'Search your items in here.',
                                   hintStyle: TextStyle(
                                     color: const Color(0xff5a5a5a),
                                     fontSize: 12.sp,
@@ -175,11 +172,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                             ),
                             InkWell(
                               onTap: () {
-                                if (controller.search.text.isEmpty) {
-                                  Get.offNamed(RouterName.home);
-                                } else {
-                                  controller.search.clear();
-                                }
+                                controller.search.clear();
                               },
                               child: Container(
                                 margin: EdgeInsets.only(right: 10.w),
@@ -195,8 +188,8 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      controller.favoriteist == null ||
-                              controller.favoriteist!.isEmpty
+                      controller.favoritedatalist == null ||
+                              controller.favoritedatalist!.isEmpty
                           ? Expanded(
                               child: Center(
                                   child: Column(
@@ -226,17 +219,17 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                     SizedBox(
                                       height: 10.h,
                                     ),
-                                    controller.favoriteist != null
+                                    controller.favoritedatalist != null
                                         ? ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
-                                            itemCount:
-                                                controller.favoriteist?.length,
+                                            itemCount: controller
+                                                .favoritedatalist?.length,
                                             itemBuilder:
                                                 (BuildContext context, index) {
                                               var loc = controller
-                                                  .favoriteist?[index];
+                                                  .favoritedatalist?[index];
                                               var dates = loc?.date;
                                               var id = loc?.uid;
                                               print(">>>>>>> loc id ${id}");
@@ -264,7 +257,7 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                     Get.toNamed(
                                                       RouterName.edititem,
                                                       arguments: controller
-                                                          .favoriteist?[index]
+                                                          .favoritelist?[index]
                                                           .toJson(),
                                                     );
                                                   },

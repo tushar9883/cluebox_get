@@ -17,7 +17,7 @@ class MyLocation extends BaseView<MyLocationController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-          // controller.myLocationList == null || controller.myLocationList!.isEmpty
+          // controller.mydataLocationList == null || controller.mydataLocationList!.isEmpty
           controller.isLoading == true
               ? Material(
                   color: Colors.black.withOpacity(0.5),
@@ -93,7 +93,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                     PopupMenuItem(
                                       value: 0,
                                       onTap: () {
-                                        controller.myLocationList?.sort(
+                                        controller.mydataLocationList?.sort(
                                             (a, b) =>
                                                 a.name!.compareTo(b.name!));
                                         controller.update();
@@ -109,7 +109,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                     PopupMenuItem(
                                       value: 1,
                                       onTap: () {
-                                        controller.myLocationList?.sort(
+                                        controller.mydataLocationList?.sort(
                                             (a, b) =>
                                                 a.date!.compareTo(b.date!));
                                         controller.update();
@@ -174,11 +174,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      if (controller.search.text.isEmpty) {
-                                        Get.offNamed(RouterName.home);
-                                      } else {
-                                        controller.search.clear();
-                                      }
+                                      controller.search.clear();
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(right: 10.w),
@@ -194,8 +190,8 @@ class MyLocation extends BaseView<MyLocationController> {
                             SizedBox(
                               height: 14.h,
                             ),
-                            controller.myLocationList == null ||
-                                    controller.myLocationList!.isEmpty
+                            controller.mydataLocationList == null ||
+                                    controller.mydataLocationList!.isEmpty
                                 ? Expanded(
                                     child: Center(
                                         child: Column(
@@ -224,20 +220,21 @@ class MyLocation extends BaseView<MyLocationController> {
                                       // physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       padding: EdgeInsets.only(bottom: 200.h),
-                                      itemCount:
-                                          controller.myLocationList?.length ??
-                                              0,
+                                      itemCount: controller
+                                              .mydataLocationList?.length ??
+                                          0,
                                       itemBuilder:
                                           (BuildContext context, index) {
                                         return InkWell(
                                           onTap: () {
                                             var titlename = controller
-                                                .myLocationList?[index].name;
+                                                .mydataLocationList?[index]
+                                                .name;
                                             print(titlename);
                                             Get.toNamed(
                                               RouterName.myBoxes,
                                               arguments: controller
-                                                  .myLocationList?[index]
+                                                  .mydataLocationList?[index]
                                                   .toJson(),
                                             );
                                           },
@@ -256,7 +253,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                                     Expanded(
                                                       child: Text(
                                                         controller
-                                                                .myLocationList?[
+                                                                .mydataLocationList?[
                                                                     index]
                                                                 .name ??
                                                             '',
@@ -286,7 +283,7 @@ class MyLocation extends BaseView<MyLocationController> {
                                                     //   ),
                                                     //   child: Text(
                                                     //     controller
-                                                    //         .myLocationList?[index]
+                                                    //         .mydataLocationList?[index]
                                                     //         .tagCount
                                                     //         .toString() ??
                                                     //         '0',
