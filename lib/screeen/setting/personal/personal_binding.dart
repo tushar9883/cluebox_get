@@ -78,6 +78,7 @@ class PersonalController extends BaseController {
         uidd);
     toastbar("Personal Info updated successfully", isSuccess: true);
     hideDialog();
+    Get.back();
   }
 
   dataget() async {

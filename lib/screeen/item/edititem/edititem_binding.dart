@@ -85,7 +85,9 @@ class EditItemController extends BaseController {
 
     ///TODO Initstate ma async use karvo hoy tyare use thay function nichenu
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      showLoadingDialog();
       await getAllLoc(userid);
+      hideDialog();
       await getnewdata();
       await getBoxLocWise();
       await itemboxes();
