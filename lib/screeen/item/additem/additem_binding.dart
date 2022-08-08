@@ -56,16 +56,20 @@ class AddItemController extends BaseController {
 
   getArgdata() async {
     // print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
-    if (Get.arguments['favorite'] != null) {
+    if (Get.arguments?['favorite'] != null) {
       print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
       isFavorite = Get.arguments['favorite'];
       print("Do It");
       print("dataaaaaaaaaaaa${isFavorite}");
+    } else {
+      print("No Favorite Data");
     }
-    if (Get.arguments['tag'] != null) {
+    if (Get.arguments?['tag'] != null) {
       print("uygvuygb  ${Get.arguments['tag']}");
       initalTags = [Get.arguments['tag']];
       update();
+    } else {
+      print("No Tag Data");
     }
   }
 
