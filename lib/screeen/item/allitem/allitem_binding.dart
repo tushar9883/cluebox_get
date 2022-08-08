@@ -34,8 +34,8 @@ class AllItemController extends BaseController {
     itemlist?.clear();
     itemlist = allData;
     storage = allData;
-    update();
     isLoading == false;
+    update();
   }
 
   searching() {
@@ -53,6 +53,7 @@ class AllItemController extends BaseController {
   }
 
   deleteitem() async {
+    isLoading = true;
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
 
     if (userData.isNotEmpty) {
@@ -61,6 +62,7 @@ class AllItemController extends BaseController {
       await DbHelp().udpateUserData(userData.first, userData.first.uid);
       print("User itemCount updated___________");
     }
+    isLoading = false;
   }
 
   back() {
