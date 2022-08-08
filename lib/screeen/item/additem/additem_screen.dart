@@ -218,6 +218,8 @@ class AdditemScreen extends BaseView<AddItemController> {
                                     color: const Color(0xff111111),
                                     fontSize: 14.sp,
                                   ),
+                                  textCapitalization:
+                                      TextCapitalization.characters,
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
