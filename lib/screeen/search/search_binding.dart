@@ -27,42 +27,33 @@ class SearchController extends BaseController {
     searchModel = allresult;
     print("sdicbf${allresult}");
     storvalue();
-    getToken();
     update();
   }
 
   storvalue() async {
     if (search.text.isNotEmpty) {
       values.add(search.text);
-      setToken();
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setStringList("data", values);
+      prefs.commit();
+      print("token is: ${prefs.getStringList("data")}");
     }
   }
 
-  // storageGet() async {
-  //   var check = await storage.read(key: "search");
-  //   print("datatatatatatat ${check!.length}");
-  //   print("valuessss data  ${check}");
-  // }
-
-  void setToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("data", values.toString());
-    print("token is: ${prefs.getString("data")}");
-  }
-
-  Future<String?> getToken() async {
+  Future<List<String>> getValues() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.reload();
-    String? value = sharedPreferences.getString("data");
+    List<String>? value = sharedPreferences.getStringList("data");
+    values = value!;
     print("your data: $value");
+    print("your : ${values.length}");
+    print("your : ${values}");
     return value;
   }
 
   @override
   void onInit() {
     super.onInit();
-    // storageGet();
-    setToken();
     update();
+    getValues();
   }
 }
