@@ -79,6 +79,7 @@ class SearchScreen extends BaseView<SearchController> {
                       onSubmitted: (val) {
                         controller.showLoadingDialog();
                         controller.getSeachResult();
+                        controller.isFirst = false;
                         controller.update();
                         controller.hideDialog();
                       },
@@ -115,94 +116,93 @@ class SearchScreen extends BaseView<SearchController> {
                 ],
               ),
             ),
-
             SizedBox(
               height: 10.h,
             ),
-
-            ///ToDO 1 Search
-            controller.searchModel == null
+            controller.isFirst == true
                 ? Expanded(
-                    child: Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(
-                          'assets/image/Search.png',
-                          height: 92.h,
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 22.w),
+                          child: Text(
+                            "SEARCH HISTORY",
+                            style: robotoMedium.copyWith(
+                              color: const Color(0xff7d7d7d),
+                              fontSize: 8.sp,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 20.h,
                         ),
-                        Text(
-                          'Let’s find the Clue for your item.',
-                          style: robotoRegular.copyWith(
-                            color: const Color(0xffa8a8a8),
-                            fontSize: 10.sp,
+                        Container(
+                          margin: EdgeInsets.only(left: 22.w),
+                          child: SimpleTags(
+                            content: controller.values,
+                            wrapSpacing: 15,
+                            wrapRunSpacing: 6,
+                            onTagPress: (tag) {
+                              print('pressed $tag');
+                            },
+                            onTagLongPress: (tag) {
+                              print('long pressed $tag');
+                            },
+                            onTagDoubleTap: (tag) {
+                              print('double tapped $tag');
+                            },
+                            tagContainerPadding: EdgeInsets.all(10.h),
+                            tagTextStyle: robotoBold.copyWith(
+                                color: const Color(0xff7d7d7d),
+                                fontSize: 14.sp),
+                            // tagIcon: Icon(Icons.clear, size: 12),
+                            tagContainerDecoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: const Color(0xff7d7d7d),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20.r),
+                              ),
+                            ),
                           ),
-                        )
+                        ),
                       ],
-                    )),
+                    ),
                   )
-                :
-
-                ///ToDo 2 Seach
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     SizedBox(
-                //       height: 60.h,
-                //     ),
-                //     Container(
-                //       margin: EdgeInsets.only(left: 22.w),
-                //       child: Text(
-                //         "SEARCH HISTORY",
-                //         style: robotoMedium.copyWith(
-                //           color: const Color(0xff7d7d7d),
-                //           fontSize: 8.sp,
-                //         ),
+                : const SizedBox.shrink(),
+            controller.searchModel == null
+                // ? Expanded(
+                //     child: Center(
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Image.asset(
+                //             'assets/image/Search.png',
+                //             height: 92.h,
+                //           ),
+                //           SizedBox(
+                //             height: 20.h,
+                //           ),
+                //           Text(
+                //             'Let’s find the Clue for your item.',
+                //             style: robotoRegular.copyWith(
+                //               color: const Color(0xffa8a8a8),
+                //               fontSize: 10.sp,
+                //             ),
+                //           )
+                //         ],
                 //       ),
                 //     ),
-                //     SizedBox(
-                //       height: 30.h,
-                //     ),
-                //     Container(
-                //       margin: EdgeInsets.only(left: 22.w),
-                //       child: SimpleTags(
-                //         content: controller.content,
-                //         wrapSpacing: 15,
-                //         wrapRunSpacing: 6,
-                //         onTagPress: (tag) {
-                //           print('pressed $tag');
-                //         },
-                //         onTagLongPress: (tag) {
-                //           print('long pressed $tag');
-                //         },
-                //         onTagDoubleTap: (tag) {
-                //           print('double tapped $tag');
-                //         },
-                //         tagContainerPadding: EdgeInsets.all(10.h),
-                //         tagTextStyle: robotoBold.copyWith(
-                //             color: const Color(0xff7d7d7d), fontSize: 14.sp),
-                //         // tagIcon: Icon(Icons.clear, size: 12),
-                //         tagContainerDecoration: BoxDecoration(
-                //           color: Colors.white,
-                //           border: Border.all(
-                //             color: const Color(0xff7d7d7d),
-                //             width: 1,
-                //           ),
-                //           borderRadius: BorderRadius.all(
-                //             Radius.circular(20.r),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-
-                ///ToDO 3 Search
-                Expanded(
+                //   )
+                ? const SizedBox.shrink()
+                : Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

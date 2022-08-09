@@ -20,6 +20,7 @@ class SearchController extends BaseController {
   List<AddItemModel>? searchModel;
   bool result = false;
   List<String> values = [];
+  bool isFirst = true;
 
   getSeachResult() async {
     var allresult = await DbHelp().getsearch(search.text, userid!);
@@ -47,13 +48,14 @@ class SearchController extends BaseController {
     print("your data: $value");
     print("your : ${values.length}");
     print("your : ${values}");
+    update();
     return value;
   }
 
   @override
   void onInit() {
     super.onInit();
-    update();
     getValues();
+    update();
   }
 }
