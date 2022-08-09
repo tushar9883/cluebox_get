@@ -21,7 +21,7 @@ class AllItemScreen extends BaseView<AllItemController> {
     var total;
     return controller.isLoading == true
         ? Material(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.1),
             child: Center(
               child: Wrap(
                 children: [

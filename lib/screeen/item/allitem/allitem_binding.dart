@@ -28,13 +28,13 @@ class AllItemController extends BaseController {
   bool isLoading = false;
 
   Future<void> getData() async {
-    isLoading == true;
+    isLoading = true;
     print("Favorite >>>><<<<< $userid");
     var allData = await DbHelp().getAllItemList(userid!, boxId: myBox?.uid);
     itemlist?.clear();
     itemlist = allData;
     storage = allData;
-    isLoading == false;
+    isLoading = false;
     update();
   }
 
