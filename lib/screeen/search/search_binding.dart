@@ -20,6 +20,7 @@ class SearchController extends BaseController {
   List<AddItemModel>? searchModel;
   bool result = false;
   List<String> values = [];
+  List<String> valuesdata = [];
   bool isFirst = true;
 
   getSeachResult() async {
@@ -45,9 +46,13 @@ class SearchController extends BaseController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     List<String>? value = sharedPreferences.getStringList("data");
     values = value!;
+    try {
+      values.removeRange(10, value.length);
+    } catch (e) {
+      print(e);
+    }
+
     print("your data: $value");
-    print("your : ${values.length}");
-    print("your : ${values}");
     update();
     return value;
   }

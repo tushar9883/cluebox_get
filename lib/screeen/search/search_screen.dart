@@ -75,11 +75,21 @@ class SearchScreen extends BaseView<SearchController> {
                     child: TextField(
                       cursorColor: const Color(0xff5566fd),
                       onSubmitted: (val) {
-                        controller.showLoadingDialog();
-                        controller.getSeachResult();
-                        controller.isFirst = false;
-                        controller.update();
-                        controller.hideDialog();
+                        if (controller.search.text.isNotEmpty) {
+                          if (controller.search.text.length >= 3) {
+                            controller.showLoadingDialog();
+                            controller.getSeachResult();
+                            controller.isFirst = false;
+                            controller.update();
+                            controller.hideDialog();
+                          } else {
+                            controller.showSimpleErrorToast(
+                                message: 'Minimum Length 3');
+                          }
+                        } else {
+                          controller.showSimpleErrorToast(
+                              message: 'Please Enter Search ');
+                        }
                       },
                       controller: controller.search,
                       style: robotoRegular.copyWith(
@@ -90,6 +100,7 @@ class SearchScreen extends BaseView<SearchController> {
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.search,
                       decoration: InputDecoration(
+                        // errorText: controller.errorText,
                         hintText: 'Search your item here.',
                         hintStyle: TextStyle(
                           color: const Color(0xff5a5a5a),
@@ -144,6 +155,8 @@ class SearchScreen extends BaseView<SearchController> {
                           child: SimpleTags(
                             content: controller.values,
                             wrapSpacing: 15,
+
+                            // tagTextMaxlines: 5,
                             wrapRunSpacing: 6,
                             onTagPress: (tag) {
                               print('pressed $tag');
