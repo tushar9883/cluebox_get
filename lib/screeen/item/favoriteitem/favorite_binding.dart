@@ -1,6 +1,7 @@
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/model/additem_model.dart';
+import 'package:clue_get/screeen/home/home_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,15 @@ class FavoriteController extends BaseController {
     favoritedatalist = allData;
     isLoading = false;
     update();
+  }
+
+  back() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var controll = Get.find<HomeController>();
+      controll.getUserData(userid!);
+      controll.getData(userid!);
+    });
+    Get.back();
   }
 
   searching() {
