@@ -20,7 +20,6 @@ class SearchController extends BaseController {
   List<AddItemModel>? searchModel;
   bool result = false;
   List<String> values = [];
-  List<String> valuesdata = [];
   bool isFirst = true;
 
   getSeachResult() async {
@@ -47,6 +46,7 @@ class SearchController extends BaseController {
     List<String>? value = sharedPreferences.getStringList("data");
     values = value!;
     try {
+      values = values.reversed.toList();
       values.removeRange(10, value.length);
     } catch (e) {
       print(e);

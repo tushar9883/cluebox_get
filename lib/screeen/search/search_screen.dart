@@ -159,13 +159,8 @@ class SearchScreen extends BaseView<SearchController> {
                             // tagTextMaxlines: 5,
                             wrapRunSpacing: 6,
                             onTagPress: (tag) {
+                              controller.search.text = tag;
                               print('pressed $tag');
-                            },
-                            onTagLongPress: (tag) {
-                              print('long pressed $tag');
-                            },
-                            onTagDoubleTap: (tag) {
-                              print('double tapped $tag');
                             },
                             tagContainerPadding: EdgeInsets.all(10.h),
                             tagTextStyle: robotoBold.copyWith(
@@ -189,30 +184,30 @@ class SearchScreen extends BaseView<SearchController> {
                   )
                 : const SizedBox.shrink(),
             controller.searchModel == null
-                // ? Expanded(
-                //     child: Center(
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: [
-                //           Image.asset(
-                //             'assets/image/Search.png',
-                //             height: 92.h,
-                //           ),
-                //           SizedBox(
-                //             height: 20.h,
-                //           ),
-                //           Text(
-                //             'Let’s find the Clue for your item.',
-                //             style: robotoRegular.copyWith(
-                //               color: const Color(0xffa8a8a8),
-                //               fontSize: 10.sp,
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   )
-                ? const SizedBox.shrink()
+                ? Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/image/Search.png',
+                            height: 92.h,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Text(
+                            'Let’s find the Clue for your item.',
+                            style: robotoRegular.copyWith(
+                              color: const Color(0xffa8a8a8),
+                              fontSize: 10.sp,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                // ? const SizedBox.shrink()
                 : Expanded(
                     child: SingleChildScrollView(
                       child: Column(
