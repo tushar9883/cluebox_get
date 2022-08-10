@@ -19,15 +19,18 @@ class SearchController extends BaseController {
   var userid = FirebaseAuth.instance.currentUser?.uid;
   List<AddItemModel>? searchModel;
   bool result = false;
+  bool isLoading = false;
   List<String> values = [];
   bool isFirst = true;
 
   getSeachResult() async {
+    isLoading = true;
     var allresult = await DbHelp().getsearch(search.text, userid!);
     searchModel?.clear();
     searchModel = allresult;
     print("sdicbf${allresult}");
     storvalue();
+    isLoading = false;
     update();
   }
 
