@@ -150,10 +150,15 @@ class AllItemScreen extends BaseView<AllItemController> {
                       ),
                       InkWell(
                         onTap: () {
+                          controller.showLoadingDialog();
                           if (controller.search.text.isNotEmpty) {
                             controller.search.clear();
+                            controller.hideDialog();
+                            controller.update();
                           } else if (controller.search.text.isEmpty) {
                             controller.getData();
+                            controller.hideDialog();
+                            controller.update();
                           }
                         },
                         child: Container(

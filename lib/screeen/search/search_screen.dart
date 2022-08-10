@@ -112,10 +112,15 @@ class SearchScreen extends BaseView<SearchController> {
                   ),
                   InkWell(
                     onTap: () {
+                      controller.showLoadingDialog();
                       if (controller.search.text.isNotEmpty) {
                         controller.search.clear();
+                        controller.hideDialog();
+                        controller.update();
                       } else if (controller.search.text.isEmpty) {
                         controller.getSeachResult();
+                        controller.hideDialog();
+                        controller.update();
                       }
                     },
                     child: Container(

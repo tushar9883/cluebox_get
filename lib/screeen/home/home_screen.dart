@@ -585,7 +585,7 @@ class HomeScreen extends BaseView<HomeController> {
                                     )
                                   : const SizedBox.shrink(),
                               SizedBox(
-                                height: 8.h,
+                                height: 16.h,
                               ),
                             ],
                           ),
