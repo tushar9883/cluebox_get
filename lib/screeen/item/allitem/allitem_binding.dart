@@ -5,6 +5,7 @@ import 'package:clue_get/model/box_model.dart';
 import 'package:clue_get/model/tag_model.dart';
 import 'package:clue_get/model/user_model.dart';
 import 'package:clue_get/screeen/home/home_binding.dart';
+import 'package:clue_get/screeen/tag/tag/tag_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,9 @@ class AllItemController extends BaseController {
   bool isFavoritetrue = true;
   List<AddItemModel>? itemlist;
   List<AddItemModel>? storage;
-
-  TagModel? tagModel;
+  List<TagModel>? tages;
+  // TagModel? tagModel;
+  List<TagModel>? tagList;
   AddItemModel? item;
   BoxModel? myBox;
   bool isLoading = false;
@@ -52,6 +54,10 @@ class AllItemController extends BaseController {
     }
   }
 
+  tag() async {
+    tages = await DbHelp().getAllTagsByUser(userid!);
+  }
+
   deleteitem() async {
     isLoading = true;
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
@@ -61,7 +67,27 @@ class AllItemController extends BaseController {
       userData.first.itemCount = (userData.first.itemCount ?? 0) - 1;
       await DbHelp().udpateUserData(userData.first, userData.first.uid);
       print("User itemCount updated___________");
+      print('tag id  ----- ${tages?.first.uid}');
+
+      TagModel? tagData = await DbHelp().getTagData('${tages?.first.uid}');
+      var tagIds = [];
+      if (tagData != null) {
+        tagIds.add(tagData.uid);
+        tagData.tagItemCount = (tagData.tagItemCount ?? 0) - 1;
+        await DbHelp().addtag(tagData);
+        print("User Tag updated___________");
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        var controlH = Get.find<HomeController>();
+        controlH.getData(userid!);
+        controlH.getAllTags(userid!);
+        controlH.getUserData(userid!);
+        // var controll = Get.find<TagController>();
+        // controll.getAllTags(userid!);
+      });
     }
+
     isLoading = false;
   }
 
@@ -81,7 +107,9 @@ class AllItemController extends BaseController {
     if (Get.arguments != null) {
       myBox = BoxModel.fromDB(Get.arguments);
     }
+    tag();
     getData();
+    print('tag id  ----- ${tages?.first.uid}');
     update();
     super.onInit();
   }

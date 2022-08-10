@@ -52,6 +52,14 @@ class TagItemController extends BaseController {
     update();
   }
 
+  back() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var controll = Get.find<TagController>();
+      controll.getAllTags(userid!);
+    });
+    Get.back();
+  }
+
   deleteitem() async {
     List<UserModel>? userData = await DbHelp().getuserData(userid!);
 
