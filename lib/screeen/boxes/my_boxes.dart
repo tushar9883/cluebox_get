@@ -16,328 +16,319 @@ class MyBoxes extends BaseView<MyBoxController> {
   Widget vBuilder(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:
-          // controller.mydataBoxList == null || controller.mydataBoxList!.isEmpty
-          controller.isLoading == true
-              ? Material(
-                  color: Colors.black.withOpacity(0.5),
-                  child: Center(
-                    child: Wrap(
-                      children: [
-                        Container(
-                          padding: REdgeInsets.all(10.0),
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10.r)),
-                          // child: const CircularProgressIndicator(),
-                          child: const SpinKitFadingCircle(
-                            color: Colors.blue,
-                            size: 50.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : SafeArea(
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ///ToDo 2 Box
+                Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ///ToDo 2 Box
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Container(
-                                      margin: EdgeInsets.only(left: 21.w),
-                                      child: SvgPicture.asset(
-                                          'assets/svg/back.svg')),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 21.w),
-                                  child: GradientText(
-                                    "All Boxes",
-                                    style: robotoBold.copyWith(
-                                      color: const Color(0xff4A00E0),
-                                      fontSize: 22.sp,
-                                    ),
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Color(0xff4A00E0),
-                                        Color(0xff8E2DE2),
-                                      ],
-                                      begin: Alignment(-1.0, 0),
-                                      end: Alignment(1, 1),
-                                    ),
-                                  ),
-                                ),
-                                PopupMenuButton(
-                                  padding: EdgeInsets.zero,
-                                  position: PopupMenuPosition.under,
-                                  child: SvgPicture.asset(
-                                    'assets/svg/filter.svg',
-                                    height: 70.h,
-                                  ),
-                                  onSelected: (value) {
-                                    value!;
-                                    print(value);
-                                  },
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      value: 0,
-                                      onTap: () {
-                                        controller.mydataBoxList?.sort((a, b) =>
-                                            a.name!.compareTo(b.name!));
-                                        controller.update();
-                                      },
-                                      child: Center(
-                                        child: Text('A to Z',
-                                            style: robotoBold.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 12.sp,
-                                            )),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 1,
-                                      onTap: () {
-                                        controller.mydataBoxList?.sort((a, b) =>
-                                            a.date!.compareTo(b.date!));
-                                        controller.update();
-                                      },
-                                      child: Center(
-                                        child: Text('Date Added',
-                                            style: robotoBold.copyWith(
-                                              color: Colors.black,
-                                              fontSize: 12.sp,
-                                            )),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 21.w),
-                              height: 54.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(62),
-                                color: const Color(0xffe5e5e5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                                margin: EdgeInsets.only(left: 21.w),
+                                child: SvgPicture.asset('assets/svg/back.svg')),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 21.w),
+                            child: GradientText(
+                              "All Boxes",
+                              style: robotoBold.copyWith(
+                                color: const Color(0xff4A00E0),
+                                fontSize: 22.sp,
                               ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  const Icon(
-                                    Icons.search,
-                                    color: const Color(0xff5a5a5a),
-                                  ),
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  Expanded(
-                                    child: TextField(
-                                      cursorColor: const Color(0xff5566fd),
-                                      controller: controller.search,
-                                      style: robotoRegular.copyWith(
-                                        color: const Color(0xff111111),
-                                        fontSize: 14.sp,
-                                      ),
-                                      onSubmitted: (value) {
-                                        controller.searching();
-                                      },
-                                      autofocus: false,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.search,
-                                      decoration: InputDecoration(
-                                        hintText: 'Search your boxes here.',
-                                        hintStyle: TextStyle(
-                                          color: const Color(0xff5a5a5a),
-                                          fontSize: 12.sp,
-                                        ),
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      controller.showLoadingDialog();
-                                      if (controller.search.text.isNotEmpty) {
-                                        controller.search.clear();
-                                        controller.hideDialog();
-                                        controller.update();
-                                      } else if (controller
-                                          .search.text.isEmpty) {
-                                        controller.getBoxLocWise();
-                                        controller.hideDialog();
-                                        controller.update();
-                                      }
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(right: 10.w),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Color(0xff5a5a5a),
-                                      ),
-                                    ),
-                                  ),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff4A00E0),
+                                  Color(0xff8E2DE2),
                                 ],
+                                begin: Alignment(-1.0, 0),
+                                end: Alignment(1, 1),
                               ),
                             ),
-                            SizedBox(
-                              height: 14.h,
+                          ),
+                          PopupMenuButton(
+                            padding: EdgeInsets.zero,
+                            position: PopupMenuPosition.under,
+                            child: SvgPicture.asset(
+                              'assets/svg/filter.svg',
+                              height: 70.h,
                             ),
-                            controller.mydataBoxList == null ||
-                                    controller.mydataBoxList!.isEmpty
-                                ? Expanded(
-                                    child: Center(
-                                        child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/image/Search.png',
-                                          height: 92.h,
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Text(
-                                          'Create the boxes to group the relevant items.',
-                                          style: robotoRegular.copyWith(
-                                            color: const Color(0xffa8a8a8),
-                                            fontSize: 10.sp,
-                                          ),
-                                        )
-                                      ],
-                                    )),
+                            onSelected: (value) {
+                              value!;
+                              print(value);
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 0,
+                                onTap: () {
+                                  controller.mydataBoxList?.sort(
+                                      (a, b) => a.name!.compareTo(b.name!));
+                                  controller.update();
+                                },
+                                child: Center(
+                                  child: Text('A to Z',
+                                      style: robotoBold.copyWith(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                      )),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 1,
+                                onTap: () {
+                                  controller.mydataBoxList?.sort(
+                                      (a, b) => a.date!.compareTo(b.date!));
+                                  controller.update();
+                                },
+                                child: Center(
+                                  child: Text('Date Added',
+                                      style: robotoBold.copyWith(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                      )),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 21.w),
+                        height: 54.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(62),
+                          color: const Color(0xffe5e5e5),
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            const Icon(
+                              Icons.search,
+                              color: const Color(0xff5a5a5a),
+                            ),
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Expanded(
+                              child: TextField(
+                                cursorColor: const Color(0xff5566fd),
+                                controller: controller.search,
+                                style: robotoRegular.copyWith(
+                                  color: const Color(0xff111111),
+                                  fontSize: 14.sp,
+                                ),
+                                onSubmitted: (value) {
+                                  controller.searching();
+                                },
+                                autofocus: false,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.search,
+                                decoration: InputDecoration(
+                                  hintText: 'Search your boxes here.',
+                                  hintStyle: TextStyle(
+                                    color: const Color(0xff5a5a5a),
+                                    fontSize: 12.sp,
+                                  ),
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                controller.showLoadingDialog();
+                                if (controller.search.text.isNotEmpty) {
+                                  controller.search.clear();
+                                  controller.hideDialog();
+                                  controller.update();
+                                } else if (controller.search.text.isEmpty) {
+                                  controller.getBoxLocWise();
+                                  controller.hideDialog();
+                                  controller.update();
+                                }
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 10.w),
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Color(0xff5a5a5a),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      controller.mydataBoxList == null ||
+                              controller.mydataBoxList!.isEmpty
+                          ? Expanded(
+                              child: Center(
+                                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/image/Search.png',
+                                    height: 92.h,
+                                  ),
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  Text(
+                                    'Create the boxes to group the relevant items.',
+                                    style: robotoRegular.copyWith(
+                                      color: const Color(0xffa8a8a8),
+                                      fontSize: 10.sp,
+                                    ),
                                   )
-                                : Expanded(
-                                    child: ListView.builder(
-                                      // physics: const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets.only(bottom: 200.h),
-                                      itemCount:
-                                          controller.mydataBoxList?.length ?? 0,
-                                      itemBuilder:
-                                          (BuildContext context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            var titlename = controller
-                                                .mydataBoxList?[index].name;
-                                            print(titlename);
+                                ],
+                              )),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                // physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                padding: EdgeInsets.only(bottom: 200.h),
+                                itemCount:
+                                    controller.mydataBoxList?.length ?? 0,
+                                itemBuilder: (BuildContext context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      var titlename =
+                                          controller.mydataBoxList?[index].name;
+                                      print(titlename);
 
-                                            Get.toNamed(
-                                              RouterName.allitem,
-                                              arguments: controller
-                                                  .mydataBoxList?[index]
-                                                  .toJson(),
-                                            );
+                                      Get.toNamed(
+                                        RouterName.allitem,
+                                        arguments: controller
+                                            .mydataBoxList?[index]
+                                            .toJson(),
+                                      );
 
-                                            // Get.toNamed(
-                                            //   RouterName.locationScreen,
-                                            //   arguments: controller
-                                            //       .mydataBoxList?[index]
-                                            //       .toJson(),
-                                            // );
-                                          },
-                                          child: Column(
+                                      // Get.toNamed(
+                                      //   RouterName.locationScreen,
+                                      //   arguments: controller
+                                      //       .mydataBoxList?[index]
+                                      //       .toJson(),
+                                      // );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 21.w,
+                                              right: 21.w,
+                                              top: 12.h),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 21.w,
-                                                    right: 21.w,
-                                                    top: 12.h),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        controller
-                                                                .mydataBoxList?[
-                                                                    index]
-                                                                .name ??
-                                                            '',
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        style: robotoMedium
-                                                            .copyWith(
-                                                                fontSize: 16.sp,
-                                                                color: Colors
-                                                                    .black),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10.w,
-                                                    ),
-                                                    // Container(
-                                                    //   padding:
-                                                    //   EdgeInsets.symmetric(
-                                                    //     horizontal: 10.w,
-                                                    //     vertical: 5.h,
-                                                    //   ),
-                                                    //   decoration: BoxDecoration(
-                                                    //     borderRadius:
-                                                    //     BorderRadius
-                                                    //         .circular(25.r),
-                                                    //     color: Colors.black,
-                                                    //   ),
-                                                    //   child: Text(
-                                                    //     controller
-                                                    //         .mydataBoxList?[index]
-                                                    //         .tagCount
-                                                    //         .toString() ??
-                                                    //         '0',
-                                                    //     overflow: TextOverflow
-                                                    //         .ellipsis,
-                                                    //     style:
-                                                    //     robotoBold.copyWith(
-                                                    //         fontSize: 12.sp,
-                                                    //         color: Colors
-                                                    //             .white),
-                                                    //   ),
-                                                    // ),
-                                                  ],
+                                              Expanded(
+                                                child: Text(
+                                                  controller
+                                                          .mydataBoxList?[index]
+                                                          .name ??
+                                                      '',
+                                                  overflow: TextOverflow.clip,
+                                                  style: robotoMedium.copyWith(
+                                                      fontSize: 16.sp,
+                                                      color: Colors.black),
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: 12.h,
+                                                width: 10.w,
                                               ),
-                                              Container(
-                                                color: const Color(0xffDEDEDE),
-                                                height: 1,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              )
+                                              // Container(
+                                              //   padding:
+                                              //   EdgeInsets.symmetric(
+                                              //     horizontal: 10.w,
+                                              //     vertical: 5.h,
+                                              //   ),
+                                              //   decoration: BoxDecoration(
+                                              //     borderRadius:
+                                              //     BorderRadius
+                                              //         .circular(25.r),
+                                              //     color: Colors.black,
+                                              //   ),
+                                              //   child: Text(
+                                              //     controller
+                                              //         .mydataBoxList?[index]
+                                              //         .tagCount
+                                              //         .toString() ??
+                                              //         '0',
+                                              //     overflow: TextOverflow
+                                              //         .ellipsis,
+                                              //     style:
+                                              //     robotoBold.copyWith(
+                                              //         fontSize: 12.sp,
+                                              //         color: Colors
+                                              //             .white),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
-                                        );
-                                      },
+                                        ),
+                                        SizedBox(
+                                          height: 12.h,
+                                        ),
+                                        Container(
+                                          color: const Color(0xffDEDEDE),
+                                          height: 1,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        )
+                                      ],
                                     ),
-                                  ),
-                          ],
-                        ),
-                      )
+                                  );
+                                },
+                              ),
+                            ),
                     ],
                   ),
+                )
+              ],
+            ),
+          ),
+          if (controller.isLoading == true)
+            Container(
+              color: Colors.black.withOpacity(0.1),
+              child: Center(
+                child: Wrap(
+                  children: [
+                    Container(
+                      padding: REdgeInsets.all(10.0),
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.r)),
+                      child: const SpinKitFadingCircle(
+                        color: Colors.blue,
+                        size: 50.0,
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+            ),
+        ],
+      ),
       // floatingActionButton: InkWell(
       //   onTap: () {
       //     showDialog(

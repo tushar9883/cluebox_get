@@ -119,7 +119,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                       ),
                       const Icon(
                         Icons.search,
-                        color: const Color(0xff5a5a5a),
+                        color: Color(0xff5a5a5a),
                       ),
                       SizedBox(
                         width: 4.w,
@@ -247,7 +247,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                                           children: [
                                             SlidableAction(
                                               backgroundColor:
-                                                  Color(0xFFFE4A49),
+                                                  const Color(0xFFFE4A49),
                                               foregroundColor: Colors.white,
                                               icon: Icons.delete,
                                               label: 'Delete',
@@ -484,7 +484,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                               style:
                                                                   robotoMedium
                                                                       .copyWith(
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xff7d7d7d),
                                                                 fontSize: 8.sp,
                                                               ),
@@ -544,7 +544,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                             "LOCATION",
                                                             style: robotoMedium
                                                                 .copyWith(
-                                                              color: Color(
+                                                              color: const Color(
                                                                   0xff7d7d7d),
                                                               fontSize: 8.sp,
                                                             ),
@@ -595,7 +595,7 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Item Added on: ${outputDate}",
+                                                  "Item Added on: $outputDate",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: robotoMedium.copyWith(

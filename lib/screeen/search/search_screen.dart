@@ -66,7 +66,7 @@ class SearchScreen extends BaseView<SearchController> {
                   ),
                   const Icon(
                     Icons.search,
-                    color: const Color(0xff5a5a5a),
+                    color: Color(0xff5a5a5a),
                   ),
                   SizedBox(
                     width: 4.w,
