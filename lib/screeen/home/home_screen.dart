@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
@@ -459,37 +457,34 @@ class HomeScreen extends BaseView<HomeController> {
                                                       ],
                                                     ),
                                                     child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.r),
-                                                        child: loc?.image ==
-                                                                null
-                                                            ? Image.asset(
-                                                                'assets/image/default.png',
-                                                                height: 65.h,
-                                                                width: 74.w,
-                                                                fit: BoxFit
-                                                                    .cover)
-                                                            : Image.network(
-                                                                "${loc?.image}",
-                                                                height: 65.h,
-                                                                width: 74.w,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                errorBuilder:
-                                                                    (context,
-                                                                        error,
-                                                                        stackTrace) {
-                                                                  return Image.asset(
-                                                                      'assets/image/default.png',
-                                                                      height:
-                                                                          65.h,
-                                                                      width:
-                                                                          74.w,
-                                                                      fit: BoxFit
-                                                                          .cover);
-                                                                },
-                                                              )),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.r),
+                                                      child: loc?.image == null
+                                                          ? Image.asset(
+                                                              'assets/image/default.png',
+                                                              height: 65.h,
+                                                              width: 74.w,
+                                                              fit: BoxFit.cover)
+                                                          : Image.network(
+                                                              "${loc?.image}",
+                                                              height: 65.h,
+                                                              width: 74.w,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder:
+                                                                  (context,
+                                                                      error,
+                                                                      stackTrace) {
+                                                                return Image.asset(
+                                                                    'assets/image/default.png',
+                                                                    height:
+                                                                        65.h,
+                                                                    width: 74.w,
+                                                                    fit: BoxFit
+                                                                        .cover);
+                                                              },
+                                                            ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
