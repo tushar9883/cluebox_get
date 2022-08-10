@@ -183,7 +183,7 @@ class SearchScreen extends BaseView<SearchController> {
                     ),
                   )
                 : const SizedBox.shrink(),
-            controller.searchModel == null
+            controller.searchModel == null || controller.searchModel!.isEmpty
                 ? Expanded(
                     child: Center(
                       child: Column(
