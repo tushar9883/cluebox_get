@@ -174,7 +174,13 @@ class MyLocation extends BaseView<MyLocationController> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      controller.search.clear();
+                                      var id = controller.userid;
+                                      if (controller.search.text.isNotEmpty) {
+                                        controller.search.clear();
+                                      } else if (controller
+                                          .search.text.isEmpty) {
+                                        controller.getAllLocations(id!);
+                                      }
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(right: 10.w),

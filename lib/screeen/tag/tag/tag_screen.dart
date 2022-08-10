@@ -170,7 +170,12 @@ class TagScreen extends BaseView<TagController> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  controller.search.clear();
+                                  var id = controller.userid;
+                                  if (controller.search.text.isNotEmpty) {
+                                    controller.search.clear();
+                                  } else if (controller.search.text.isEmpty) {
+                                    controller.getAllTags(id!);
+                                  }
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(right: 10.w),

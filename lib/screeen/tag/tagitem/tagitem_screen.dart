@@ -310,7 +310,12 @@ class TagItemScreen extends BaseView<TagItemController> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      controller.search.clear();
+                                      if (controller.search.text.isNotEmpty) {
+                                        controller.search.clear();
+                                      } else if (controller
+                                          .search.text.isEmpty) {
+                                        controller.getAllItemsFromTag();
+                                      }
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(right: 10.w),

@@ -16,6 +16,7 @@ class MyLocationBinding implements Bindings {
 }
 
 class MyLocationController extends BaseController {
+  var userid = FirebaseAuth.instance.currentUser?.uid;
   final search = TextEditingController();
   // var jsonResult;
   List<LocationModel>? myLocationList;
@@ -53,7 +54,6 @@ class MyLocationController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    var userid = FirebaseAuth.instance.currentUser?.uid;
     getAllLocations(userid!);
     // loadJson();
     update();
