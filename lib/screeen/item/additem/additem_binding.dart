@@ -316,7 +316,8 @@ class AddItemController extends BaseController {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        // return alert;
+        return WillPopScope(onWillPop: () async => false, child: alert);
       },
     );
   }

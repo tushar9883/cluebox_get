@@ -159,7 +159,12 @@ class SearchScreen extends BaseView<SearchController> {
                             // tagTextMaxlines: 5,
                             wrapRunSpacing: 6,
                             onTagPress: (tag) {
+                              controller.showLoadingDialog();
                               controller.search.text = tag;
+                              controller.getSeachResult();
+                              controller.isFirst = false;
+                              controller.update();
+                              controller.hideDialog();
                               print('pressed $tag');
                             },
                             tagContainerPadding: EdgeInsets.all(10.h),

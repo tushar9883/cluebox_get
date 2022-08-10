@@ -218,8 +218,6 @@ class EditItemController extends BaseController {
       Nameitem.text = name!;
       counter.text = quantity!;
       isFavorite = like!;
-      // locationvaluess = allLocList
-      //     ?.firstWhere((element) => element.uid == itemModel?.locationId);
 
       if (itemModel?.tag != null) {
         tags.clear();
@@ -326,8 +324,10 @@ class EditItemController extends BaseController {
     // show the dialog
     showDialog(
       context: context,
+      barrierDismissible: true,
       builder: (BuildContext context) {
-        return alert;
+        // return alert;
+        return WillPopScope(onWillPop: () async => false, child: alert);
       },
     );
   }
