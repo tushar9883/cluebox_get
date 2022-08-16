@@ -183,6 +183,15 @@ class DbHelp {
     return res;
   }
 
+  Future<List<TagModel?>?> getTagListData(List<String?> ids) async {
+    List<TagModel?> allTags = [];
+    for (var element in ids) {
+      TagModel? res = await tagdb.getSingle(element!);
+      allTags.add(res);
+    }
+    return allTags;
+  }
+
   Future<List<UserModel>> getUserDetails(String user) async {
     List<UserModel> res = await userdb.getQueryList(
       args: [

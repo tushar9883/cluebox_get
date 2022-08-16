@@ -55,7 +55,7 @@ class AddItemModel {
   String? uid;
   String? userid;
   String? itemName;
-  List? tag;
+  List<dynamic>? tag;
   String? boxName;
   String? locationName;
   String? quantity;

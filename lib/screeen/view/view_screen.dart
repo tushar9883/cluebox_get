@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:like_button/like_button.dart';
 import '../../base/base_view_view_model.dart';
 import '../../res/style.dart';
+import '../../router/router_name.dart';
 
 class ViewScreen extends BaseView<ViewController> {
   const ViewScreen({Key? key}) : super(key: key);
@@ -161,8 +162,8 @@ class ViewScreen extends BaseView<ViewController> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        controller.tagList != null &&
-                                controller.tagList!.isNotEmpty == true
+                        controller.tagdata != null &&
+                                controller.tagdata.isNotEmpty == true
                             ? Column(
                                 children: [
                                   SizedBox(
@@ -172,9 +173,9 @@ class ViewScreen extends BaseView<ViewController> {
                                       padding: EdgeInsets.only(left: 12.w),
                                       scrollDirection: Axis.horizontal,
                                       itemCount:
-                                          (controller.tagList?.length)! > 10
+                                          (controller.tagdata.length) > 10
                                               ? 10
-                                              : controller.tagList?.length,
+                                              : controller.tagdata.length,
                                       itemBuilder:
                                           (BuildContext context, index) {
                                         return InkWell(
@@ -193,7 +194,7 @@ class ViewScreen extends BaseView<ViewController> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                "#${controller.tagList?[index].name}",
+                                                "#${controller.tagdata[index]?.name}",
                                                 textAlign: TextAlign.center,
                                                 style: robotoBold.copyWith(
                                                   color: Colors.white,
@@ -241,7 +242,6 @@ class ViewScreen extends BaseView<ViewController> {
                         ),
                         Text(
                           "${controller.itemModel?.boxName}",
-                          // "Checker Data",
                           style: robotoBold.copyWith(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -286,7 +286,10 @@ class ViewScreen extends BaseView<ViewController> {
                           height: 50.h,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(RouterName.edititem,
+                                arguments: controller.itemModel?.toJson());
+                          },
                           child: Container(
                             alignment: Alignment.center,
                             width: 140.w,

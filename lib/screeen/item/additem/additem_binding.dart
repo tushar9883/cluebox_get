@@ -153,14 +153,14 @@ class AddItemController extends BaseController {
       hideDialog();
       toastbar('Please enter Box Name');
     } else {
-      var tagIds = [];
+      List<String> tagIds = [];
       for (var tag in tagController.getTags ?? []) {
         TagModel? tagData = await DbHelp()
             .getTagData('${tag.toString().toLowerCase()}_$userid');
 
         if (tagData != null) {
           //Tag is already there in db
-          tagIds.add(tagData.uid);
+          tagIds.add(tagData.uid ?? "");
           tagData.tagItemCount = (tagData.tagItemCount ?? 0) + 1;
           await DbHelp().addtag(tagData);
           print("Present___________");
