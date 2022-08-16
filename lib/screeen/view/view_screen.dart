@@ -155,8 +155,6 @@ class ViewScreen extends BaseView<ViewController> {
                                       var id = controller.itemModel?.uid;
                                       controller.itemModel?.favorite = !isLiked;
                                       controller.update();
-                                      print(
-                                          '1111111111111111111111 ${controller.itemModel?.favorite}');
                                       if (controller.itemModel?.favorite ==
                                           true) {
                                         controller.showLoadingDialog();

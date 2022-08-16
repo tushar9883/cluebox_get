@@ -1,5 +1,6 @@
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
+import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
 import 'package:clue_get/screeen/tag/tagitem/tagitem_binding.dart';
@@ -791,13 +792,54 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                       ),
                                                       LikeButton(
                                                         size: 20.h,
+                                                        isLiked:
+                                                            data?.favorite ==
+                                                                true,
+                                                        onTap: (isLiked) async {
+                                                          var id = data?.uid;
+                                                          data?.favorite =
+                                                              !isLiked;
+                                                          controller.update();
+                                                          if (data?.favorite ==
+                                                              true) {
+                                                            controller
+                                                                .showLoadingDialog();
+                                                            await DbHelp()
+                                                                .updateFavorite(
+                                                                    AddItemModel(
+                                                                      favorite:
+                                                                          data?.favorite,
+                                                                    ),
+                                                                    id);
+                                                            controller.update();
+                                                            // controller
+                                                            //     .getAllItemsFromTag();
+                                                            controller
+                                                                .hideDialog();
+                                                          } else {
+                                                            controller
+                                                                .showLoadingDialog();
+                                                            await DbHelp()
+                                                                .updateFavorite(
+                                                                    AddItemModel(
+                                                                        favorite:
+                                                                            data?.favorite),
+                                                                    id);
+                                                            controller.update();
+                                                            // controller
+                                                            //     .getAllItemsFromTag();
+                                                            controller
+                                                                .hideDialog();
+                                                          }
+                                                          return Future.value(
+                                                              data?.favorite);
+                                                        },
                                                         likeBuilder:
                                                             (isTapped) {
                                                           return SvgPicture
                                                               .asset(
                                                             data?.favorite ??
                                                                     false
-                                                                // isTapped
                                                                 ? 'assets/svg/likes_fill.svg'
                                                                 : 'assets/svg/like.svg',
                                                             height: 18.h,
