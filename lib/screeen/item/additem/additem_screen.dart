@@ -786,12 +786,12 @@ class AdditemScreen extends BaseView<AddItemController> {
                                 SizedBox(
                                   height: 40.h,
                                 ),
-                                InkWell(
-                                  onTap: () async {
-                                    // await controller.additem();
-                                    await controller.submit(context);
-                                  },
-                                  child: Center(
+                                Center(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      // await controller.additem();
+                                      await controller.submit(context);
+                                    },
                                     child: Container(
                                       width: 177.w,
                                       height: 48.h,
