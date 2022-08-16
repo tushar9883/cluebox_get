@@ -435,12 +435,12 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                       await DbHelp()
                                                                           .removeItem(
                                                                               id!);
-                                                                      await DbHelp()
-                                                                          .removeBox(
-                                                                              boxid!);
-                                                                      await DbHelp()
-                                                                          .removeLocation(
-                                                                              locationid!);
+                                                                      // await DbHelp()
+                                                                      //     .removeBox(
+                                                                      //         boxid!);
+                                                                      // await DbHelp()
+                                                                      //     .removeLocation(
+                                                                      //         locationid!);
                                                                       await controller
                                                                           .deleteitem();
                                                                       WidgetsBinding

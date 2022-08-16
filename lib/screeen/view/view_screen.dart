@@ -1,3 +1,5 @@
+import 'package:clue_get/db/db_helper.dart';
+import 'package:clue_get/model/additem_model.dart';
 import 'package:clue_get/screeen/view/view_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -147,6 +149,40 @@ class ViewScreen extends BaseView<ViewController> {
                                   margin: EdgeInsets.only(right: 21.w),
                                   child: LikeButton(
                                     size: 30.h,
+                                    isLiked:
+                                        controller.itemModel?.favorite == true,
+                                    onTap: (isLiked) async {
+                                      var id = controller.itemModel?.uid;
+                                      controller.itemModel?.favorite = !isLiked;
+                                      controller.update();
+                                      print(
+                                          '1111111111111111111111 ${controller.itemModel?.favorite}');
+                                      if (controller.itemModel?.favorite ==
+                                          true) {
+                                        controller.showLoadingDialog();
+                                        await DbHelp().updateFavorite(
+                                            AddItemModel(
+                                              favorite: controller
+                                                  .itemModel?.favorite,
+                                            ),
+                                            id);
+                                        controller.update();
+                                        controller.getnewdata();
+                                        controller.hideDialog();
+                                      } else {
+                                        controller.showLoadingDialog();
+                                        await DbHelp().updateFavorite(
+                                            AddItemModel(
+                                                favorite: controller
+                                                    .itemModel?.favorite),
+                                            id);
+                                        controller.update();
+                                        controller.getnewdata();
+                                        controller.hideDialog();
+                                      }
+                                      return Future.value(
+                                          controller.itemModel?.favorite);
+                                    },
                                     likeBuilder: (e) {
                                       return SvgPicture.asset(
                                         controller.itemModel!.favorite!
