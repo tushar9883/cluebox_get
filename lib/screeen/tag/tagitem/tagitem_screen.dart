@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:clue_get/base/base_view_view_model.dart';
 import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/res/style.dart';
@@ -175,26 +173,15 @@ class TagItemScreen extends BaseView<TagItemController> {
                                 margin: EdgeInsets.only(left: 21.w),
                                 child: SvgPicture.asset('assets/svg/back.svg')),
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 21.w),
-                                child: Text(
-                                  "#${controller.tagModel?.name}",
-                                  style: robotoBold.copyWith(
-                                    color: Colors.black,
-                                    fontSize: 18.sp,
-                                  ),
-                                ),
+                          Container(
+                            margin: EdgeInsets.only(left: 21.w),
+                            child: Text(
+                              "#${controller.tagModel?.name}",
+                              style: robotoBold.copyWith(
+                                color: Colors.black,
+                                fontSize: 18.sp,
                               ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              SvgPicture.asset(
-                                'assets/svg/edit.svg',
-                                height: 12.h,
-                              )
-                            ],
+                            ),
                           ),
                           PopupMenuButton(
                             padding: EdgeInsets.zero,
