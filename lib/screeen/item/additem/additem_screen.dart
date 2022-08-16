@@ -9,6 +9,8 @@ import 'package:like_button/like_button.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import '../../../base/base_view_view_model.dart';
 import '../../../model/location_model.dart';
+import '../../../router/router_name.dart';
+import '../../home/home_binding.dart';
 
 class AdditemScreen extends BaseView<AddItemController> {
   const AdditemScreen({Key? key}) : super(key: key);
@@ -16,7 +18,17 @@ class AdditemScreen extends BaseView<AddItemController> {
   @override
   Widget vBuilder(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        var id = controller.userid;
+        Get.until((route) => Get.currentRoute == RouterName.home);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          var controll = Get.find<HomeController>();
+          controll.getData(id);
+          controll.getAllTags(id);
+          controll.getUserData(id);
+        });
+        return true;
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: true,
