@@ -41,6 +41,7 @@ class AddItemController extends BaseController {
   bool showBox = false;
   bool showLocation = false;
   bool hideBox = false;
+  bool isLoading = false;
   List<LocationModel>? allLocList;
   List<BoxModel>? allBoxList;
   List<TagModel>? allTagsList;
@@ -55,17 +56,12 @@ class AddItemController extends BaseController {
   // var tag = Get.arguments['tag'];
 
   getArgdata() async {
-    // print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
     if (Get.arguments?['favorite'] != null) {
-      print("bdisufbgvuidsbfdsbfib${Get.arguments['tag']}");
       isFavorite = Get.arguments['favorite'];
-      print("Do It");
-      print("dataaaaaaaaaaaa${isFavorite}");
     } else {
       print("No Favorite Data");
     }
     if (Get.arguments?['tag'] != null) {
-      print("uygvuygb  ${Get.arguments['tag']}");
       initalTags = [Get.arguments['tag']];
       update();
     } else {
@@ -129,28 +125,29 @@ class AddItemController extends BaseController {
   }
 
   submit(BuildContext context) async {
-    showLoadingDialog();
+    // showLoadingDialog();
+    isLoading = true;
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
     if (Nameitem.text.isEmpty) {
-      hideDialog();
+      isLoading = false;
       toastbar('Item name is required');
     } else if (locationvaluess == null) {
-      hideDialog();
+      isLoading = false;
       toastbar('Please select/add Location');
     } else if (locationvaluess?.name == 'Add Location' &&
         LocationName.text.isEmpty) {
-      hideDialog();
+      isLoading = false;
       toastbar('Please enter Location Name');
     } else if (locationvaluess?.name == 'Add Location' &&
         BoxName.text.isEmpty) {
-      hideDialog();
+      isLoading = false;
       toastbar('Please enter Box Name');
     } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
-      hideDialog();
+      isLoading = false;
       toastbar('Please select/add Box');
     } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
-      hideDialog();
+      isLoading = false;
       toastbar('Please enter Box Name');
     } else {
       List<String> tagIds = [];
@@ -189,10 +186,10 @@ class AddItemController extends BaseController {
         selectedLocation =
             LocationModel(uid: docrefLoc.id, name: LocationName.text);
         update();
-        hideDialog();
+        isLoading = false;
       } else {
         selectedLocation = locationvaluess;
-        hideDialog();
+        isLoading = false;
       }
       if (boxvalue?.name == 'Add Box' ||
           locationvaluess?.name == 'Add Location') {
@@ -205,11 +202,11 @@ class AddItemController extends BaseController {
         ));
         update();
         selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
-        hideDialog();
+        isLoading = false;
       } else {
         selectedBox = boxvalue;
         update();
-        hideDialog();
+        isLoading = false;
       }
       await DbHelp().addItem(AddItemModel(
           userid: userid,
@@ -234,7 +231,7 @@ class AddItemController extends BaseController {
         print("User itemCount updated___________");
       }
 
-      hideDialog();
+      isLoading = false;
       showAlertDialog(context);
     }
   }

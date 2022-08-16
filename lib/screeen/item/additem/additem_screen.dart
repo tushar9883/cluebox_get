@@ -826,7 +826,9 @@ class AdditemScreen extends BaseView<AddItemController> {
                 ],
               ),
             ),
-            if (controller.allLocList == null || controller.allLocList!.isEmpty)
+            if (controller.allLocList == null ||
+                controller.allLocList!.isEmpty ||
+                controller.isLoading == true)
               Container(
                 color: Colors.black.withOpacity(0.1),
                 child: Center(

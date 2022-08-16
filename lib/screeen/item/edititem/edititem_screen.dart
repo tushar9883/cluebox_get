@@ -68,11 +68,24 @@ class EditItemScreen extends BaseView<EditItemController> {
                                       EdgeInsets.symmetric(horizontal: 21.h),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(14.r),
-                                    child: Image.network(
-                                      controller.imgUrl.toString(),
-                                      height: 194.h,
-                                      width: 372.w,
-                                      fit: BoxFit.cover,
+                                    child: Stack(
+                                      children: [
+                                        Image.network(
+                                          controller.imgUrl.toString(),
+                                          height: 194.h,
+                                          width: 372.w,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Container(
+                                          width: 372.w,
+                                          height: 194.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14.r),
+                                            color: const Color(0x99ffffff),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),

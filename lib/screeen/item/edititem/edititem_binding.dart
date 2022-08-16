@@ -408,20 +408,11 @@ class EditItemController extends BaseController {
 
   Future uplodeProfilePic() async {
     showLoadingDialog();
-    // setState(() {
-    //   isLoading = !isLoading;
-    // });
     print("iiiiiiiiiiiiiiiii${XFile(profileImage!.path)}");
     var result = await StorageData()
         .uploadFile(xfile: XFile(profileImage!.path), folderName: 'images');
     imgUrl = result["imageUrl"];
     print('immmmmmmmmmmmm-------------${imgUrl}');
-
-    // if (mounted) {
-    //   setState(() {
-    //     isLoading = !isLoading;
-    //   });
-    // }
     hideDialog();
     update();
   }

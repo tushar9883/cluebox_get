@@ -249,12 +249,6 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                         .favoritelist?[index]
                                                         .toJson(),
                                                   );
-                                                  // Get.toNamed(
-                                                  //   RouterName.edititem,
-                                                  //   arguments: controller
-                                                  //       .favoritelist?[index]
-                                                  //       .toJson(),
-                                                  // );
                                                 },
                                                 child: Column(
                                                   children: [
