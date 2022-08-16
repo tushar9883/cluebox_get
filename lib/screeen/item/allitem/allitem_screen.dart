@@ -235,10 +235,15 @@ class AllItemScreen extends BaseView<AllItemController> {
                                       onTap: () {
                                         print("12132132131313");
                                         Get.toNamed(
-                                          RouterName.edititem,
+                                          RouterName.viewpage,
                                           arguments: controller.itemlist?[index]
                                               .toJson(),
                                         );
+                                        // Get.toNamed(
+                                        //   RouterName.edititem,
+                                        //   arguments: controller.itemlist?[index]
+                                        //       .toJson(),
+                                        // );
                                       },
                                       child: Slidable(
                                         endActionPane: ActionPane(

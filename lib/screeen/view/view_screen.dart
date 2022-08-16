@@ -65,22 +65,6 @@ class ViewScreen extends BaseView<ViewController> {
                                       ),
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: 153.w,
-                                      height: 38.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 2.w,
-                                        ),
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               )
                             : Stack(
@@ -138,18 +122,9 @@ class ViewScreen extends BaseView<ViewController> {
                               margin: EdgeInsets.only(right: 21.w),
                               child: LikeButton(
                                 size: 30.h,
-                                isLiked: controller.itemModel?.favorite,
-                                onTap: (isLiked) {
-                                  controller.itemModel?.favorite = !isLiked;
-                                  controller.update();
-                                  print(
-                                      '22222222222222222${controller.isFavorite}');
-                                  return Future.value(
-                                      controller.itemModel?.favorite);
-                                },
-                                likeBuilder: (isTapped) {
+                                likeBuilder: (e) {
                                   return SvgPicture.asset(
-                                    isTapped
+                                    controller.itemModel!.favorite!
                                         ? 'assets/svg/likes_fill.svg'
                                         : 'assets/svg/like.svg',
                                     height: 18.h,

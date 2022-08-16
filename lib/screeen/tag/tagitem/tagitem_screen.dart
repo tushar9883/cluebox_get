@@ -528,11 +528,17 @@ class TagItemScreen extends BaseView<TagItemController> {
                                             child: InkWell(
                                               onTap: () {
                                                 Get.toNamed(
-                                                  RouterName.edititem,
+                                                  RouterName.viewpage,
                                                   arguments: controller
                                                       .itemdataList?[index]
                                                       .toJson(),
                                                 );
+                                                // Get.toNamed(
+                                                //   RouterName.edititem,
+                                                //   arguments: controller
+                                                //       .itemdataList?[index]
+                                                //       .toJson(),
+                                                // );
                                               },
                                               child: Column(
                                                 children: [
