@@ -120,19 +120,44 @@ class ViewScreen extends BaseView<ViewController> {
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(right: 21.w),
-                              child: LikeButton(
-                                size: 30.h,
-                                likeBuilder: (e) {
-                                  return SvgPicture.asset(
-                                    controller.itemModel!.favorite!
-                                        ? 'assets/svg/likes_fill.svg'
-                                        : 'assets/svg/like.svg',
-                                    height: 18.h,
-                                  );
-                                },
-                              ),
+                            Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Colors.black,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  child: Text(
+                                    "${controller.itemModel?.quantity}",
+                                    textAlign: TextAlign.center,
+                                    style: robotoBold.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 21.w),
+                                  child: LikeButton(
+                                    size: 30.h,
+                                    likeBuilder: (e) {
+                                      return SvgPicture.asset(
+                                        controller.itemModel!.favorite!
+                                            ? 'assets/svg/likes_fill.svg'
+                                            : 'assets/svg/like.svg',
+                                        height: 18.h,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -253,41 +278,6 @@ class ViewScreen extends BaseView<ViewController> {
                         ),
                         Text(
                           "${controller.itemModel?.locationName}",
-                          // "Bedroom",
-                          style: robotoBold.copyWith(
-                            color: Colors.black,
-                            fontSize: 18.sp,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/loc.svg',
-                              color: const Color(0xff4A00E0),
-                              height: 14.h,
-                              width: 15.w,
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              "Quantity",
-                              style: robotoMedium.copyWith(
-                                color: Colors.black,
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "${controller.itemModel?.quantity}",
                           // "Bedroom",
                           style: robotoBold.copyWith(
                             color: Colors.black,
