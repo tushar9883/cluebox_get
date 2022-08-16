@@ -262,6 +262,41 @@ class ViewScreen extends BaseView<ViewController> {
                         SizedBox(
                           height: 30.h,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svg/loc.svg',
+                              color: const Color(0xff4A00E0),
+                              height: 14.h,
+                              width: 15.w,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              "Quantity",
+                              style: robotoMedium.copyWith(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                          "${controller.itemModel?.quantity}",
+                          // "Bedroom",
+                          style: robotoBold.copyWith(
+                            color: Colors.black,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
                         InkWell(
                           onTap: () {
                             Get.toNamed(RouterName.edititem,
