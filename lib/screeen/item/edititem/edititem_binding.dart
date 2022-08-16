@@ -326,7 +326,6 @@ class EditItemController extends BaseController {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        // return alert;
         return WillPopScope(onWillPop: () async => false, child: alert);
       },
     );

@@ -433,9 +433,9 @@ class HomeScreen extends BaseView<HomeController> {
                                             Get.toNamed(
                                               RouterName.viewpage,
                                               // RouterName.edititem,
-                                              // arguments: controller
-                                              //     .itemList?[index]
-                                              //     .toJson(),
+                                              arguments: controller
+                                                  .itemList?[index]
+                                                  .toJson(),
                                             );
                                           },
                                           child: Row(

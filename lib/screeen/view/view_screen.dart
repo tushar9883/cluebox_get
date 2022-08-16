@@ -125,7 +125,8 @@ class ViewScreen extends BaseView<ViewController> {
                             Container(
                               margin: EdgeInsets.only(left: 21.w),
                               child: Text(
-                                "Cold Medicine",
+                                "${controller.itemModel?.itemName}",
+                                // "Cold Medicine",
                                 style: robotoBold.copyWith(
                                   color: Colors.black,
                                   fontSize: 22.sp,
@@ -136,13 +137,14 @@ class ViewScreen extends BaseView<ViewController> {
                               margin: EdgeInsets.only(right: 21.w),
                               child: LikeButton(
                                 size: 30.h,
-                                isLiked: controller.isFavorite,
+                                isLiked: controller.itemModel?.favorite,
                                 onTap: (isLiked) {
-                                  controller.isFavorite = !isLiked;
+                                  controller.itemModel?.favorite = !isLiked;
                                   controller.update();
                                   print(
                                       '22222222222222222${controller.isFavorite}');
-                                  return Future.value(controller.isFavorite);
+                                  return Future.value(
+                                      controller.itemModel?.favorite);
                                 },
                                 likeBuilder: (isTapped) {
                                   return SvgPicture.asset(
@@ -238,7 +240,8 @@ class ViewScreen extends BaseView<ViewController> {
                           height: 10.h,
                         ),
                         Text(
-                          "Checker Data",
+                          "${controller.itemModel?.boxName}",
+                          // "Checker Data",
                           style: robotoBold.copyWith(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -272,7 +275,8 @@ class ViewScreen extends BaseView<ViewController> {
                           height: 10.h,
                         ),
                         Text(
-                          "Bedroom",
+                          "${controller.itemModel?.locationName}",
+                          // "Bedroom",
                           style: robotoBold.copyWith(
                             color: Colors.black,
                             fontSize: 18.sp,
@@ -319,7 +323,7 @@ class ViewScreen extends BaseView<ViewController> {
                           height: 30.h,
                         ),
                         Text(
-                          "Item Added on: 05 Apr 2021",
+                          "Item Added on: ${controller.outputDate}",
                           style: robotoMedium.copyWith(
                             color: const Color(0xff6a6a6a),
                             fontSize: 12.sp,
