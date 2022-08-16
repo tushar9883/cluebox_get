@@ -20,7 +20,7 @@ class AdditemScreen extends BaseView<AddItemController> {
     return WillPopScope(
       onWillPop: () async {
         var id = controller.userid;
-        Get.until((route) => Get.currentRoute == RouterName.home);
+        // Get.until((route) => Get.currentRoute == RouterName.home);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           var controll = Get.find<HomeController>();
           controll.getData(id);
