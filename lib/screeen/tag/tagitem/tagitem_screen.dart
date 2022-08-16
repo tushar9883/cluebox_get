@@ -13,6 +13,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 
+import '../tag/tag_binding.dart';
+
 class TagItemScreen extends BaseView<TagItemController> {
   const TagItemScreen({Key? key}) : super(key: key);
 
@@ -162,6 +164,11 @@ class TagItemScreen extends BaseView<TagItemController> {
                         children: [
                           InkWell(
                             onTap: () {
+                              var id = controller.userid;
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                var controll = Get.find<TagController>();
+                                controll.getAllTags(id!);
+                              });
                               Navigator.of(context).pop();
                             },
                             child: Container(
@@ -381,7 +388,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                               children: [
                                                 SlidableAction(
                                                   backgroundColor:
-                                                      Color(0xFFFE4A49),
+                                                      const Color(0xFFFE4A49),
                                                   foregroundColor: Colors.white,
                                                   icon: Icons.delete,
                                                   label: 'Delete',
@@ -433,28 +440,36 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                         () async {
                                                                       controller
                                                                           .showLoadingDialog();
+                                                                      // controller
+                                                                      //         .isLoading =
+                                                                      //     true;
                                                                       print(
                                                                           'Delete');
-                                                                      DbHelp()
+                                                                      await DbHelp()
                                                                           .removeItem(
                                                                               id!);
-                                                                      DbHelp().removeBox(
-                                                                          boxid!);
-                                                                      DbHelp().removeLocation(
-                                                                          locationid!);
-                                                                      controller
+                                                                      await DbHelp()
+                                                                          .removeBox(
+                                                                              boxid!);
+                                                                      await DbHelp()
+                                                                          .removeLocation(
+                                                                              locationid!);
+                                                                      await controller
                                                                           .deleteitem();
                                                                       WidgetsBinding
                                                                           .instance
                                                                           .addPostFrameCallback(
-                                                                              (_) {
+                                                                              (_) async {
                                                                         var controll =
                                                                             Get.find<TagItemController>();
-                                                                        controll
+                                                                        await controll
                                                                             .getAllItemsFromTag();
                                                                       });
                                                                       controller
                                                                           .hideDialog();
+                                                                      // controller
+                                                                      //         .isLoading =
+                                                                      //     false;
                                                                       Navigator.of(
                                                                               context)
                                                                           .pop();
@@ -649,7 +664,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                     "BOX NUMBER/NAME",
                                                                     style: robotoMedium
                                                                         .copyWith(
-                                                                      color: Color(
+                                                                      color: const Color(
                                                                           0xff7d7d7d),
                                                                       fontSize:
                                                                           8.sp,
@@ -719,7 +734,7 @@ class TagItemScreen extends BaseView<TagItemController> {
                                                                   "LOCATION",
                                                                   style: robotoMedium
                                                                       .copyWith(
-                                                                    color: Color(
+                                                                    color: const Color(
                                                                         0xff7d7d7d),
                                                                     fontSize:
                                                                         8.sp,

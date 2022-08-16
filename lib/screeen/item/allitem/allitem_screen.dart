@@ -294,29 +294,31 @@ class AllItemScreen extends BaseView<AllItemController> {
                                                           children: [
                                                             Center(
                                                               child: InkWell(
-                                                                onTap: () {
+                                                                onTap:
+                                                                    () async {
                                                                   controller
                                                                       .showLoadingDialog();
                                                                   print(
                                                                       'Delete');
-                                                                  DbHelp()
+                                                                  await DbHelp()
                                                                       .removeItem(
                                                                           id!);
-                                                                  DbHelp()
+                                                                  await DbHelp()
                                                                       .removeBox(
                                                                           boxid!);
-                                                                  DbHelp().removeLocation(
-                                                                      locationid!);
-                                                                  controller
+                                                                  await DbHelp()
+                                                                      .removeLocation(
+                                                                          locationid!);
+                                                                  await controller
                                                                       .deleteitem();
                                                                   WidgetsBinding
                                                                       .instance
                                                                       .addPostFrameCallback(
-                                                                          (_) {
+                                                                          (_) async {
                                                                     var controll =
                                                                         Get.find<
                                                                             AllItemController>();
-                                                                    controll
+                                                                    await controll
                                                                         .getData();
                                                                   });
                                                                   controller

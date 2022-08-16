@@ -125,29 +125,35 @@ class AddItemController extends BaseController {
   }
 
   submit(BuildContext context) async {
-    // showLoadingDialog();
-    isLoading = true;
+    showLoadingDialog();
+    // isLoading = true;
     final _utcTime = DateTime.now().toUtc();
     final Localtime = _utcTime.toLocal();
     if (Nameitem.text.isEmpty) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Item name is required');
     } else if (locationvaluess == null) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Please select/add Location');
     } else if (locationvaluess?.name == 'Add Location' &&
         LocationName.text.isEmpty) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Please enter Location Name');
     } else if (locationvaluess?.name == 'Add Location' &&
         BoxName.text.isEmpty) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Please enter Box Name');
     } else if (locationvaluess?.name != 'Add Location' && boxvalue == null) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Please select/add Box');
     } else if (boxvalue?.name == 'Add Box' && BoxName.text.isEmpty) {
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       toastbar('Please enter Box Name');
     } else {
       List<String> tagIds = [];
@@ -186,10 +192,12 @@ class AddItemController extends BaseController {
         selectedLocation =
             LocationModel(uid: docrefLoc.id, name: LocationName.text);
         update();
-        isLoading = false;
+        // isLoading = false;
+        hideDialog();
       } else {
         selectedLocation = locationvaluess;
-        isLoading = false;
+        // isLoading = false;
+        hideDialog();
       }
       if (boxvalue?.name == 'Add Box' ||
           locationvaluess?.name == 'Add Location') {
@@ -202,11 +210,13 @@ class AddItemController extends BaseController {
         ));
         update();
         selectedBox = BoxModel(uid: docrefBox.id, name: BoxName.text);
-        isLoading = false;
+        // isLoading = false;
+        hideDialog();
       } else {
         selectedBox = boxvalue;
         update();
-        isLoading = false;
+        // isLoading = false;
+        hideDialog();
       }
       await DbHelp().addItem(AddItemModel(
           userid: userid,
@@ -231,7 +241,8 @@ class AddItemController extends BaseController {
         print("User itemCount updated___________");
       }
 
-      isLoading = false;
+      // isLoading = false;
+      hideDialog();
       showAlertDialog(context);
     }
   }
