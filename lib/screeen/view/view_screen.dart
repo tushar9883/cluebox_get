@@ -107,14 +107,16 @@ class ViewScreen extends BaseView<ViewController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 21.w),
-                              child: Text(
-                                "${controller.itemModel?.itemName}",
-                                // "Cold Medicine",
-                                style: robotoBold.copyWith(
-                                  color: Colors.black,
-                                  fontSize: 22.sp,
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(left: 21.w),
+                                child: Text(
+                                  "${controller.itemModel?.itemName}",
+                                  // "Cold Medicine",
+                                  style: robotoBold.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 22.sp,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                             ),
@@ -189,7 +191,7 @@ class ViewScreen extends BaseView<ViewController> {
                               )
                             : const SizedBox.shrink(),
                         SizedBox(
-                          height: 50.h,
+                          height: 30.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +225,7 @@ class ViewScreen extends BaseView<ViewController> {
                           ),
                         ),
                         SizedBox(
-                          height: 50.h,
+                          height: 30.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -258,7 +260,7 @@ class ViewScreen extends BaseView<ViewController> {
                           ),
                         ),
                         SizedBox(
-                          height: 50.h,
+                          height: 30.h,
                         ),
                         InkWell(
                           onTap: () {
