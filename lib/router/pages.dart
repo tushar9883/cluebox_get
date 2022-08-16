@@ -33,8 +33,10 @@ import 'package:clue_get/screeen/tag/tag/tag_binding.dart';
 import 'package:clue_get/screeen/tag/tag/tag_screen.dart';
 import 'package:clue_get/screeen/tag/tagitem/tagitem_binding.dart';
 import 'package:clue_get/screeen/tag/tagitem/tagitem_screen.dart';
+import 'package:clue_get/screeen/view/view_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../screeen/item/edititem/edititem_binding.dart';
+import '../screeen/view/view_binding.dart';
 
 class Pages {
   static List<GetPage> pages() {
@@ -111,6 +113,10 @@ class Pages {
           name: RouterName.myBoxes,
           page: () => const MyBoxes(),
           binding: MyBoxBinding()),
+      GetPage(
+          name: RouterName.viewpage,
+          page: () => const ViewScreen(),
+          binding: ViewBinding()),
 
       // GetPage(
       //     name: RouterName.search,

@@ -431,10 +431,11 @@ class HomeScreen extends BaseView<HomeController> {
                                         child: InkWell(
                                           onTap: () {
                                             Get.toNamed(
-                                              RouterName.edititem,
-                                              arguments: controller
-                                                  .itemList?[index]
-                                                  .toJson(),
+                                              RouterName.viewpage,
+                                              // RouterName.edititem,
+                                              // arguments: controller
+                                              //     .itemList?[index]
+                                              //     .toJson(),
                                             );
                                           },
                                           child: Row(

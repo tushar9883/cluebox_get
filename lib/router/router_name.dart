@@ -17,4 +17,5 @@ class RouterName {
   static const String authcheck = '/authcheck';
   static const String myLocation = '/myLocation';
   static const String myBoxes = '/myBoxes';
+  static const String viewpage = '/viewpage';
 }
