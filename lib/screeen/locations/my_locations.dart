@@ -1,9 +1,11 @@
 import 'package:clue_get/base/base_view_view_model.dart';
+import 'package:clue_get/db/db_helper.dart';
 import 'package:clue_get/res/gradient.dart';
 import 'package:clue_get/res/style.dart';
 import 'package:clue_get/router/router_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -207,21 +209,24 @@ class MyLocation extends BaseView<MyLocationController> {
                                 itemCount:
                                     controller.mydataLocationList?.length ?? 0,
                                 itemBuilder: (BuildContext context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      var titlename = controller
-                                          .mydataLocationList?[index].name;
-                                      print(titlename);
-                                      Get.toNamed(
-                                        RouterName.myBoxes,
-                                        arguments: controller
-                                            .mydataLocationList?[index]
-                                            .toJson(),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
+                                  var data =
+                                      controller.mydataLocationList?[index];
+                                  var locid = data?.uid;
+                                  return Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          var titlename = controller
+                                              .mydataLocationList?[index].name;
+                                          print(titlename);
+                                          Get.toNamed(
+                                            RouterName.myBoxes,
+                                            arguments: controller
+                                                .mydataLocationList?[index]
+                                                .toJson(),
+                                          );
+                                        },
+                                        child: Container(
                                           margin: EdgeInsets.only(
                                               left: 21.w,
                                               right: 21.w,
@@ -246,50 +251,23 @@ class MyLocation extends BaseView<MyLocationController> {
                                               SizedBox(
                                                 width: 10.w,
                                               ),
-                                              // Container(
-                                              //   padding:
-                                              //   EdgeInsets.symmetric(
-                                              //     horizontal: 10.w,
-                                              //     vertical: 5.h,
-                                              //   ),
-                                              //   decoration: BoxDecoration(
-                                              //     borderRadius:
-                                              //     BorderRadius
-                                              //         .circular(25.r),
-                                              //     color: Colors.black,
-                                              //   ),
-                                              //   child: Text(
-                                              //     controller
-                                              //         .mydataLocationList?[index]
-                                              //         .tagCount
-                                              //         .toString() ??
-                                              //         '0',
-                                              //     overflow: TextOverflow
-                                              //         .ellipsis,
-                                              //     style:
-                                              //     robotoBold.copyWith(
-                                              //         fontSize: 12.sp,
-                                              //         color: Colors
-                                              //             .white),
-                                              //   ),
-                                              // ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        Container(
-                                          color: const Color(0xffDEDEDE),
-                                          height: 1,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        height: 12.h,
+                                      ),
+                                      Container(
+                                        color: const Color(0xffDEDEDE),
+                                        height: 1,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      )
+                                    ],
                                   );
                                 },
                               ),

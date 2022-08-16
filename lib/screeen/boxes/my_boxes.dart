@@ -252,33 +252,6 @@ class MyBoxes extends BaseView<MyBoxController> {
                                               SizedBox(
                                                 width: 10.w,
                                               ),
-                                              // Container(
-                                              //   padding:
-                                              //   EdgeInsets.symmetric(
-                                              //     horizontal: 10.w,
-                                              //     vertical: 5.h,
-                                              //   ),
-                                              //   decoration: BoxDecoration(
-                                              //     borderRadius:
-                                              //     BorderRadius
-                                              //         .circular(25.r),
-                                              //     color: Colors.black,
-                                              //   ),
-                                              //   child: Text(
-                                              //     controller
-                                              //         .mydataBoxList?[index]
-                                              //         .tagCount
-                                              //         .toString() ??
-                                              //         '0',
-                                              //     overflow: TextOverflow
-                                              //         .ellipsis,
-                                              //     style:
-                                              //     robotoBold.copyWith(
-                                              //         fontSize: 12.sp,
-                                              //         color: Colors
-                                              //             .white),
-                                              //   ),
-                                              // ),
                                             ],
                                           ),
                                         ),
