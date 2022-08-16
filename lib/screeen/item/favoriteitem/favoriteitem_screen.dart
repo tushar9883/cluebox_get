@@ -289,27 +289,35 @@ class FavoriteScreen extends BaseView<FavoriteController> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             12.r),
-                                                                child: Image
-                                                                    .network(
-                                                                  "${loc?.image}",
-                                                                  height: 180.h,
-                                                                  width: 110.w,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  errorBuilder:
-                                                                      (context,
-                                                                          error,
-                                                                          stackTrace) {
-                                                                    return Image.asset(
+                                                                child: loc?.image ==
+                                                                        null
+                                                                    ? Image.asset(
                                                                         'assets/image/ser_1.png',
                                                                         height: 180
                                                                             .h,
                                                                         width: 110
                                                                             .w,
                                                                         fit: BoxFit
-                                                                            .cover);
-                                                                  },
-                                                                ),
+                                                                            .cover)
+                                                                    : Image
+                                                                        .network(
+                                                                        "${loc?.image}",
+                                                                        height:
+                                                                            180.h,
+                                                                        width:
+                                                                            110.w,
+                                                                        fit: BoxFit
+                                                                            .fill,
+                                                                        errorBuilder: (context,
+                                                                            error,
+                                                                            stackTrace) {
+                                                                          return Image.asset(
+                                                                              'assets/image/ser_1.png',
+                                                                              height: 180.h,
+                                                                              width: 110.w,
+                                                                              fit: BoxFit.cover);
+                                                                        },
+                                                                      ),
                                                               ),
                                                             ),
                                                           ],
