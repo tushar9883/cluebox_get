@@ -23,13 +23,6 @@ class MyLocationController extends BaseController {
   List<LocationModel>? mydataLocationList;
   bool isLoading = false;
 
-  loadJson() async {
-    String data = await rootBundle.loadString('assets/json/check.json');
-    // jsonResult = json.decode(data);
-    update();
-    // print(jsonResult);
-  }
-
   Future<void> getAllLocations(String userId) async {
     isLoading = true;
     var allLocations = await DbHelp().getAllLocation(userId);
