@@ -262,11 +262,17 @@ class SearchScreen extends BaseView<SearchController> {
                                       child: InkWell(
                                         onTap: () {
                                           Get.toNamed(
-                                            RouterName.edititem,
+                                            RouterName.viewpage,
                                             arguments: controller
                                                 .searchModel?[index]
                                                 .toJson(),
                                           );
+                                          // Get.toNamed(
+                                          //   RouterName.edititem,
+                                          //   arguments: controller
+                                          //       .searchModel?[index]
+                                          //       .toJson(),
+                                          // );
                                         },
                                         child: Column(
                                           children: [

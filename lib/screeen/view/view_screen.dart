@@ -393,8 +393,9 @@ class ViewScreen extends BaseView<ViewController> {
                       padding: REdgeInsets.all(10.0),
                       width: 100.w,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.r)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                       child: const SpinKitFadingCircle(
                         color: Colors.blue,
                         size: 50.0,
