@@ -219,28 +219,23 @@ class ViewScreen extends BaseView<ViewController> {
                                               : controller.tagdata.length,
                                       itemBuilder:
                                           (BuildContext context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            print("101010101010");
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 10.w),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.r),
-                                              color: const Color(0xff929292),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "#${controller.tagdata[index]?.name}",
-                                                textAlign: TextAlign.center,
-                                                style: robotoBold.copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: 13.sp,
-                                                ),
+                                        return Container(
+                                          margin: EdgeInsets.only(left: 10.w),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25.r),
+                                            color: const Color(0xff929292),
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "#${controller.tagdata[index]?.name}",
+                                              textAlign: TextAlign.center,
+                                              style: robotoBold.copyWith(
+                                                color: Colors.white,
+                                                fontSize: 13.sp,
                                               ),
                                             ),
                                           ),
