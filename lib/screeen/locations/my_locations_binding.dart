@@ -36,7 +36,6 @@ class MyLocationController extends BaseController {
     myLocationList?.clear();
     myLocationList = allLocations;
     mydataLocationList = allLocations;
-    print("loc id${myLocationList?.first.uid}");
     isLoading = false;
     update();
   }
