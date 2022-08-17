@@ -9,6 +9,7 @@ import 'package:like_button/like_button.dart';
 import '../../base/base_view_view_model.dart';
 import '../../res/style.dart';
 import '../../router/router_name.dart';
+import '../item/favoriteitem/favorite_binding.dart';
 
 class ViewScreen extends BaseView<ViewController> {
   const ViewScreen({Key? key}) : super(key: key);
@@ -27,6 +28,10 @@ class ViewScreen extends BaseView<ViewController> {
                   children: [
                     InkWell(
                       onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          var controll = Get.find<FavoriteController>();
+                          controll.getData();
+                        });
                         Get.back();
                       },
                       child: Container(
